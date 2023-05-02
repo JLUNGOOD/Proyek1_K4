@@ -10,8 +10,8 @@
 </head>
 <body>
     <div class="wrapper">
-        @include('layouts.navbar');
-        @include('layouts.sidebar');
+        @include('layouts.navbar')
+        @include('layouts.sidebar')
         <div class="content-wrapper"></div>
             <section class="content-header">
                 <div class="container-fluid">
