@@ -16,7 +16,15 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', function () {
-    return view('home_user');
+    return view('user.home_user');
+});
+
+Route::get('/pengaduan', function(){
+    return view('user.pengaduan');
+});
+
+Route::get('/tanggapan', function(){
+    return view('user.tanggapan');
 });
 
 Route::get('/admin', function () {
