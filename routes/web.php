@@ -15,11 +15,11 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', function () {
-    return view('home_user');
+    return view('welcome');
 });
 
 Route::get('/admin', function () {
-    return 'is-admin';
+    return view('admin.index');
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
