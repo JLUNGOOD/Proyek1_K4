@@ -25,6 +25,17 @@
                     <a class="nav-link" href="#lapor">Pengaduan</a>
                 </li>
             </ul>
+            <ul>
+                <li>
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="dropdown-item" data-bs-toggle="modal"
+                                data-bs-target="#keluar">
+                            <i class="fas fa-sign-out-alt pe-1"></i>Keluar
+                        </button>
+                    </form>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>

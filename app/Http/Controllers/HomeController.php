@@ -28,6 +28,6 @@ class HomeController extends Controller
             return redirect('admin');
         }
 
-        return view('home');
+        return view('home_user');
     }
 }
