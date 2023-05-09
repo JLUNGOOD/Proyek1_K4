@@ -20,21 +20,27 @@
                 @csrf
                 <h1 class="display-5 fw-bold mb-4 text-center">Login</h1>
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
-                           name="email">
+                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="floatingInput"
+                           placeholder="name@example.com" name="email">
                     <label for="floatingInput">Email Address</label>
+                    @error('email')
+                    <small class="text-danger">{{ $message }} </small>
+                    @enderror
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
-                           name="password">
+                    <input type="password" class="form-control @error('password') is-invalid @enderror"
+                           id="floatingPassword" placeholder="Password" name="password">
                     <label for="floatingPassword">Password</label>
+                    @error('password')
+                    <small class="text-danger">{{ $message }} </small>
+                    @enderror
                 </div>
                 <div class="checkbox mb-3">
                     <label>
                         <input type="checkbox" class="form-check-input" value="remember-me" name="remember"> Ingat saya
                     </label>
                 </div>
-                <button class="w-100 btn btn-lg btn-dark" type="submit" name="masuk">Sign In</button>
+                <button class="w-100 btn btn-lg btn-dark" type="submit">Sign In</button>
                 <hr class="my-4">
                 <small class="d-block text-muted text-center">Belum punya akun? <a href="" data-bs-toggle="modal"
                                                                                    data-bs-target="#daftar">Daftar</a>.
@@ -49,54 +55,52 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fw-bold mb-0 fs-2" id="exampleModalLabel">Daftar</h1>
+                <h1 class="modal-title fw-bold mb-0 fs-2" id="exampleModalLabel">Register</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post">
+            <form action="{{ url('register') }}" method="post">
+                @csrf
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label for="firstname" class="form-label">Nama Depan</label>
-                            <input class="form-control" name="firstname" id="firstname" placeholder="Nama Depan *"
-                                   required>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="lastname" class="form-label">Nama Belakang</label>
-                            <input class="form-control" name="lastname" id="lastname" placeholder="Nama Belakang *"
-                                   required>
-                        </div>
-                    </div>
                     <div class="mt-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input class="form-control" name="email" id="email" placeholder="Massukkan Alamat Email Anda *"
+                        <label for="name" class="form-label">Nama Lengkap</label>
+                        <input class="form-control" name="name" id="name" placeholder="Masukkan Nama Anda *"
                                required>
                     </div>
                     <div class="mt-3">
-                        <label for="password" class="form-label">Kata Sandi</label>
+                        <label for="email" class="form-label">Email</label>
+                        <input class="form-control" name="email" id="email" placeholder="Masukkan Alamat Email Anda *"
+                               required>
+                    </div>
+                    <div class="mt-3">
+                        <label for="password" class="form-label">Password</label>
                         <input type="password" class="form-control" name="password" id="password"
-                               placeholder="Massukkan Kata Sandi Anda *"
-                               required minlength="8" maxlength="20">
+                               placeholder="Masukkan Kata Sandi Anda *" required>
                         <div id="passwordHelpBlock" class="form-text">
-                            Kata sandi Anda harus sepanjang 8-20 karakter.
+                            Kata sandi minimal 4 karakter.
                         </div>
                     </div>
                     <div class="mt-3">
-                        <label for="date-of-birth" class="form-label">Tanggal Lahir</label>
-                        <input type="date" class="form-control" name="date-of-birth" id="date-of-birth"
+                        <label for="password_confirmation" class="form-label">Password Confirmation</label>
+                        <input type="password" class="form-control" name="password_confirmation"
+                               id="password_confirmation" placeholder="Masukkan Konfirmasi Kata Sandi Anda *" required>
+                    </div>
+                    <div class="mt-3">
+                        <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
+                        <input type="date" class="form-control" name="tanggal_lahir" id="tanggal_lahir"
                                placeholder="Masukkan Tanggal Lahir Anda *" required>
                     </div>
                     <div class="mt-3">
                         <label class="form-label">Jenis Kelamin</label>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gender" value="Laki-laki" id="male"
-                                   checked>
+                            <input class="form-check-input" type="radio" name="jenis_kelamin" value="L"
+                                   id="male" checked>
                             <label class="form-check-label" for="male">
                                 Laki-laki
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gender" value="Perempuan" id="female"
-                                   required>
+                            <input class="form-check-input" type="radio" name="jenis_kelamin" value="P"
+                                   id="female" required>
                             <label class="form-check-label" for="female">
                                 Perempuan
                             </label>
@@ -104,7 +108,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" name="daftar" class="btn btn-dark">Daftar</button>
+                    <button type="submit" class="btn btn-dark">Sign Up</button>
                 </div>
             </form>
         </div>
