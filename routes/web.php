@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +20,12 @@ Route::get('/', function () {
 });
 
 Route::get('/admin', function () {
-    return view('admin.index');
+
+    if (Auth::user()->role == '1') {
+        return view('admin.index');;
+    }
+
+    return redirect('/home');
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
