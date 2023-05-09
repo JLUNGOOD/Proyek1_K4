@@ -9,6 +9,29 @@
     @vite(['resources/js/app.js'])
 </head>
 <body>
-
+    <div class="wrapper">
+        @include('layouts.navbar')
+        @include('layouts.sidebar')
+        <div class="content-wrapper"></div>
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                       
+                    </div>
+            </section>
+    
+            <section class="content">
+    
+                <div class="card">
+                    <div class="card-header">
+    
+                    <div class="card-body">
+                      @yield('content')
+                    </div>
+                  </div>
+    
+                </section>
+        </div>
+    </div>
 </body>
 </html>
