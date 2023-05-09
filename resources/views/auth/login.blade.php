@@ -63,31 +63,51 @@
                 <div class="modal-body">
                     <div class="mt-3">
                         <label for="name" class="form-label">Nama Lengkap</label>
-                        <input class="form-control" name="name" id="name" placeholder="Masukkan Nama Anda *"
-                               required>
+                        <input class="form-control @error('email') is-invalid @enderror" name="name" id="name"
+                               placeholder="Masukkan Nama Anda *" required>
+                        @error('name')
+                        <small class="text-danger">{{ $message }} </small>
+                        @enderror
                     </div>
                     <div class="mt-3">
                         <label for="email" class="form-label">Email</label>
-                        <input class="form-control" name="email" id="email" placeholder="Masukkan Alamat Email Anda *"
-                               required>
+                        <input class="form-control @error('email_register') is-invalid @enderror" name="email"
+                               id="email"
+                               placeholder="Masukkan Alamat Email Anda *" required>
+                        @error('email_register')
+                        <small class="text-danger">{{ $message }} </small>
+                        @enderror
                     </div>
                     <div class="mt-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" name="password" id="password"
-                               placeholder="Masukkan Kata Sandi Anda *" required>
+                        <input type="password" class="form-control @error('password_regsiter') is-invalid @enderror"
+                               name="password_register" id="password" placeholder="Masukkan Kata Sandi Anda *" required>
                         <div id="passwordHelpBlock" class="form-text">
                             Kata sandi minimal 4 karakter.
                         </div>
+                        @error('password_register')
+                        <small class="text-danger">{{ $message }} </small>
+                        @enderror
                     </div>
                     <div class="mt-3">
                         <label for="password_confirmation" class="form-label">Password Confirmation</label>
-                        <input type="password" class="form-control" name="password_confirmation"
-                               id="password_confirmation" placeholder="Masukkan Konfirmasi Kata Sandi Anda *" required>
+                        <input type="password"
+                               class="form-control @error('password_regsiter_confirmation') is-invalid @enderror"
+                               name="password_register_confirmation" id="password_confirmation"
+                               placeholder="Masukkan Konfirmasi Kata Sandi Anda *" required>
+                        @error('password_register_confirmation')
+                        <small class="text-danger">{{ $message }} </small>
+                        @enderror
                     </div>
                     <div class="mt-3">
-                        <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
+                        <label for="tanggal_lahir" class="form-label @error('tanggal_lahir') is-invalid @enderror">
+                            Tanggal Lahir
+                        </label>
                         <input type="date" class="form-control" name="tanggal_lahir" id="tanggal_lahir"
                                placeholder="Masukkan Tanggal Lahir Anda *" required>
+                        @error('tanggal_lahir')
+                        <small class="text-danger">{{ $message }} </small>
+                        @enderror
                     </div>
                     <div class="mt-3">
                         <label class="form-label">Jenis Kelamin</label>
