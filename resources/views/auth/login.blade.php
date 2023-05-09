@@ -20,10 +20,10 @@
                 @csrf
                 <h1 class="display-5 fw-bold mb-4 text-center">Login</h1>
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="floatingInput"
-                           placeholder="name@example.com" name="email">
+                    <input type="email" class="form-control @error('email_login') is-invalid @enderror" id="floatingInput"
+                           placeholder="name@example.com" name="email_login">
                     <label for="floatingInput">Email Address</label>
-                    @error('email')
+                    @error('email_login')
                     <small class="text-danger">{{ $message }} </small>
                     @enderror
                 </div>
@@ -71,7 +71,7 @@
                     </div>
                     <div class="mt-3">
                         <label for="email" class="form-label">Email</label>
-                        <input class="form-control @error('email_register') is-invalid @enderror" name="email"
+                        <input class="form-control @error('email_register') is-invalid @enderror" name="email_register"
                                id="email"
                                placeholder="Masukkan Alamat Email Anda *" required>
                         @error('email_register')
@@ -80,7 +80,7 @@
                     </div>
                     <div class="mt-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control @error('password_regsiter') is-invalid @enderror"
+                        <input type="password" class="form-control @error('password_register') is-invalid @enderror"
                                name="password_register" id="password" placeholder="Masukkan Kata Sandi Anda *" required>
                         <div id="passwordHelpBlock" class="form-text">
                             Kata sandi minimal 4 karakter.
@@ -92,7 +92,7 @@
                     <div class="mt-3">
                         <label for="password_confirmation" class="form-label">Password Confirmation</label>
                         <input type="password"
-                               class="form-control @error('password_regsiter_confirmation') is-invalid @enderror"
+                               class="form-control @error('password_register_confirmation') is-invalid @enderror"
                                name="password_register_confirmation" id="password_confirmation"
                                placeholder="Masukkan Konfirmasi Kata Sandi Anda *" required>
                         @error('password_register_confirmation')
