@@ -28,18 +28,31 @@
                     <a class="nav-link" href="/tanggapan">Tanggapan</a>
                 </li>
             </ul>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button type="submit" class="dropdown-item" data-bs-toggle="modal"
-                                data-bs-target="#keluar">
-                            <i class="fas fa-sign-out-alt pe-1"></i>Keluar
-                        </button>
-                    </form>
-                </li>
-                
-            </ul>
+            <div class="d-flex">
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        <i class="far fa-user-circle fs-6 pe-1"></i>
+                        {{ auth()->user()->name }}
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow">
+                        <li><a class="dropdown-item" href="profil-admin.php">Profil</a></li>
+                        <li><a class="dropdown-item" href="ubah-password-admin.php">Ubah Kata Sandi</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="dropdown-item" data-bs-toggle="modal"
+                                        data-bs-target="#keluar">
+                                    <i class="fas fa-sign-out-alt pe-1"></i>Keluar
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </nav>
