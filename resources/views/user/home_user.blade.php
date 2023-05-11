@@ -33,7 +33,7 @@
                     <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
                         <i class="far fa-user-circle fs-6 pe-1"></i>
-                        {{ auth()->user()->name }}
+                        {{-- {{ auth()->user()->name }} --}}
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end shadow">
                         <li><a class="dropdown-item" href="profil-admin.php">Profil</a></li>
@@ -61,7 +61,7 @@
     <div class="container px-4 py-5 h-100vh d-flex">
         <div class="row flex-lg-row-reverse align-items-center">
             <div class="col-10 col-sm-8 col-lg-6 mx-auto">
-                <img src="img/undraw_Online_test_re_kyfx.png" class="img-fluid" alt="Data Reports"
+                <img src="{{ asset('img/undraw_Online_test_re_kyfx.png') }}" class="img-fluid" alt="Data Reports"
                      loading="lazy">
             </div>
             <div class="col-lg-6 mt-3">
@@ -74,13 +74,13 @@
             </div>
         </div>
     </div>
-    <img src="img/wave.svg" alt="Wave">
+    <img src="{{ asset('img/wave.svg') }}" alt="Wave">
 </div>
 
 <div id="#" class="container px-4 py-3">
     <div class="row flex-lg-row align-items-center">
         <div class="col-10 col-sm-8 col-lg-6">
-            <img src="img/undraw_Profile_re_4a55.png" class="d-block mx-lg-auto img-fluid" alt="Data Reports"
+            <img src="{{ asset('img/undraw_Profile_re_4a55.png') }}" class="d-block mx-lg-auto img-fluid" alt="Data Reports"
                  loading="lazy">
         </div>
         <div class="col-lg-6">
