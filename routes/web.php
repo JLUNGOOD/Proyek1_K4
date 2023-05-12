@@ -19,11 +19,11 @@ Route::get('/', function () {
     return view('user.home_user');
 });
 
-Route::get('/pengaduan', function(){
+Route::get('/pengaduan', function () {
     return view('user.pengaduan');
 });
 
-Route::get('/tanggapan', function(){
+Route::get('/tanggapan', function () {
     return view('user.tanggapan');
 });
 
@@ -31,6 +31,15 @@ Route::get('/admin', function () {
 
     if (Auth::user()->role == '1') {
         return view('admin.index');;
+    }
+
+    return redirect('/home');
+});
+
+Route::get('/admin/tanggapi', function () {
+
+    if (Auth::user()->role == '1') {
+        return view('admin.tanggapi_laporan');
     }
 
     return redirect('/home');
