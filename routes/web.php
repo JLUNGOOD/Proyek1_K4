@@ -27,22 +27,14 @@ Route::get('/tanggapan', function () {
     return view('user.tanggapan');
 });
 
-Route::get('/admin', function () {
+Route::middleware(['admin'])->group(function() {
+    Route::get('/admin', function () {
+            return view('admin.index');
+    });
 
-    if (Auth::user()->role == '1') {
-        return view('admin.index');;
-    }
-
-    return redirect('/home');
-});
-
-Route::get('/admin/tanggapi', function () {
-
-    if (Auth::user()->role == '1') {
-        return view('admin.tanggapi_laporan');
-    }
-
-    return redirect('/home');
+    Route::get('/admin/tanggapi', function () {
+            return view('admin.tanggapi_laporan');
+    });
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
