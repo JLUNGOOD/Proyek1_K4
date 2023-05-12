@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('tanggapan', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pengaduan_id')->constrained('pengaduan');
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('pengaduan_id');
+            $table->foreignId('user_id');
             $table->text('isi_tanggapan');
             $table->boolean('is_read')->default(0);
             $table->timestamps();

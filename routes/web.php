@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PengaduanController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -19,9 +20,7 @@ Route::get('/', function () {
     return view('user.home_user');
 });
 
-Route::get('/pengaduan', function () {
-    return view('user.pengaduan');
-});
+Route::get('/pengaduan', [PengaduanController::class, 'index']);
 
 Route::get('/tanggapan', function () {
     return view('user.tanggapan');

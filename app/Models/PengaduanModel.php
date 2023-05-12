@@ -11,10 +11,15 @@ class PengaduanModel extends Model
 
     protected $table = 'pengaduan';
     protected $fillable = [
+        'kategori_id',
         'user_id',
         'judul',
         'isi',
         'tanggal_kejadian',
         'bukti_gambar'
     ];
+
+    public function kategori() {
+        return $this->belongsTo(KategoriModel::class);
+    }
 }

@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\KategoriModel;
 
 class PengaduanController extends Controller
 {
-    //
+    public function index()
+    {
+        $categories = KategoriModel::all();
+        return view('user.pengaduan')->with('categories', $categories);
+    }
 }

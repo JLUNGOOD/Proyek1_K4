@@ -33,7 +33,7 @@
                     <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
                         <i class="far fa-user-circle fs-6 pe-1"></i>
-                        {{--                         {{ auth()->user()->name }}--}}
+{{--                        {{ auth()->user()->name }}--}}
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end shadow">
                         <li><a class="dropdown-item" href="profil-admin.php">Profil</a></li>
