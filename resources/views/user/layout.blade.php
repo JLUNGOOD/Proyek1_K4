@@ -7,10 +7,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link href="{{ url('/css/user.css') }}" rel="stylesheet">
+    @stack('css')
 </head>
 <body data-bs-spy="scroll" data-bs-target="#navbar" data-bs-smooth-scroll="true" tabindex="0">
 <nav id="navbar" class="navbar navbar-expand-lg fixed-top bg-light shadow">
-    <div class="container px-4">
+    <div class="container">
         <span class="navbar-brand fw-bold">PDAM Kota</span>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,36 +23,43 @@
                     <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/pengaduan') }}">Pengaduan</a>
+                    <a class="nav-link" href="/pengaduan">Pengaduan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/tanggapan') }}">Tanggapan</a>
+                    <a class="nav-link" href="/tanggapan">Tanggapan</a>
                 </li>
             </ul>
-            <div class="d-flex">
-                <div class="dropdown">
-                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                        <i class="far fa-user-circle fs-6 pe-1"></i>
-{{--                        {{ auth()->user()->name }}--}}
+            <div class="d-flex gap-3 navbar-nav my-2">
+                @auth
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle d-block w-100" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            <i class="far fa-user-circle fs-6 pe-1"></i>
+                            {{ auth()->user()->name }}
+                        </button>
+                        <ul class="dropdown-menu shadow">
+                            <li><a class="dropdown-item" href="profil-user.php">Ubah Profil</a></li>
+                            <li><a class="dropdown-item" href="ubah-password-user.php">Ubah Kata Sandi</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item" data-bs-toggle="modal"
+                                            data-bs-target="#keluar">
+                                        <i class="fas fa-sign-out-alt pe-1"></i>Keluar
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                @else
+                    <a class="btn btn-sm btn-outline-dark" role="button" href="{{ url('login') }}">Log in</a>
+                    <button type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#daftar">
+                        Sign In
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-end shadow">
-                        <li><a class="dropdown-item" href="profil-admin.php">Profil</a></li>
-                        <li><a class="dropdown-item" href="ubah-password-admin.php">Ubah Kata Sandi</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                            <form action="{{ route('logout') }}" method="POST">
-                                @csrf
-                                <button type="submit" class="dropdown-item" data-bs-toggle="modal"
-                                        data-bs-target="#keluar">
-                                    <i class="fas fa-sign-out-alt pe-1"></i>Keluar
-                                </button>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
+                @endauth
             </div>
         </div>
     </div>

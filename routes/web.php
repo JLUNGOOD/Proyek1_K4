@@ -21,10 +21,13 @@ Route::get('/', function () {
     return view('user.home_user');
 });
 
-Route::get('/pengaduan', [PengaduanController::class, 'index']);
+Route::middleware('auth')->group(function () {
+    Route::get('/pengaduan', [PengaduanController::class, 'index']);
+    Route::post('/pengaduan', [PengaduanController::class, 'store' ])->name('pengaduan.store');
 
-Route::get('/tanggapan', function () {
-    return view('user.tanggapan');
+    Route::get('/tanggapan', function () {
+        return view('user.tanggapan');
+    });
 });
 
 Route::middleware(['admin'])->group(function () {

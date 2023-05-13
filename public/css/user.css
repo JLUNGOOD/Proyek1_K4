@@ -23,8 +23,9 @@
     border-color: #212529;
 }
 
-.img-profile {
+.img-preview {
     width: 150px;
+    height: auto;
 }
 
 .mt-lg {

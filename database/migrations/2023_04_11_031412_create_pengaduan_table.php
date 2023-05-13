@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->string('judul', 255);
             $table->text('isi');
-            $table->date('tanggal_kejadian');
+            $table->date('tanggal_kejadian')->nullable();
             $table->string('bukti_gambar')->nullable();
             $table->boolean('is_read')->default(0);
             $table->timestamps();
