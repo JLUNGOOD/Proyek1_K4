@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('informasi', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('user_id');
             $table->string('judul_informasi');
             $table->string('isi_informasi');
             $table->timestamps();

@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('pengaduan', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('kategori_id');
+            $table->foreignId('user_id');
             $table->string('judul', 255);
             $table->text('isi');
             $table->date('tanggal_kejadian');

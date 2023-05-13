@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('kegiatan', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('user_id');
             $table->string('admin', 30);
             $table->string('pegawai', 30);
             $table->string('judul_kegiatan', 50);

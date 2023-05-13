@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PengaduanController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,11 +17,23 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('user.home_user');
 });
 
-Route::get('/admin', function () {
-    return 'is-admin';
+Route::get('/pengaduan', [PengaduanController::class, 'index']);
+
+Route::get('/tanggapan', function () {
+    return view('user.tanggapan');
+});
+
+Route::middleware(['admin'])->group(function() {
+    Route::get('/admin', function () {
+            return view('admin.index');
+    });
+
+    Route::get('/admin/tanggapi', function () {
+            return view('admin.tanggapi_laporan');
+    });
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
