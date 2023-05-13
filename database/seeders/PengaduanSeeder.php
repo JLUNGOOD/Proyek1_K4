@@ -14,6 +14,6 @@ class PengaduanSeeder extends Seeder
      */
     public function run()
     {
-        //
+
     }
 }

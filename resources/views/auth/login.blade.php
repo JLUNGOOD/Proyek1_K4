@@ -21,7 +21,7 @@
                 <h1 class="display-5 fw-bold mb-4 text-center">Login</h1>
                 <div class="form-floating mb-3">
                     <input type="email" class="form-control @error('email') is-invalid @enderror" id="floatingInput"
-                           placeholder="name@example.com" name="email">
+                           placeholder="name@example.com" value="{{ old('email') ?? '' }}" name="email">
                     <label for="floatingInput">Email Address</label>
                     @error('email')
                     <small class="text-danger">{{ $message }} </small>
