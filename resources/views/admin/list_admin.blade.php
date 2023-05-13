@@ -51,7 +51,10 @@
                     </ul>
                     <div class="card-body">
                         <a href="" class="btn btn-dark">Ubah</a>
-                        <a href="" class="btn btn-danger">Hapus</a>
+                        <form method="post" action="{{ url('/admin/delete_user/' . $admin->id) }}" class="d-inline-block">
+                            @csrf
+                            <button type="submit" class="btn btn-danger">Hapus</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -76,3 +79,15 @@
     </div>
 </div>
 @endsection
+
+@if(session()->has('message'))
+    @push('script')
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: "{{ session('message') }}",
+                timer: 5000
+            })
+        </script>
+    @endpush
+@endif

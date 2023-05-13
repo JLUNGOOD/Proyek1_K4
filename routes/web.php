@@ -32,6 +32,8 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/tanggapi', [AdminController::class, 'tanggapi']);
     Route::get('/admin/tambah_admin', [AdminController::class, 'tambah_admin']);
     Route::get('/admin/list_admin', [AdminController::class, 'list_admin']);
+    Route::post('/admin/create_user', [AdminController::class, 'create_user']);
+    Route::post('/admin/delete_user/{id}', [AdminController::class, 'delete_user']);
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
