@@ -49,30 +49,31 @@
 
     <div class="container pt-5">
         <div class="row">
-            <div class="col-md-6 mb-3">
-                <div class="position-relative card ">
-                <div class="card-header d-flex justify-content-between">
-                    <span>Pengaduan</span>
-{{--                    <span>' . (($item["id_tanggapan"] !== null) ? "Sudah direspon" : "Belum direspon") . '</span>--}}
+            @foreach($daftar_pengaduan as $pengaduan)
+                <div class="col-md-6 mb-3">
+                    <div class="position-relative card ">
+                        <div class="card-header d-flex justify-content-between">
+                            <span>Pengaduan</span>
+                            {{--                    <span>' . (($item["id_tanggapan"] !== null) ? "Sudah direspon" : "Belum direspon") . '</span>--}}
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $pengaduan->judul }}</h5>
+                            {{--                    <a href="rincian-laporan.php?lapor=' . $_GET["lapor"] . '&id=' . $item["id"] . '"--}}
+                            {{--                    class="btn btn-dark">Lihat Rincian</a>--}}
+                            <a class="btn btn-dark">Lihat Rincian</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            {{ $pengaduan->tanggal_kejadian }}
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title">Judul</h5>
-{{--                    <a href="rincian-laporan.php?lapor=' . $_GET["lapor"] . '&id=' . $item["id"] . '"--}}
-{{--                    class="btn btn-dark">Lihat Rincian</a>--}}
-                    <a class="btn btn-dark">Lihat Rincian</a>
-                </div>
-                <div class="card-footer text-muted">
-{{--                    ' . $item["tanggal_lapor"] . '--}}
-                    tanggal_lapor
-                </div>
-            </div>
-        </div>
+            @endforeach
         </div>
     </div>
 
     <div class="container">
         <footer class="mt-5 py-3 border-top">
-            <p class="text-center text-muted">&copy; 2022, Design and Develop By Bahtiar Rifa'i</p>
+            <p class="text-center text-muted">&copy; 2022</p>
         </footer>
     </div>
 
