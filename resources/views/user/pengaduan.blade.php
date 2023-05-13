@@ -124,10 +124,10 @@
             });
 
             $('#gambar').change(function() {
-                var file = this.files[0];
-                var reader = new FileReader();
-                var imagePreview = $('.img-preview');
-                var imagePopup = $('.image-popup');
+                const file = this.files[0];
+                const reader = new FileReader();
+                const imagePreview = $('.img-preview');
+                const imagePopup = $('.image-popup');
 
                 reader.onload = function(e) {
                     imagePreview.attr('src', e.target.result);
