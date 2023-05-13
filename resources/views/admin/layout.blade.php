@@ -62,7 +62,7 @@
                     </a>
                 </li>
                 <li class="nav-item mb-1">
-                    <a href="daftar-admin.php" class="nav-link text-white" aria-current="page">
+                    <a href="{{ url('/admin/list_admin') }}" class="nav-link text-white" aria-current="page">
                         <div class="icon-neat">
                             <i class="fas fa-user-tie"></i>
                         </div>
