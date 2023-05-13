@@ -22,10 +22,10 @@
                     <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/pengaduan">Pengaduan</a>
+                    <a class="nav-link" href="{{ url('/pengaduan') }}">Pengaduan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/tanggapan">Tanggapan</a>
+                    <a class="nav-link" href="{{ url('/tanggapan') }}">Tanggapan</a>
                 </li>
             </ul>
             <div class="d-flex">

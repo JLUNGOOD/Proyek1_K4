@@ -40,4 +40,31 @@
             </div>
         </div>
     </div>
+
+    <div class="container d-flex justify-content-start px-4 py-3">
+        <div class="card me-2" style="width: 18rem;">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-text">Ini berisi kegiatan PDAM Kota</p>
+            </div>
+          </div>
+          <div class="card me-2" style="width: 18rem;">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-text">Kegiatan ini bertujuan untuk membuat tanggul air</p>
+            </div>
+          </div>
+          <div class="card me-2" style="width: 18rem;">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-text">Kegiatan bersama warga</p>
+            </div>
+          </div>
+          <div class="card me-2" style="width: 18rem;">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-text">Kegiatan bersama warga</p>
+            </div>
+          </div>
+    </div>
 @endsection
