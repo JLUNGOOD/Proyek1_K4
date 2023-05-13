@@ -34,6 +34,10 @@ Route::middleware(['admin'])->group(function() {
     Route::get('/admin/tanggapi', function () {
             return view('admin.tanggapi_laporan');
     });
+
+    Route::get('/admin/tambah_admin', function () {
+            return view('admin.tambah_admin');
+    });
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
