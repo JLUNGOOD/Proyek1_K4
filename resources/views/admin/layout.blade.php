@@ -54,7 +54,7 @@
             <hr>
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item mb-1">
-                    <a href="index.php" class="nav-link active" aria-current="page">
+                    <a href="{{ url('/admin') }}" class="nav-link active" aria-current="page">
                         <div class="icon-neat">
                             <i class="fas fa-tachometer-alt"></i>
                         </div>
