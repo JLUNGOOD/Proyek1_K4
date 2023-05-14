@@ -49,18 +49,20 @@
 
       <div class="container" id="card-container">
         <div class="row gy-3">
-
+          @if(count($kegiatan)>0)
+          @foreach($kegiatan as $k)
           <div class="col md-4">
-            <div class="card h-100">
-              <img src="https://pdamgianyar.co.id/upload/2c40249223e45301321fca78fc3fb368143354110820201013.jpg" alt="cekpipa" class="card-img-top h-50">
+            <div class="card h-60">
+              <img src="https://pdamgianyar.co.id/upload/2c40249223e45301321fca78fc3fb368143354110820201013.jpg" alt="cekpipa" class="card-img-top" height="240px">
               <div class="card-body">
                 <h5 class="card-title">PDAM Memperbaiki Pipa</h5>
                 <p class="card-text">Kegiatan ini bertujuan untuk memperbaiki kerusakan pipa di daerah tersebut</p>
               </div>
             </div>
           </div>
-
-          <div class="col md-4">
+          @endforeach
+          @endif
+          {{-- <div class="col md-4">
             <div class="card h-100">
               <img src="https://pudamtsgianyar.co.id/upload/b03bde2170ecd336ab7631c597636b2d142782989120211116.jpg" alt="cekpipa" class="card-img-top h-50">
               <div class="card-body">
@@ -98,7 +100,7 @@
                 <p class="card-text">Kegiatan ini bertujuan untuk memperbaiki kerusakan pipa di daerah tersebut</p>
               </div>
             </div>
-          </div>
+          </div> --}}
 
         </div>
       </div>
