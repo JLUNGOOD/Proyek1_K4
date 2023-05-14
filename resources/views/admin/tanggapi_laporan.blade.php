@@ -60,7 +60,7 @@
                             <h5 class="card-title">{{ $pengaduan->judul }}</h5>
                             {{--                    <a href="rincian-laporan.php?lapor=' . $_GET["lapor"] . '&id=' . $item["id"] . '"--}}
                             {{--                    class="btn btn-dark">Lihat Rincian</a>--}}
-                            <a class="btn btn-dark">Lihat Rincian</a>
+                            <a class="btn btn-dark" href="{{ url('/admin/tanggapi/' . $pengaduan->id) }}">Lihat Rincian</a>
                         </div>
                         <div class="card-footer text-muted">
                             {{ $pengaduan->tanggal_kejadian }}

@@ -15,7 +15,7 @@ class AdminController extends Controller
         return view('admin.index');
     }
 
-    function tanggapi()
+    function list_tanggapi()
     {
         $daftar_pengaduan = PengaduanModel::all();
         return view('admin.tanggapi_laporan', ['daftar_pengaduan' => $daftar_pengaduan]);
@@ -64,5 +64,11 @@ class AdminController extends Controller
     {
         UserModel::destroy($id);
         return redirect('/admin/list_admin')->with('message', 'User berhasil dihapus');
+    }
+
+    function tanggapi($id)
+    {
+        $pengaduan = PengaduanModel::find($id);
+        return view('admin.detail_laporan', ['pengaduan' => $pengaduan]);
     }
 }
