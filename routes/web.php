@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PengaduanController;
+use App\Models\kegiatanModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -18,7 +19,9 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', function () {
-    return view('user.home_user');
+    $kegiatan = kegiatanModel::all();
+        return view('user.home_user')
+            ->with('kegiatan', $kegiatan);
 });
 
 Route::middleware('auth')->group(function () {
