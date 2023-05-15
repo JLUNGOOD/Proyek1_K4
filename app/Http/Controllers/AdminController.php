@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PengaduanModel;
+use App\Models\TanggapanModel;
 use App\Models\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -69,6 +70,7 @@ class AdminController extends Controller
     function tanggapi($id)
     {
         $pengaduan = PengaduanModel::find($id);
-        return view('admin.detail_laporan', ['pengaduan' => $pengaduan]);
+        $tanggapan = TanggapanModel::where('pengaduan_id', $id)->first();
+        return view('admin.detail_laporan', ['pengaduan' => $pengaduan, 'tanggapan' => $tanggapan]);
     }
 }
