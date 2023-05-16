@@ -30,9 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/buat_pengaduan', [PengaduanController::class, 'create']);
     Route::post('/buat_pengaduan', [PengaduanController::class, 'store'])->name('pengaduan.store');
 
-    Route::get('/pengaduan_saya', function () {
-        return view('user.pengaduan_saya');
-    });
+    Route::get('/pengaduan_saya', [PengaduanController::class, 'pengaduan_saya']);
 
     Route::get('/ubah_profil', [UserController::class, 'editProfile' ])->name('user.edit-profile');
     Route::post('/ubah_profil', [UserController::class, 'updateProfile' ])->name('user.update-profile');
@@ -52,8 +50,9 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/send_tanggapan', [AdminController::class, 'send_tanggapan']);
 });
 
-Route::post('/tanggapan/sudah_ditanggapi', [PengaduanController::class, 'getSudahDitanggapi']);
-Route::post('/tanggapan/belum_ditanggapi', [PengaduanController::class, 'getBelumDitanggapi']);
+Route::post('/pengaduan/sudah_ditanggapi', [PengaduanController::class, 'getSudahDitanggapi']);
+Route::post('/pengaduan/belum_ditanggapi', [PengaduanController::class, 'getBelumDitanggapi']);
+Route::post('/pengaduan/search', [PengaduanController::class, 'searchPengaduan']);
 
 Route::get('/home', [HomeController::class, 'index']);
 

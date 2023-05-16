@@ -11,14 +11,14 @@
             <h2 class="my-4 pt-2">Daftar Laporan</h2>
             <div class="row justify-content-center my-4">
                 <div class="col-lg-8">
-                    <form method="post" class="d-flex">
+                    <div class="d-flex">
                         <div class="input-group">
-                            <input class="form-control border-dark bg-light" placeholder="Cari..."
+                            <input id="keyword" class="form-control border-dark bg-light" placeholder="Cari..."
                                    name="keyword"
                                    aria-label="Cari" aria-describedby="button-cari">
-                            <button class="btn btn-dark" type="submit" id="button-cari" name="cari">Cari</button>
+                            <button class="btn btn-dark" onclick="searchPengaduan()" id="button-cari" name="cari">Cari</button>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -37,12 +37,6 @@
                         </button>
                     </div>
                 </div>
-                <form method="post" class="col-4 col-sm-2">
-                    <select class="form-select form-select-sm border-dark" aria-label="urutkan">
-                        <option value="1" class="text-small" selected>Terlama</option>
-                        <option value="2" class="text-small">Terbaru</option>
-                    </select>
-                </form>
             </div>
         </div>
     </div>
@@ -95,12 +89,15 @@
 
 @push('script')
     <script>
+        let sortByResponded = 0; // 0 = unsorted, 1 = responded, 2 = not responded
         function getSudahDitanggapi() {
+            sortByResponded = 1;
             $.ajax({
                 method: 'POST',
-                url: '{{ url('/tanggapan/sudah_ditanggapi') }}',
+                url: '{{ url('/pengaduan/sudah_ditanggapi') }}',
                 data: {
                     _token: '{{ csrf_token() }}',
+                    sortByResponded: sortByResponded
                 },
                 success: (response) => {
                     $('#list-pengaduan').empty();
@@ -130,11 +127,49 @@
         }
 
         function getBelumDitanggapi() {
+            sortByResponded = 2;
             $.ajax({
                 method: 'POST',
-                url: '{{ url('/tanggapan/belum_ditanggapi') }}',
+                url: '{{ url('/pengaduan/belum_ditanggapi') }}',
                 data: {
                     _token: '{{ csrf_token() }}',
+                    sortByResponded: sortByResponded
+                },
+                success: (response) => {
+                    $('#list-pengaduan').empty();
+                    response['pengaduans'].forEach((pengaduan) => {
+                        let temp_html = `
+                        <div class="col-md-6 mb-3">
+                            <div class="position-relative card ">
+                                <div class="card-header d-flex justify-content-between">
+                                    <span>Pengaduan</span>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">${pengaduan['judul']}</h5>
+                                    <a class="btn btn-dark" href="/admin/tanggapi/${pengaduan['id']}">Lihat
+                                        Rincian</a>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    ${pengaduan['tanggal_kejadian']}
+                                </div>
+                            </div>
+                        </div>
+                        `;
+                        $('#list-pengaduan').append(temp_html);
+                    });
+                    console.log(response['pengaduans']);
+                },
+            });
+        }
+
+        function searchPengaduan() {
+            $.ajax({
+                method: 'POST',
+                url: '{{ url('/pengaduan/search') }}',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    keyword: $('#keyword').val(),
+                    sortByResponded: sortByResponded
                 },
                 success: (response) => {
                     $('#list-pengaduan').empty();

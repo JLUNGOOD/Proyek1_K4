@@ -85,6 +85,7 @@ class PengaduanController extends Controller
         $pengaduans = PengaduanModel::whereHas('tanggapan')->get();
         return response()->json(['pengaduans' => $pengaduans]);
     }
+
     function getBelumDitanggapi(Request $request)
     {
         $pengaduans = PengaduanModel::leftJoin('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
@@ -92,5 +93,37 @@ class PengaduanController extends Controller
             ->select('pengaduan.id', 'pengaduan.judul', 'pengaduan.isi', 'pengaduan.tanggal_kejadian')
             ->get();
         return response()->json(['pengaduans' => $pengaduans]);
+    }
+
+    function searchPengaduan(Request $request)
+    {
+        $keyword = $request->keyword;
+        if ($request['sortByResponded'] == 0) {
+            $pengaduans = PengaduanModel::where('judul', 'like', '%' . $request->keyword . '%')
+                ->orWhere('isi', 'like', '%' . $request->keyword . '%')
+                ->get();
+        } elseif ($request['sortByResponded'] == 1) {
+            $pengaduans = PengaduanModel::whereHas('tanggapan', function ($query) use ($keyword) {
+                $query->Where('judul', 'like', '%' . $keyword . '%');
+            })
+                ->where(function ($query) use ($keyword) {
+                    $query->where('judul', 'like', '%' . $keyword . '%');
+                })
+                ->get();
+        } elseif ($request['sortByResponded'] == 2) {
+            $pengaduans = PengaduanModel::whereDoesntHave('tanggapan', function ($query) use ($keyword) {
+                $query->Where('judul', 'like', '%' . $keyword . '%');
+            })
+                ->where(function ($query) use ($keyword) {
+                    $query->where('judul', 'like', '%' . $keyword . '%');
+                })
+                ->get();
+        }
+        return response()->json(['pengaduans' => $pengaduans]);
+    }
+
+    public function pengaduan_saya() {
+        $daftar_pengaduan = PengaduanModel::all();
+        return view('user.pengaduan_saya', ['daftar_pengaduan' => $daftar_pengaduan]);
     }
 }
