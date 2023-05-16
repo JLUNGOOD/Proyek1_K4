@@ -104,14 +104,13 @@
                 </form>
             </div>
         </div>
-
     </div>
 @endsection
 
 @push('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('.image-popup').magnificPopup({
                 type: 'image',
                 zoom: {
@@ -121,13 +120,13 @@
                 }
             });
 
-            $('#gambar').change(function() {
+            $('#gambar').change(function () {
                 const file = this.files[0];
                 const reader = new FileReader();
                 const imagePreview = $('.img-preview');
                 const imagePopup = $('.image-popup');
 
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     imagePreview.attr('src', e.target.result);
                     imagePopup.attr('href', e.target.result);
                 };

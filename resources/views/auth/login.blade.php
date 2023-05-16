@@ -63,7 +63,7 @@
                 <div class="modal-body">
                     <div class="mt-3">
                         <label for="name" class="form-label">Nama Lengkap</label>
-                        <input class="form-control @error('email') is-invalid @enderror" name="name" id="name"
+                        <input class="form-control @error('name') is-invalid @enderror" name="name" id="name"
                                placeholder="Masukkan Nama Anda *" required>
                         @error('name')
                         <small class="text-danger">{{ $message }} </small>

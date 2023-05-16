@@ -62,8 +62,10 @@
                             {{ auth()->user()->name }}
                         </button>
                         <ul class="dropdown-menu shadow">
-                            <li><a class="dropdown-item" href="profil-user.php">Ubah Profil</a></li>
-                            <li><a class="dropdown-item" href="ubah-password-user.php">Ubah Kata Sandi</a></li>
+                            <li><a class="dropdown-item {{ url('ubah_profil') == url()->current() ? 'active' : '' }}"
+                                   href="{{ url('ubah_profil') }}">Ubah Profil</a></li>
+                            <li><a class="dropdown-item {{ url('ubah_password') == url()->current() ? 'active' : '' }}"
+                                   href="{{ url('ubah_password') }}">Ubah Kata Sandi</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -124,16 +126,17 @@
                 <h5 class="text-uppercase mb-4 font-weight-bold text-warning">PDAM Kota Malang</h5>
                 <p>Sedikit informasi tentang kami. Terimakasih</p>
             </div>
-            
+
             <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
                 <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Useful Links</h5>
                 <p><a href="#" class="text-white" style="text-decoration: none;">Pengaduan</a></p>
                 <p><a href="#" class="text-white" style="text-decoration: none;">Tanggapan</a></p>
             </div>
-            
+
             <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
                 <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Contact Us</h5>
-                <p><i class="fas fa-home mr-3">Jl. Terusan Danau Sentani No.100, Madyopuro, Kec. Kedungkandang, Kota Malang</i></p>
+                <p><i class="fas fa-home mr-3">Jl. Terusan Danau Sentani No.100, Madyopuro, Kec. Kedungkandang, Kota
+                        Malang</i></p>
                 <p><i class="fas fa-envelope mr-3">pdam@gmail.com</i></p>
                 <p><i class="fas fa-phone mr-3">0816550800</i></p>
             </div>
