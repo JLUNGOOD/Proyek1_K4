@@ -86,8 +86,8 @@ class UserController extends Controller
             'password' => ['required', 'string', 'min:4', 'confirmed'],
         ]);
 
-        $request->password = Hash::make($request->pasword);
-        dd($request->password);
+        $request['password'] = Hash::make($request['password']);
+
         UserModel::where('id', '=', auth()->user()->id)->update($request->except(['_token', '_method', 'old_password', 'password_confirmation']));
 
         return back()->with('success', 'Password Anda Berhasil Diubah');
