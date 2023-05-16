@@ -67,10 +67,10 @@
                                     class="img-preview d-block rounded border mb-2" alt="Image Preview">
                             </a>
                         </div>
-                        <input type="file" class="form-control @error('gambar') is-invalid @enderror"
+                        <input type="file" class="form-control @error('bukti_gambar') is-invalid @enderror"
                                name="bukti_gambar" id="gambar" aria-describedby="gambar"
                                value="{{ old('bukti_gambar') }}">
-                        @error('gambar')
+                        @error('bukti_gambar')
                         <small class="text-danger">{{ $message }} </small>
                         @enderror
                     </div>

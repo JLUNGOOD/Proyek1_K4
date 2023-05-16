@@ -32,7 +32,7 @@ class PengaduanController extends Controller
         return view('user.buat_pengaduan')->with('categories', $categories);
     }
 
-    protected function validator(array $data)
+    protected function validator(array $data): \Illuminate\Validation\Validator
     {
         return Validator::make($data, [
             'kategori' => ['required', 'exists:kategori,id'],
