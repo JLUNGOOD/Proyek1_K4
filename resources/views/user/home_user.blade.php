@@ -47,23 +47,24 @@
       
       <h2 class="text-center my-5">Kegiatan</h2>
 
-      <div class="container" id="card-container">
+      <div class="container pb-5" id="card-container">
         <div class="row gy-3">
-          @if(count($kegiatan)>0)
-          @foreach($kegiatan as $k)
+          {{-- @if(count($kegiatan)>0)
+          @foreach($kegiatan as $k) --}}
           <div class="col md-4">
-            <div class="card h-60">
-              <img src="https://pdamgianyar.co.id/upload/2c40249223e45301321fca78fc3fb368143354110820201013.jpg" alt="cekpipa" class="card-img-top" height="240px">
+            <div class="card h-100">
+              <img src="https://pdamgianyar.co.id/upload/2c40249223e45301321fca78fc3fb368143354110820201013.jpg" alt="cekpipa" class="card-img-top">
               <div class="card-body">
                 <h5 class="card-title">PDAM Memperbaiki Pipa</h5>
                 <p class="card-text">Kegiatan ini bertujuan untuk memperbaiki kerusakan pipa di daerah tersebut</p>
               </div>
             </div>
           </div>
-          @endforeach
-          @endif
-          {{-- <div class="col md-4">
+          {{-- @endforeach
+          @endif --}}
+          <div class="col md-4">
             <div class="card h-100">
+              
               <img src="https://pudamtsgianyar.co.id/upload/b03bde2170ecd336ab7631c597636b2d142782989120211116.jpg" alt="cekpipa" class="card-img-top h-50">
               <div class="card-body">
                 <h5 class="card-title">PDAM Mencatat</h5>
@@ -71,7 +72,7 @@
               </div>
             </div>
           </div>
-   
+          
           <div class="col md-4">
             <div class="card h-100">
               <img src="https://www.pdamkutaitimur.com/wp-content/uploads/2020/05/WhatsApp-Image-2020-05-20-at-16.36.40.jpeg" alt="cekpipa" class="card-img-top h-50">
@@ -81,7 +82,7 @@
               </div>
             </div>
           </div>
-
+          
           <div class="col md-4">
             <div class="card h-100">
               <img src="https://pudamtsgianyar.co.id/upload/b03bde2170ecd336ab7631c597636b2d142782989120211116.jpg" alt="cekpipa" class="card-img-top h-50">
@@ -100,7 +101,7 @@
                 <p class="card-text">Kegiatan ini bertujuan untuk memperbaiki kerusakan pipa di daerah tersebut</p>
               </div>
             </div>
-          </div> --}}
+          </div> 
 
         </div>
       </div>

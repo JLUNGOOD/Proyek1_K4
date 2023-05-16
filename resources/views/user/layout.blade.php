@@ -124,21 +124,21 @@
         <div class="row gy-3">
             <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
                 <h5 class="text-uppercase mb-4 font-weight-bold text-warning">PDAM Kota Malang</h5>
-                <p>Sedikit informasi tentang kami. Terimakasih</p>
+                <p>Memberikan pelayanan terbaik bagi masyarakat dengan sepenuh hati</p>
             </div>
 
             <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
                 <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Useful Links</h5>
                 <p><a href="#" class="text-white" style="text-decoration: none;">Pengaduan</a></p>
                 <p><a href="#" class="text-white" style="text-decoration: none;">Tanggapan</a></p>
+                <p><a href="#" class="text-white" style="text-decoration: none;">Informasi</a></p>
             </div>
 
             <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
                 <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Contact Us</h5>
-                <p><i class="fas fa-home mr-3">Jl. Terusan Danau Sentani No.100, Madyopuro, Kec. Kedungkandang, Kota
-                        Malang</i></p>
-                <p><i class="fas fa-envelope mr-3">pdam@gmail.com</i></p>
-                <p><i class="fas fa-phone mr-3">0816550800</i></p>
+                <p><a class="text-white" href="https://goo.gl/maps/gqAHo2FVEK7ENg8C6"> JL. A Yani, No 53-55, Purwantoro, Kec. Blimbing, Kota Malang, Jawa Timur 65125</a></p>
+                <p><a class="text-white" href="http://alwanalawi1@gmail.com"><i class="fas fa-envelope mr-3">pdam@gmail.com</i></a></p>
+                <p><a class="text-white" href="https://wa.me/6285257146203"><i class="fas fa-phone mr-3">081244305712</i></a></p>
             </div>
         </div>
 
