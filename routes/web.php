@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PengaduanController;
+use App\Models\kegiatanModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -18,7 +19,9 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', function () {
-    return view('user.home_user');
+    $kegiatan = kegiatanModel::all();
+        return view('user.home_user')
+            ->with('kegiatan', $kegiatan);
 });
 
 Route::middleware('auth')->group(function () {
@@ -32,11 +35,12 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index']);
-    Route::get('/admin/tanggapi', [AdminController::class, 'tanggapi']);
+    Route::get('/admin/tanggapi', [AdminController::class, 'list_tanggapi']);
     Route::get('/admin/tambah_admin', [AdminController::class, 'tambah_admin']);
     Route::get('/admin/list_admin', [AdminController::class, 'list_admin']);
     Route::post('/admin/create_user', [AdminController::class, 'create_user']);
     Route::post('/admin/delete_user/{id}', [AdminController::class, 'delete_user']);
+    Route::get('/admin/tanggapi/{id}', [AdminController::class, 'tanggapi']);
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

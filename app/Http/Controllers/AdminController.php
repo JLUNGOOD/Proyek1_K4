@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PengaduanModel;
+use App\Models\TanggapanModel;
 use App\Models\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +16,7 @@ class AdminController extends Controller
         return view('admin.index');
     }
 
-    function tanggapi()
+    function list_tanggapi()
     {
         $daftar_pengaduan = PengaduanModel::all();
         return view('admin.tanggapi_laporan', ['daftar_pengaduan' => $daftar_pengaduan]);
@@ -64,5 +65,12 @@ class AdminController extends Controller
     {
         UserModel::destroy($id);
         return redirect('/admin/list_admin')->with('message', 'User berhasil dihapus');
+    }
+
+    function tanggapi($id)
+    {
+        $pengaduan = PengaduanModel::find($id);
+        $tanggapan = TanggapanModel::where('pengaduan_id', $id)->first();
+        return view('admin.detail_laporan', ['pengaduan' => $pengaduan, 'tanggapan' => $tanggapan]);
     }
 }
