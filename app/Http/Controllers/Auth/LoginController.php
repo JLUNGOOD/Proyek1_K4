@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -45,6 +45,12 @@ class LoginController extends Controller
             $this->username() => [$this->username() => 'required', 'email:rfc,dns', 'string', 'min:4',],
             'password' => ['required', 'string', 'min:4'],
         ]);
+    }
+
+    protected function authenticated(Request $request, $user): RedirectResponse
+    {
+        return redirect()->intended($this->redirectPath())
+            ->with('login_success', 'Selamat datang! Anda berhasil login.');
     }
 
     public function logout(Request $request)

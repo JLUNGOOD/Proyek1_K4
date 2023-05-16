@@ -22,11 +22,11 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/pengaduan', [PengaduanController::class, 'index']);
-    Route::post('/pengaduan', [PengaduanController::class, 'store' ])->name('pengaduan.store');
+    Route::get('/buat_pengaduan', [PengaduanController::class, 'create']);
+    Route::post('/buat_pengaduan', [PengaduanController::class, 'store' ])->name('pengaduan.store');
 
-    Route::get('/tanggapan', function () {
-        return view('user.tanggapan');
+    Route::get('/pengaduan_saya', function () {
+        return view('user.pengaduan_saya');
     });
 });
 

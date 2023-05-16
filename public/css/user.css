@@ -24,8 +24,9 @@
 }
 
 .img-preview {
-    width: 150px;
-    height: auto;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
 }
 
 .mt-lg {
@@ -66,4 +67,8 @@ select::selection {
 .dropdown-menu-dark .dropdown-item.active, .dropdown-menu-dark .dropdown-item:active {
     background: #ffffff !important;
     color: #212529 !important;
+}
+
+.z-index-5 {
+    z-index: 5000;
 }

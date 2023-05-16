@@ -79,8 +79,7 @@
                     </button>
 
                     <div class="modal fade" tabindex="-1" role="dialog" data-bs-backdrop="static"
-                         data-bs-keyboard="false"
-                         aria-hidden="true" id="modalChoice">
+                         data-bs-keyboard="false" aria-hidden="true" id="modalChoice">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content rounded-3 shadow">
                                 <div class="modal-body p-4 text-center">
@@ -110,7 +109,6 @@
 @endsection
 
 @push('script')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
     <script>
         $(document).ready(function() {
