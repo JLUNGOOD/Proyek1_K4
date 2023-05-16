@@ -79,4 +79,18 @@ class PengaduanController extends Controller
 
         return back()->with('success', 'Pengaduan Anda berhasil dikirim. Terima kasih atas kontribusinya!');
     }
+
+    function getSudahDitanggapi(Request $request)
+    {
+        $pengaduans = PengaduanModel::whereHas('tanggapan')->get();
+        return response()->json(['pengaduans' => $pengaduans]);
+    }
+    function getBelumDitanggapi(Request $request)
+    {
+        $pengaduans = PengaduanModel::leftJoin('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
+            ->whereNull('tanggapan.pengaduan_id')
+            ->select('pengaduan.id', 'pengaduan.judul', 'pengaduan.isi', 'pengaduan.tanggal_kejadian')
+            ->get();
+        return response()->json(['pengaduans' => $pengaduans]);
+    }
 }

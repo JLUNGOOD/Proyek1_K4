@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PengaduanController;
+use App\Http\Controllers\UserController;
 use App\Models\kegiatanModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -21,17 +22,23 @@ Auth::routes();
 
 Route::get('/', function () {
     $kegiatan = kegiatanModel::all();
-        return view('user.home_user')
-            ->with('kegiatan', $kegiatan);
+    return view('user.home_user')
+        ->with('kegiatan', $kegiatan);
 });
 
 Route::middleware('auth')->group(function () {
     Route::get('/buat_pengaduan', [PengaduanController::class, 'create']);
-    Route::post('/buat_pengaduan', [PengaduanController::class, 'store' ])->name('pengaduan.store');
+    Route::post('/buat_pengaduan', [PengaduanController::class, 'store'])->name('pengaduan.store');
 
     Route::get('/pengaduan_saya', function () {
         return view('user.pengaduan_saya');
     });
+
+    Route::get('/ubah_profil', [UserController::class, 'editProfile' ])->name('user.edit-profile');
+    Route::post('/ubah_profil', [UserController::class, 'updateProfile' ])->name('user.update-profile');
+
+    Route::get('/ubah_password', [UserController::class, 'editPassword' ])->name('user.edit-password');
+    Route::post('/ubah_password', [UserController::class, 'updatePassword' ])->name('user.update-password');
 });
 
 Route::middleware(['admin'])->group(function () {
@@ -42,7 +49,11 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/create_user', [AdminController::class, 'create_user']);
     Route::post('/admin/delete_user/{id}', [AdminController::class, 'delete_user']);
     Route::get('/admin/tanggapi/{id}', [AdminController::class, 'tanggapi']);
+    Route::post('/admin/send_tanggapan', [AdminController::class, 'send_tanggapan']);
 });
+
+Route::post('/tanggapan/sudah_ditanggapi', [PengaduanController::class, 'getSudahDitanggapi']);
+Route::post('/tanggapan/belum_ditanggapi', [PengaduanController::class, 'getBelumDitanggapi']);
 
 Route::get('/home', [HomeController::class, 'index']);
 
