@@ -2,28 +2,6 @@
 
 @section('content')
     <div class="bg-white container mt-lg shadow rounded pb-4">
-        {{--        <?php--}}
-        {{--        if (isset($_POST["tanggapan"])) {--}}
-        {{--            $_POST["lapor"] = $_GET["lapor"];--}}
-        {{--            $_POST["id"] = $_GET["id"];--}}
-        {{--            $email = $_SESSION['adminMasuk'];--}}
-        {{--            $_POST["id_admin"] = getData("SELECT id FROM admin WHERE email = '$email'")[0]['id'];--}}
-
-        {{--            if (beriTanggapan($_POST) > 0) {--}}
-        {{--                echo '--}}
-        {{--            <div class="my-3 alert alert-success alert-dismissible fade show" role="alert">--}}
-        {{--                <strong>Berhasil memberi tanggapan!</strong>.--}}
-        {{--                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>--}}
-        {{--            </div>';--}}
-        {{--            } else {--}}
-        {{--                echo '--}}
-        {{--            <div class="my-3 alert alert-danger alert-dismissible fade show" role="alert">--}}
-        {{--                <strong>Gagal memberi tanggapan!</strong>.--}}
-        {{--                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>--}}
-        {{--            </div>';--}}
-        {{--            }--}}
-        {{--        }--}}
-        {{--        ?>--}}
         <form class="container" method="post">
             <h2 class="my-4 pt-2">Rincian Laporan</h2>
             <div class="mb-3 row border-bottom">
@@ -42,7 +20,8 @@
             <div class="mb-3 row border-bottom">
                 <label for="isi" class="col-sm-3 col-form-label fw-bold">Isi Laporan</label>
                 <div class="col-sm-9">
-                    <input readonly class="form-control-plaintext" id="isi" value="{{ $pengaduan->isi }}">
+                    <textarea readonly class="form-control-plaintext" rows="5" id="isi"
+                              style="resize: none">{{ $pengaduan->isi }}</textarea>
                 </div>
             </div>
             <div class="mb-3 row border-bottom">
@@ -103,7 +82,10 @@
             </p>
             <div class="collapse" id="tanggapi">
                 <div class="card card-body mb-3">
-                    <form method="post">
+                    <form method="post" action="{{ url('/admin/send_tanggapan') }}">
+                        @csrf
+                        <input type="hidden" value="{{ auth()->user()->id }}" name="user_id">
+                        <input type="hidden" value="{{ $pengaduan->id }}" name="pengaduan_id">
                         <div class="mb-3">
                             <label for="isi" class="form-label fw-bold">Isi Tanggapan</label>
                             <textarea class="form-control" name="isi" id="isi" rows="3"
@@ -112,7 +94,7 @@
                                 Catatan: Tanggapan yang sudah dikirim tidak bisa diubah.
                             </div>
                         </div>
-                        <button type="submit" name="tanggapan" class="btn btn-dark">Kirim</button>
+                        <button onclick="" name="tanggapan" class="btn btn-dark">Kirim</button>
                     </form>
                 </div>
             </div>
@@ -134,6 +116,35 @@
                     </div>
                 </div>
             </form>
-    @endif
-</div>
+        @endif
+    </div>
+
+
+        <div class="modal fade" tabindex="-1" role="dialog" data-bs-keyboard="false" aria-hidden="true"
+             id="modalLoginSuccess">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content rounded-3 shadow d-flex">
+                    <div class="modal-header border-bottom-0">
+                        <h1 class="modal-title fs-5">Tanggapan berhasil dikirim!</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body py-0">
+                        <p>Anda dapat mulai mulai menganggapi pengaduan yang lain.</p>
+                    </div>
+                    <div class="modal-footer flex-column border-top-0">
+                        <button type="button" class="btn btn-dark w-100" data-bs-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 @endsection
+
+@push('script')
+    @if(session('message' ))
+        <script>
+            $(document).ready(function () {
+                $('#modalLoginSuccess').modal('show');
+            });
+        </script>
+    @endif
+@endpush

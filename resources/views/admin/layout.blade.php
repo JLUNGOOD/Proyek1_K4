@@ -45,7 +45,7 @@
         <div class="offcanvas offcanvas-start d-flex flex-column flex-shrink-0 p-3 text-bg-dark" data-bs-scroll="true"
              tabindex="-1" id="sidebar" aria-labelledby="sidebarAdmin">
             <div class="d-flex align-items-center justify-content-between">
-                <a href="../index.php" class="fs-4 text-simple fw-bold">LAPOR PNG</a>
+                <a href="{{ url('/') }}" class="fs-4 text-simple fw-bold">Lapor HomePage</a>
                 <button class="btn btn-close btn-close-white" type="button" data-bs-toggle="offcanvas"
                         data-bs-target="#sidebar"
                         aria-controls="offcanvasWithBothOptions">
@@ -61,29 +61,24 @@
                         Dashboard
                     </a>
                 </li>
+                @if(auth()->user()->role == '1')
+                    <li class="nav-item mb-1">
+                        <a href="{{ url('/admin/list_admin') }}" class="nav-link text-white" aria-current="page">
+                            <div class="icon-neat">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            List Admin
+                        </a>
+                    </li>
+                @endif
                 <li class="nav-item mb-1">
-                    <a href="{{ url('/admin/list_admin') }}" class="nav-link text-white" aria-current="page">
-                        <div class="icon-neat">
-                            <i class="fas fa-user-tie"></i>
-                        </div>
-                        List Admin
-                    </a>
-                </li>
-                <li class="dropdown nav-item mb-1">
-                    <a class="nav-link text-white dropdown-toggle" href="{{ url('/admin/tanggapi') }}" role="button"
-                       data-bs-toggle="dropdown"
+                    <a class="nav-link text-white" href="{{ url('/admin/tanggapi') }}"
                        aria-expanded="false">
                         <div class="icon-neat">
                             <i class="fas fa-file-alt"></i>
                         </div>
                         Tanggapi Laporan
                     </a>
-
-                    <ul class="dropdown-menu dropdown-menu-dark">
-                        <li><a class="dropdown-item" href="{{ url('/admin/tanggapi') }}">Pengaduan</a>
-                        </li>
-                        <li><a class="dropdown-item" href="{{ url('/admin/tanggapi') }}">Aspirasi</a></li>
-                    </ul>
                 </li>
             </ul>
         </div>
