@@ -28,30 +28,30 @@
         </div>
     </div>
 
-    <div class="container pt-5">
-        <div class="row">
-            @foreach ($lapor as $item)
-                <div class="col-md-6 mb-3">
-                    <div class="position-relative card {{ ($item['id_tanggapan'] !== null) ? 'is-response' : '' }}">
-                        @if ($item['dibaca_pengguna'] == 0 && $item['id_tanggapan'] != null)
-                            <span
-                                class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle"></span>
-                        @endif
-                        <div class="card-header d-flex justify-content-between">
-                            <span>{{ ucfirst(session('klarifikasi')) }}</span>
-                            <span>{{ ($item['id_tanggapan'] !== null) ? 'Sudah direspon' : 'Belum direspon' }}</span>
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $item['judul'] }}</h5>
-                            <a href="rincian-laporan-saya.php?id={{ $item['id'] }}" class="btn btn-dark">Lihat
-                                Rincian</a>
-                        </div>
-                        <div class="card-footer text-muted">
-                            {{ $item['tanggal_lapor'] }}
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>
+{{--    <div class="container pt-5">--}}
+{{--        <div class="row">--}}
+{{--            @foreach ($lapor as $item)--}}
+{{--                <div class="col-md-6 mb-3">--}}
+{{--                    <div class="position-relative card {{ ($item['id_tanggapan'] !== null) ? 'is-response' : '' }}">--}}
+{{--                        @if ($item['dibaca_pengguna'] == 0 && $item['id_tanggapan'] != null)--}}
+{{--                            <span--}}
+{{--                                class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle"></span>--}}
+{{--                        @endif--}}
+{{--                        <div class="card-header d-flex justify-content-between">--}}
+{{--                            <span>{{ ucfirst(session('klarifikasi')) }}</span>--}}
+{{--                            <span>{{ ($item['id_tanggapan'] !== null) ? 'Sudah direspon' : 'Belum direspon' }}</span>--}}
+{{--                        </div>--}}
+{{--                        <div class="card-body">--}}
+{{--                            <h5 class="card-title">{{ $item['judul'] }}</h5>--}}
+{{--                            <a href="rincian-laporan-saya.php?id={{ $item['id'] }}" class="btn btn-dark">Lihat--}}
+{{--                                Rincian</a>--}}
+{{--                        </div>--}}
+{{--                        <div class="card-footer text-muted">--}}
+{{--                            {{ $item['tanggal_lapor'] }}--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            @endforeach--}}
+{{--        </div>--}}
+{{--    </div>--}}
 @endsection

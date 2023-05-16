@@ -32,7 +32,6 @@ class HomeController extends Controller
         }
 
         $kegiatan = kegiatanModel::all();
-        dd($kegiatan);
         return view('user.home_user')
             ->with('kegiatan', $kegiatan);
 

@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PengaduanController;
-use use App\Models\kegiatanModel;
+use App\Models\kegiatanModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +42,9 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/create_user', [AdminController::class, 'create_user']);
     Route::post('/admin/delete_user/{id}', [AdminController::class, 'delete_user']);
     Route::get('/admin/tanggapi/{id}', [AdminController::class, 'tanggapi']);
+});
+
+Route::get('/home', [HomeController::class, 'index']);
 
 //Route::get('/login', function () {
 //    return view('login');
