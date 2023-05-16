@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PengaduanController;
+use App\Http\Controllers\UserController;
 use App\Models\kegiatanModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/pengaduan_saya', function () {
         return view('user.pengaduan_saya');
     });
+
+    Route::get('/ubah_profil', [UserController::class, 'editProfile' ])->name('user.edit-profile');
+    Route::post('/ubah_profil', [UserController::class, 'updateProfile' ])->name('user.update-profile');
+
+    Route::get('/ubah_password', [UserController::class, 'editPassword' ])->name('user.edit-password');
+    Route::post('/ubah_password', [UserController::class, 'updatePassword' ])->name('user.update-password');
 });
 
 Route::middleware(['admin'])->group(function () {
