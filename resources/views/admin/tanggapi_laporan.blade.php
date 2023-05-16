@@ -23,19 +23,19 @@
             </div>
             <div class="row">
                 <div class="col-8 col-sm-10">
-                    <form method="post" class="filter owl-carousel owl-theme">
+                    <div class="filter owl-carousel owl-theme">
                         <button type="submit" name="filter" value="semua"
                                 class="btn btn-sm">
                         </button>
-                        <button type="submit" name="filter" value="direspon"
+                        <button onclick="getSudahDitanggapi()" name="filter" value="direspon"
                                 class="btn btn-sm">
                             Sudah Direspon
                         </button>
-                        <button type="submit" name="filter" value="belum-direspon"
+                        <button onclick="getBelumDitanggapi()" name="filter" value="belum-direspon"
                                 class="btn btn-sm">
                             Belum Direspon
                         </button>
-                    </form>
+                    </div>
                 </div>
                 <form method="post" class="col-4 col-sm-2">
                     <select class="form-select form-select-sm border-dark" aria-label="urutkan">
@@ -48,19 +48,17 @@
     </div>
 
     <div class="container pt-5">
-        <div class="row">
+        <div class="row" id="list-pengaduan">
             @foreach($daftar_pengaduan as $pengaduan)
                 <div class="col-md-6 mb-3">
                     <div class="position-relative card ">
                         <div class="card-header d-flex justify-content-between">
                             <span>Pengaduan</span>
-                            {{--                    <span>' . (($item["id_tanggapan"] !== null) ? "Sudah direspon" : "Belum direspon") . '</span>--}}
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">{{ $pengaduan->judul }}</h5>
-                            {{--                    <a href="rincian-laporan.php?lapor=' . $_GET["lapor"] . '&id=' . $item["id"] . '"--}}
-                            {{--                    class="btn btn-dark">Lihat Rincian</a>--}}
-                            <a class="btn btn-dark" href="{{ url('/admin/tanggapi/' . $pengaduan->id) }}">Lihat Rincian</a>
+                            <a class="btn btn-dark" href="{{ url('/admin/tanggapi/' . $pengaduan->id) }}">Lihat
+                                Rincian</a>
                         </div>
                         <div class="card-footer text-muted">
                             {{ $pengaduan->tanggal_kejadian }}
@@ -97,6 +95,74 @@
 
 @push('script')
     <script>
+        function getSudahDitanggapi() {
+            $.ajax({
+                method: 'POST',
+                url: '{{ url('/tanggapan/sudah_ditanggapi') }}',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                },
+                success: (response) => {
+                    $('#list-pengaduan').empty();
+                    response['pengaduans'].forEach((pengaduan) => {
+                        let temp_html = `
+                        <div class="col-md-6 mb-3">
+                            <div class="position-relative card ">
+                                <div class="card-header d-flex justify-content-between">
+                                    <span>Pengaduan</span>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">${pengaduan['judul']}</h5>
+                                    <a class="btn btn-dark" href="/admin/tanggapi/${pengaduan['id']}">Lihat
+                                        Rincian</a>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    ${pengaduan['tanggal_kejadian']}
+                                </div>
+                            </div>
+                        </div>
+                        `;
+                        $('#list-pengaduan').append(temp_html);
+                    });
+                    console.log(response['pengaduans']);
+                },
+            });
+        }
+
+        function getBelumDitanggapi() {
+            $.ajax({
+                method: 'POST',
+                url: '{{ url('/tanggapan/belum_ditanggapi') }}',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                },
+                success: (response) => {
+                    $('#list-pengaduan').empty();
+                    response['pengaduans'].forEach((pengaduan) => {
+                        let temp_html = `
+                        <div class="col-md-6 mb-3">
+                            <div class="position-relative card ">
+                                <div class="card-header d-flex justify-content-between">
+                                    <span>Pengaduan</span>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">${pengaduan['judul']}</h5>
+                                    <a class="btn btn-dark" href="/admin/tanggapi/${pengaduan['id']}">Lihat
+                                        Rincian</a>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    ${pengaduan['tanggal_kejadian']}
+                                </div>
+                            </div>
+                        </div>
+                        `;
+                        $('#list-pengaduan').append(temp_html);
+                    });
+                    console.log(response['pengaduans']);
+                },
+            });
+        }
+
         $(document).ready(function () {
             $('body').addClass('h-100vh d-flex flex-column justify-content-between');
             $('.filter.owl-carousel').owlCarousel({

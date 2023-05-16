@@ -45,6 +45,9 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/send_tanggapan', [AdminController::class, 'send_tanggapan']);
 });
 
+Route::post('/tanggapan/sudah_ditanggapi', [PengaduanController::class, 'getSudahDitanggapi']);
+Route::post('/tanggapan/belum_ditanggapi', [PengaduanController::class, 'getBelumDitanggapi']);
+
 Route::get('/home', [HomeController::class, 'index']);
 
 //Route::get('/login', function () {
