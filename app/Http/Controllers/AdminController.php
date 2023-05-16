@@ -73,4 +73,16 @@ class AdminController extends Controller
         $tanggapan = TanggapanModel::where('pengaduan_id', $id)->first();
         return view('admin.detail_laporan', ['pengaduan' => $pengaduan, 'tanggapan' => $tanggapan]);
     }
+
+//    send tanggapan
+    function send_tanggapan(Request $request)
+    {
+        TanggapanModel::create([
+            'pengaduan_id' => $request['pengaduan_id'],
+            'user_id' => $request['user_id'],
+            'is_read' => '0',
+            'isi_tanggapan' => $request['isi'],
+        ]);
+        return redirect('/admin/tanggapi/' . $request['pengaduan_id'])->with('message', 'Tanggapan berhasil dikirim');
+    }
 }
