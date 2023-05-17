@@ -85,4 +85,23 @@ class AdminController extends Controller
         ]);
         return redirect('/admin/tanggapi/' . $request['pengaduan_id'])->with('message', 'Tanggapan berhasil dikirim');
     }
+
+    public function edit_user($id)
+    {
+        $user = UserModel::find($id);
+        return view('admin.tambah_admin', ['user' => $user]);
+    }
+
+    public function update_user(Request $request, $id)
+    {
+        $user = UserModel::find($id);
+        $user->update([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'role' => $request['role'],
+            'jenis_kelamin' => $request['jenis_kelamin'],
+            'tanggal_lahir' => $request['tanggal_lahir'],
+        ]);
+        return redirect('/admin/list_admin')->with('message', 'User berhasil diupdate');
+    }
 }
