@@ -16,7 +16,15 @@ class UserController extends Controller
 {
     public function editProfile(): Factory|View|Application
     {
-        return view('user.ubah_profil')->with('title', 'Ubah Profil');
+        if(auth()->check()){
+            if(auth()->user()->role == 1){
+                return view('admin.ubah_profil');
+            }else if(auth()->user()->role == 2){
+                return view('pegawai.ubah_profil');
+            }else if(auth()->user()->role == 3){
+                return view('user.ubah_profil');
+            }
+        }
     }
 
     public function updateProfile(Request $request): RedirectResponse
@@ -34,7 +42,15 @@ class UserController extends Controller
 
     public function editPassword(): Factory|View|Application
     {
-        return view('user.ubah_password')->with('title', 'Ubah Password');
+        if(auth()->check()){
+            if(auth()->user()->role == 1){
+                return view('admin.ubah_password');
+            }else if(auth()->user()->role == 2){
+                return view('pegawai.ubah_password');
+            }else if(auth()->user()->role == 3){
+                return view('user.ubah_password');
+            }
+        }
     }
 
     public function updatePassword(Request $request): RedirectResponse
