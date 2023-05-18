@@ -25,8 +25,9 @@
                     {{ auth()->user()->name }}
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end shadow">
-                    <li><a class="dropdown-item" href="profil-admin.php">Profil</a></li>
-                    <li><a class="dropdown-item" href="ubah-password-admin.php">Ubah Kata Sandi</a></li>
+                    <li><a class="dropdown-item" {{ url('ubah_profil') == url()->current() ? 'active' : '' }}" href="{{ url('ubah_profil') }}">Ubah Profil</a></li>
+                    <li><a class="dropdown-item" {{ url('ubah_password') == url()->current() ? 'active' : '' }}"
+                        href="{{ url('ubah_password') }}">Ubah Kata Sandi</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
