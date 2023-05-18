@@ -2,19 +2,21 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class kegiatanModel extends Model
+class KegiatanModel extends Model
 {
     use HasFactory;
     protected $table = 'kegiatan';
     protected $fillable = [
         'user_id',
-        'admin',
-        'pegawai',
         'judul_kegiatan',
+        'slug',
+        'foto_kegiatan',
         'isi_kegiatan',
         'tanggal_kegiatan'
     ];
 }
+

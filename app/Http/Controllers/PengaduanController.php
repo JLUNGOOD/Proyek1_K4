@@ -122,7 +122,7 @@ class PengaduanController extends Controller
         return response()->json(['pengaduans' => $pengaduans]);
     }
 
-    public function pengaduan_saya()
+    public function pengaduanSaya()
     {
         $daftar_pengaduan = PengaduanModel::all();
         return view('user.pengaduan_saya')

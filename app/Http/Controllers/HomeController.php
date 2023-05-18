@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\kegiatanModel;
+use App\Models\KegiatanModel;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
@@ -31,7 +31,7 @@ class HomeController extends Controller
             return redirect('admin');
         }
 
-        $kegiatan = kegiatanModel::all();
+        $kegiatan = KegiatanModel::all();
         return view('user.home_user')
             ->with('kegiatan', $kegiatan)->with('title', 'Halaman Utama PDAM');
 

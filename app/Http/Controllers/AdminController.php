@@ -3,16 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\KategoriModel;
+use App\Models\KegiatanModel;
 use App\Models\PengaduanModel;
 use App\Models\TanggapanModel;
 use App\Models\UserModel;
+use App\Services\FileService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
+    protected $fileService;
+
+    public function __construct(FileService $fileService)
+    {
+        $this->fileService = $fileService;
+    }
+
     function index()
     {
         $today = Carbon::today();
@@ -131,11 +141,54 @@ class AdminController extends Controller
 
     public function list_kegiatan()
     {
-        return view('admin.list_kegiatan');
+        $kegiatans = KegiatanModel::latest()->get();
+        
+        return view('admin.list_kegiatan')->with('kegiatans', $kegiatans);
     }
 
-    public function tambah_kegiatan()
+    public function createKegiatan()
     {
         return view('admin.tambah_kegiatan');
+    }
+
+    protected function validator(array $data): \Illuminate\Validation\Validator
+    {
+        return Validator::make($data, [
+            'judul_kegiatan' => ['required', 'string', 'max:255'],
+            'foto_kegiatan' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:5120'],
+            'isi_kegiatan' => ['required', 'string'],
+            'tanggal_kegiatan' => ['required', 'date'],
+        ]);
+    }
+
+    protected function storeKegiatan(Request $request)
+    {
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $kegiatan = new KegiatanModel;
+        $kegiatan->user_id = auth()->user()->id;
+        $kegiatan->judul_kegiatan = $request->judul_kegiatan;
+        $kegiatan->slug = Str::slug($kegiatan->judul_kegiatan, '-');
+
+        if ($request->hasFile('foto_kegiatan')) {
+            $image = $request->file('foto_kegiatan');
+            $uniqueFileName = $this->fileService->generateUniqueFileName($image, $kegiatan->judul_kegiatan);
+            $image->storeAs('public/foto_kegiatan', $uniqueFileName);
+
+            $kegiatan->foto_kegiatan = $uniqueFileName;
+        }
+
+        $kegiatan->isi_kegiatan = $request->isi_kegiatan;
+        $kegiatan->tanggal_kegiatan = $request->tanggal_kegiatan;
+
+        $kegiatan->save();
+
+        return back()->with('success', 'Kegiatan berhasil ditambahkan.');
     }
 }
