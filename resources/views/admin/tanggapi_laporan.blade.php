@@ -204,6 +204,7 @@
                 margin: 10,
                 autoWidth: true,
             });
+            document.getElementById('keyword').addEventListener('keyup', searchPengaduan);
         })
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
