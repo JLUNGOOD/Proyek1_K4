@@ -23,16 +23,14 @@
             </div>
             <div class="row">
                 <div class="col-8 col-sm-10">
-                    <div class="filter owl-carousel owl-theme">
-                        <button type="submit" name="filter" value="semua"
-                                class="btn btn-sm">
+                    <div class="filter">
+                        <button id="btn-get-all" onclick="getAllPengaduan()" type="submit" name="filter" value="semua" class="btn-switchable btn btn-sm btn-dark">
+                            Semua
                         </button>
-                        <button onclick="getSudahDitanggapi()" name="filter" value="direspon"
-                                class="btn btn-sm">
+                        <button id="btn-get-responded" onclick="getSudahDitanggapi()" name="filter" value="direspon" class="btn-switchable btn btn-sm btn-outline-dark">
                             Sudah Direspon
                         </button>
-                        <button onclick="getBelumDitanggapi()" name="filter" value="belum-direspon"
-                                class="btn btn-sm">
+                        <button id="btn-get-unresponded" onclick="getBelumDitanggapi()" name="filter" value="belum-direspon" class="btn-switchable btn btn-sm btn-outline-dark">
                             Belum Direspon
                         </button>
                     </div>
@@ -90,8 +88,27 @@
 @push('script')
     <script>
         let sortByResponded = 0; // 0 = unsorted, 1 = responded, 2 = not responded
+
+        function switchActiveButton(index) {
+            const activeButton = document.querySelector('.btn-switchable.btn-dark');
+            activeButton.classList.add('btn-outline-dark');
+            activeButton.classList.remove('btn-dark');
+
+            const nextActiveButton = document.querySelectorAll('.btn-switchable');
+            nextActiveButton[index].classList.add('btn-dark');
+            nextActiveButton[index].classList.remove('btn-outline-dark');
+        }
+
+        function getAllPengaduan() {
+            $('#keyword').val('');
+            sortByResponded = 0;
+            searchPengaduan();
+            switchActiveButton(0);
+        }
+
         function getSudahDitanggapi() {
             sortByResponded = 1;
+            switchActiveButton(sortByResponded);
             $.ajax({
                 method: 'POST',
                 url: '{{ url('/pengaduan/sudah_ditanggapi') }}',
@@ -121,13 +138,13 @@
                         `;
                         $('#list-pengaduan').append(temp_html);
                     });
-                    console.log(response['pengaduans']);
                 },
             });
         }
 
         function getBelumDitanggapi() {
             sortByResponded = 2;
+            switchActiveButton(sortByResponded);
             $.ajax({
                 method: 'POST',
                 url: '{{ url('/pengaduan/belum_ditanggapi') }}',
@@ -157,12 +174,12 @@
                         `;
                         $('#list-pengaduan').append(temp_html);
                     });
-                    console.log(response['pengaduans']);
                 },
             });
         }
 
         function searchPengaduan() {
+            switchActiveButton(sortByResponded);
             $.ajax({
                 method: 'POST',
                 url: '{{ url('/pengaduan/search') }}',
@@ -193,7 +210,6 @@
                         `;
                         $('#list-pengaduan').append(temp_html);
                     });
-                    console.log(response['pengaduans']);
                 },
             });
         }
