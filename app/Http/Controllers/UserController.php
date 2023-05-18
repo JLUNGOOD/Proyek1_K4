@@ -20,7 +20,7 @@ class UserController extends Controller
             if(auth()->user()->role == 1){
                 return view('admin.ubah_profil');
             }else if(auth()->user()->role == 2){
-                return view('pegawai.ubah_profil');
+                return view('admin.ubah_profil');
             }else if(auth()->user()->role == 3){
                 return view('user.ubah_profil');
             }
@@ -46,7 +46,7 @@ class UserController extends Controller
             if(auth()->user()->role == 1){
                 return view('admin.ubah_password');
             }else if(auth()->user()->role == 2){
-                return view('pegawai.ubah_password');
+                return view('admin.ubah_password');
             }else if(auth()->user()->role == 3){
                 return view('user.ubah_password');
             }

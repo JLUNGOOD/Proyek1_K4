@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="min-vh-100 d-flex gap-4 justify-content-center align-items-center flex-column">
-        <h1 class="display-5 fw-bold mb-4">Halo, Admin {{ auth()->user()->name }}</h1>
+        <h1 class="display-5 fw-bold mb-4">Halo, {{ auth()->user()->role==1? 'Admin':'Pegawai' }} {{ auth()->user()->name }}</h1>
         <div class="d-flex justify-content-center gap-4">
             <div class="card border border-5 border-warning" style="width: 18rem; background-color: #f5c99f">
                 <div class="card-body">

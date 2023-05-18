@@ -31,22 +31,25 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/ubah_password', [UserController::class, 'editPassword' ])->name('user.edit-password');
     Route::post('/ubah_password', [UserController::class, 'updatePassword' ])->name('user.update-password');
-});
-
-Route::middleware(['admin'])->group(function () {
-    Route::get('/admin', [AdminController::class, 'index']);
-    Route::get('/admin/tanggapi', [AdminController::class, 'list_tanggapi']);
-    Route::get('/admin/tambah_admin', [AdminController::class, 'tambah_admin']);
-    Route::get('/admin/list_admin', [AdminController::class, 'list_admin']);
-    Route::post('/admin/create_user', [AdminController::class, 'create_user']);
-    Route::post('/admin/delete_user/{id}', [AdminController::class, 'delete_user']);
     Route::get('/admin/tanggapi/{id}', [AdminController::class, 'tanggapi']);
-    Route::post('/admin/send_tanggapan', [AdminController::class, 'send_tanggapan']);
-    Route::get('/admin/{id}/edit_user', [AdminController::class, 'edit_user']);
-
-    Route::get('/admin/kegiatan', [AdminController::class, 'list_kegiatan']);
-    Route::get('/admin/tambah_kegiatan', [AdminController::class, 'tambah_kegiatan']);
+    
+    Route::middleware(['admin'])->group(function () {
+        Route::get('/admin', [AdminController::class, 'index']);
+        Route::get('/admin/tanggapi', [AdminController::class, 'list_tanggapi']);
+        Route::get('/admin/tambah_admin', [AdminController::class, 'tambah_admin']);
+        Route::get('/admin/list_admin', [AdminController::class, 'list_admin']);
+        Route::post('/admin/create_user', [AdminController::class, 'create_user']);
+        Route::post('/admin/delete_user/{id}', [AdminController::class, 'delete_user']);
+        
+        Route::post('/admin/send_tanggapan', [AdminController::class, 'send_tanggapan']);
+        Route::get('/admin/{id}/edit_user', [AdminController::class, 'edit_user']);
+    
+        Route::get('/admin/kegiatan', [AdminController::class, 'list_kegiatan']);
+        Route::get('/admin/tambah_kegiatan', [AdminController::class, 'tambah_kegiatan']);
+    });
 });
+
+
 
 Route::post('/pengaduan/sudah_ditanggapi', [PengaduanController::class, 'getSudahDitanggapi']);
 Route::post('/pengaduan/belum_ditanggapi', [PengaduanController::class, 'getBelumDitanggapi']);
