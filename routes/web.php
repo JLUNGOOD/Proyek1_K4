@@ -43,6 +43,9 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/tanggapi/{id}', [AdminController::class, 'tanggapi']);
     Route::post('/admin/send_tanggapan', [AdminController::class, 'send_tanggapan']);
     Route::get('/admin/{id}/edit_user', [AdminController::class, 'edit_user']);
+
+    Route::get('/admin/kegiatan', [AdminController::class, 'list_kegiatan']);
+    Route::get('/admin/tambah_kegiatan', [AdminController::class, 'tambah_kegiatan']);
 });
 
 Route::post('/pengaduan/sudah_ditanggapi', [PengaduanController::class, 'getSudahDitanggapi']);
