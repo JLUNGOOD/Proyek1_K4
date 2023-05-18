@@ -20,12 +20,6 @@ use Illuminate\Support\Facades\Route;
 */
 Auth::routes();
 
-Route::get('/', function () {
-    $kegiatan = kegiatanModel::all();
-    return view('user.home_user')
-        ->with('kegiatan', $kegiatan);
-});
-
 Route::middleware('auth')->group(function () {
     Route::get('/buat_pengaduan', [PengaduanController::class, 'create']);
     Route::post('/buat_pengaduan', [PengaduanController::class, 'store'])->name('pengaduan.store');
@@ -54,7 +48,7 @@ Route::post('/pengaduan/sudah_ditanggapi', [PengaduanController::class, 'getSuda
 Route::post('/pengaduan/belum_ditanggapi', [PengaduanController::class, 'getBelumDitanggapi']);
 Route::post('/pengaduan/search', [PengaduanController::class, 'searchPengaduan']);
 
-Route::get('/home', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index']);
 
 //Route::get('/login', function () {
 //    return view('login');

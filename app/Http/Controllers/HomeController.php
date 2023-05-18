@@ -33,7 +33,7 @@ class HomeController extends Controller
 
         $kegiatan = kegiatanModel::all();
         return view('user.home_user')
-            ->with('kegiatan', $kegiatan);
+            ->with('kegiatan', $kegiatan)->with('title', 'Halaman Utama PDAM');
 
     }
 }

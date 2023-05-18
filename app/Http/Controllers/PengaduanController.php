@@ -29,7 +29,7 @@ class PengaduanController extends Controller
     protected function create(): Factory|View|Application
     {
         $categories = KategoriModel::all();
-        return view('user.buat_pengaduan')->with('categories', $categories);
+        return view('user.buat_pengaduan')->with('categories', $categories)->with('title', 'Buat Pengaduan');
     }
 
     protected function validator(array $data): \Illuminate\Validation\Validator
@@ -122,8 +122,11 @@ class PengaduanController extends Controller
         return response()->json(['pengaduans' => $pengaduans]);
     }
 
-    public function pengaduan_saya() {
+    public function pengaduan_saya()
+    {
         $daftar_pengaduan = PengaduanModel::all();
-        return view('user.pengaduan_saya', ['daftar_pengaduan' => $daftar_pengaduan]);
+        return view('user.pengaduan_saya')
+            ->with('daftar_pengaduan', $daftar_pengaduan)
+            ->with('title', 'Pengaduan Saya');
     }
 }
