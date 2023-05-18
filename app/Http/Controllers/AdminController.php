@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KategoriModel;
 use App\Models\PengaduanModel;
 use App\Models\TanggapanModel;
 use App\Models\UserModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -13,7 +15,29 @@ class AdminController extends Controller
 {
     function index()
     {
-        return view('admin.index');
+        $today = Carbon::today();
+        $categories = KategoriModel::all();
+        $categories_name = [];
+        $pengaduan_count = [];
+        $pengaduans = [
+            'total' => PengaduanModel::all()->count(),
+            'total_sudah_direspon' => PengaduanModel::whereHas('tanggapan')->count(),
+            'total_belum_direspon' => PengaduanModel::whereDoesntHave('tanggapan')->count(),
+            'today_sudah_direspon' => PengaduanModel::whereHas('tanggapan')
+                ->whereDate('created_at', $today)
+                ->count(),
+            'today_belum_direspon' => PengaduanModel::whereDoesntHave('tanggapan')
+                ->whereDate('created_at', $today)
+                ->count()
+        ];
+        foreach ($categories as $i => $category) {
+            $categories_name[$i] = $category->name;
+            $pengaduan_count[$i] = PengaduanModel::where('kategori_id', $category->id)->count();
+        }
+        return view('admin.index')
+            ->with('categories_name', json_encode($categories_name))
+            ->with('pengaduan_count', json_encode($pengaduan_count))
+            ->with('pengaduans', $pengaduans);
     }
 
     function list_tanggapi()
