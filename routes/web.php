@@ -42,6 +42,7 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/delete_user/{id}', [AdminController::class, 'delete_user']);
     Route::get('/admin/tanggapi/{id}', [AdminController::class, 'tanggapi']);
     Route::post('/admin/send_tanggapan', [AdminController::class, 'send_tanggapan']);
+    Route::get('/admin/{id}/edit_user', [AdminController::class, 'edit_user']);
 });
 
 Route::post('/pengaduan/sudah_ditanggapi', [PengaduanController::class, 'getSudahDitanggapi']);

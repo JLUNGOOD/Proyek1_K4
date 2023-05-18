@@ -50,7 +50,7 @@
                         </li>
                     </ul>
                     <div class="card-body">
-                        <a href="" class="btn btn-dark">Ubah</a>
+                        <a class="btn btn-dark" href="{{ url('admin/'.$admin->id.'/edit_user') }}">Ubah</a>
                         <form method="post" action="{{ url('/admin/delete_user/' . $admin->id) }}" class="d-inline-block">
                             @csrf
                             <button type="submit" class="btn btn-danger">Hapus</button>
