@@ -80,6 +80,15 @@
                         Tanggapi Laporan
                     </a>
                 </li>
+                <li class="nav-item mb-1">
+                    <a class="nav-link text-white" href="{{ url('/admin/kegiatan') }}"
+                       aria-expanded="false">
+                        <div class="icon-neat">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        Kelola Kegiatan
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

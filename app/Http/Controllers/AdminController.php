@@ -128,4 +128,14 @@ class AdminController extends Controller
         ]);
         return redirect('/admin/list_admin')->with('message', 'User berhasil diupdate');
     }
+
+    public function list_kegiatan()
+    {
+        return view('admin.list_kegiatan');
+    }
+
+    public function tambah_kegiatan()
+    {
+        return view('admin.tambah_kegiatan');
+    }
 }
