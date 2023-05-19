@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Auth::routes();
 
 Route::middleware('auth')->group(function () {
@@ -43,18 +44,27 @@ Route::middleware('auth')->group(function () {
         Route::post('/admin/send_tanggapan', [AdminController::class, 'send_tanggapan']);
         Route::get('/admin/{id}/edit_user', [AdminController::class, 'edit_user']);
 
-        Route::get('/admin/kegiatan', [AdminController::class, 'list_kegiatan']);
-        Route::get('/admin/tambah_kegiatan', [AdminController::class, 'createKegiatan']);
-        Route::post('/admin/tambah_kegiatan', [AdminController::class, 'storeKegiatan'])->name('admin.store-kegiatan');
+        Route::get('/admin/kegiatan', [AdminController::class, 'list_kegiatan'])->name('admin.list-kegiatan');
+        Route::get('/admin/tambah_kegiatan', [AdminController::class, 'createKegiatan'])
+            ->name('admin.create-kegiatan');
+        Route::post('/admin/tambah_kegiatan', [AdminController::class, 'storeKegiatan'])
+            ->name('admin.store-kegiatan');
+        Route::get('/admin/kegiatan/{slug}/edit', [AdminController::class, 'editKegiatan'])
+            ->name('admin.edit-kegiatan');
+        Route::post('/admin/kegiatan/{slug}/edit', [AdminController::class, 'updateKegiatan'])
+            ->name('admin.update-kegiatan');
+        Route::delete('/admin/kegiatan/{slug}', [AdminController::class, 'destroyKegiatan'])
+            ->name('admin.delete-kegiatan');
+
     });
 });
 
+Route::get('/', [HomeController::class, 'index']);
+Route::get('/kegiatan/{slug}', [HomeController::class, 'showKegiatan'])->name('user.show-kegiatan');;
 
 Route::post('/pengaduan/sudah_ditanggapi', [PengaduanController::class, 'getSudahDitanggapi']);
 Route::post('/pengaduan/belum_ditanggapi', [PengaduanController::class, 'getBelumDitanggapi']);
 Route::post('/pengaduan/search', [PengaduanController::class, 'searchPengaduan']);
-
-Route::get('/', [HomeController::class, 'index']);
 
 //Route::get('/login', function () {
 //    return view('login');

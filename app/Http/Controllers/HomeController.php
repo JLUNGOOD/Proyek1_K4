@@ -31,9 +31,15 @@ class HomeController extends Controller
             return redirect('admin');
         }
 
-        $kegiatan = KegiatanModel::all();
+        $kegiatans = KegiatanModel::latest()->get();
         return view('user.home_user')
-            ->with('kegiatan', $kegiatan)->with('title', 'Halaman Utama PDAM');
+            ->with('kegiatans', $kegiatans)->with('title', 'Halaman Utama PDAM');
+    }
 
+    public function showKegiatan($slug)
+    {
+        $kegiatan = KegiatanModel::where('slug', $slug)->first();
+        return view('user.show_kegiatan')
+            ->with('kegiatan', $kegiatan)->with('title', $kegiatan->judul_kegiatan);
     }
 }

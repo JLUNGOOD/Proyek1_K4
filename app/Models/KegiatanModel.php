@@ -18,5 +18,10 @@ class KegiatanModel extends Model
         'isi_kegiatan',
         'tanggal_kegiatan'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(UserModel::class);
+    }
 }
 

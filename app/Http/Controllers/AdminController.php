@@ -9,8 +9,12 @@ use App\Models\TanggapanModel;
 use App\Models\UserModel;
 use App\Services\FileService;
 use Carbon\Carbon;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -142,7 +146,7 @@ class AdminController extends Controller
     public function list_kegiatan()
     {
         $kegiatans = KegiatanModel::latest()->get();
-        
+
         return view('admin.list_kegiatan')->with('kegiatans', $kegiatans);
     }
 
@@ -191,4 +195,67 @@ class AdminController extends Controller
 
         return back()->with('success', 'Kegiatan berhasil ditambahkan.');
     }
+
+    public function editKegiatan($slug): Factory|View|Application
+    {
+        $kegiatan = KegiatanModel::where('slug', $slug)->first();
+        return view('admin.edit_kegiatan', ['kegiatan' => $kegiatan]);
+    }
+
+    protected function updateKegiatan(Request $request, $slug)
+    {
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $kegiatan = KegiatanModel::where('slug', $slug)->first();
+        $kegiatan->judul_kegiatan = $request->judul_kegiatan;
+        $kegiatan->slug = Str::slug($kegiatan->judul_kegiatan, '-');
+
+        if ($request->has('hapus_gambar')) {
+            if ($kegiatan->foto_kegiatan) {
+                Storage::delete('public/foto_kegiatan/' . $kegiatan->foto_kegiatan);
+            }
+
+            $kegiatan->foto_kegiatan = null;
+        } else if ($request->hasFile('foto_kegiatan')) {
+            if ($kegiatan->foto_kegiatan) {
+                Storage::delete('public/foto_kegiatan/' . $kegiatan->foto_kegiatan);
+            }
+
+            $image = $request->file('foto_kegiatan');
+            $uniqueFileName = $this->fileService->generateUniqueFileName($image, $kegiatan->judul_kegiatan);
+            $image->storeAs('public/foto_kegiatan', $uniqueFileName);
+
+            $kegiatan->foto_kegiatan = $uniqueFileName;
+        }
+
+        $kegiatan->isi_kegiatan = $request->isi_kegiatan;
+        $kegiatan->tanggal_kegiatan = $request->tanggal_kegiatan;
+        $kegiatan->save();
+
+        if ($kegiatan->wasChanged('slug')) {
+            return redirect()->route('admin.edit-kegiatan', ['slug' => $kegiatan->slug])->with('success', 'Kegiatan berhasil diperbarui.');
+        } else {
+            return back()->with('success', 'Kegiatan berhasil diperbarui.');
+        }
+    }
+
+    public function destroyKegiatan($slug)
+    {
+        $kegiatan = KegiatanModel::where('slug', $slug)->first();
+
+        if ($kegiatan->foto_kegiatan) {
+            Storage::delete('public/foto_kegiatan/' . $kegiatan->foto_kegiatan);
+        }
+
+        $kegiatan->delete();
+
+        return back()->with('success', 'Kegiatan berhasil dihapus.');
+    }
+
 }
