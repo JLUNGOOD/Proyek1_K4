@@ -14,28 +14,39 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-        <h1 class="display-6 mb-4 fw-bold text-center">Tambah Kegiatan</h1>
-        <form enctype="multipart/form-data" action="{{ route('admin.store-kegiatan') }}" method="post">
+        <h1 class="display-6 mb-4 fw-bold text-center">Edit Kegiatan</h1>
+        <form enctype="multipart/form-data" action="{{ route('admin.update-kegiatan', $kegiatan->slug) }}"
+              method="post">
             @csrf
             <div class="mb-3">
                 <label for="judul_kegiatan" class="form-label fw-bold">Judul Kegiatan</label>
                 <input class="form-control @error('judul_kegiatan') is-invalid @enderror" name="judul_kegiatan"
                        id="judul_kegiatan" placeholder="Masukkan Judul Kegiatan *"
-                       value="{{ old('judul_kegiatan') ?? '' }}">
+                       value="{{ $kegiatan->judul_kegiatan }}">
                 @error('judul_kegiatan')
                 <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
             <div class="mb-3">
                 <label for="foto_kegiatan" class="form-label fw-bold">Foto Kegiatan</label>
-                <div>
-                    <a class="image-popup d-inline-block" href="{{ asset('/img/no-img-available.png') }}">
-                        <img src="{{ asset('/img/no-img-available.png') }}"
-                             class="img-preview d-block rounded border mb-2" alt="Image Preview">
+                <div class="image">
+                    <a class="image-popup d-inline-block"
+                       href="{{ $kegiatan->foto_kegiatan ? asset('storage/foto_kegiatan/' . $kegiatan->foto_kegiatan) : asset('/img/no-img-available.png') }}">
+                        <img
+                            src="{{ $kegiatan->foto_kegiatan ? asset('storage/foto_kegiatan/' . $kegiatan->foto_kegiatan) : asset('/img/no-img-available.png') }}"
+                            class="img-preview d-block rounded border mb-2" alt="Image Preview">
                     </a>
                 </div>
+                @if ($kegiatan->foto_kegiatan)
+                    <div class="mb-3">
+                        <label for="hapus_gambar" class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="hapus_gambar" id="hapus_gambar">
+                            Hapus Gambar
+                        </label>
+                    </div>
+                @endif
                 <input type="file" class="form-control @error('foto_kegiatan') is-invalid @enderror"
-                       name="foto_kegiatan" id="foto_kegiatan" value="{{ old('foto_kegiatan') }}">
+                       name="foto_kegiatan" id="foto_kegiatan" value="{{ $kegiatan->foto_kegiatan }}">
                 <div class="form-text">Ukuran file maksimum 5 MB</div>
                 @error('foto_kegiatan')
                 <small class="text-danger">{{ $message }}</small>
@@ -43,7 +54,7 @@
             </div>
             <div class="mb-3">
                 <label for="isi_kegiatan" class="form-label fw-bold">Isi Kegiatan</label>
-                <input id="isi_kegiatan" type="hidden" name="isi_kegiatan" value="{{ old('isi_kegiatan') }}">
+                <input id="isi_kegiatan" type="hidden" name="isi_kegiatan" value="{{ $kegiatan->isi_kegiatan }}">
                 <trix-editor input="isi_kegiatan"></trix-editor>
                 @error('isi_kegiatan')
                 <small class="text-danger">{{ $message }}</small>
@@ -52,7 +63,7 @@
             <div class="mb-3">
                 <label for="tanggal_kegiatan" class="form-label fw-bold">Tanggal Kegiatan</label>
                 <input type="date" class="form-control @error('tanggal_kegiatan') is-invalid @enderror"
-                       name="tanggal_kegiatan" id="tanggal_kegiatan" value="{{ old('tanggal_kegiatan') }}">
+                       name="tanggal_kegiatan" id="tanggal_kegiatan" value="{{ $kegiatan->tanggal_kegiatan }}">
                 @error('tanggal_kegiatan')
                 <small class="text-danger">{{ $message }}</small>
                 @enderror
@@ -67,9 +78,9 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content rounded-3 shadow">
                         <div class="modal-body p-4 text-center">
-                            <h5 class="mb-3">Apakah Anda yakin ingin mengirim kegiatan ini?</h5>
-                            <p class="mb-0">Dengan mengirim kegiatan, informasi tersebut akan ditampilkan secara publik.
-                                Anda yakin?</p>
+                            <h5 class="mb-3">Apakah Anda yakin ingin memberbarui kegiatan ini?</h5>
+                            <p class="mb-0">Dengan memberbarui kegiatan, informasi tersebut akan ditampilkan secara
+                                publik. Anda yakin?</p>
                         </div>
                         <div class="modal-footer flex-nowrap p-0">
                             <button type="submit"
@@ -93,6 +104,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
     <script>
         $(document).ready(function () {
+            $('#hapus_gambar').on('change', function () {
+                if ($(this).is(':checked')) {
+                    $('#foto_kegiatan').val('').prop('disabled', true);
+                    $('.img-popup').attr('href', '{{ asset('/img/no-img-available.png') }}');
+                    $('.img-preview').attr('src', '{{ asset('/img/no-img-available.png') }}');
+                } else {
+                    $('#foto_kegiatan').prop('disabled', false);
+                    const imageUrl = '{{ $kegiatan->foto_kegiatan ? asset('storage/foto_kegiatan/' . $kegiatan->foto_kegiatan) : asset('/img/no-img-available.png') }}';
+                    $('.img-popup').attr('src', imageUrl);
+                    $('.img-preview').attr('src', imageUrl);
+                }
+            });
+
             $('.image-popup').magnificPopup({
                 type: 'image',
                 zoom: {

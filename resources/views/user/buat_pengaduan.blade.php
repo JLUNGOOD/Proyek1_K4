@@ -127,8 +127,10 @@
                 const imagePopup = $('.image-popup');
 
                 reader.onload = function (e) {
-                    imagePreview.attr('src', e.target.result);
-                    imagePopup.attr('href', e.target.result);
+                    if (file.type.includes('image')) {
+                        imagePreview.attr('src', e.target.result);
+                        imagePopup.attr('href', e.target.result);
+                    }
                 };
 
                 if (file) {

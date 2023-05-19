@@ -25,8 +25,9 @@
                     {{ auth()->user()->name }}
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end shadow">
-                    <li><a class="dropdown-item" href="profil-admin.php">Profil</a></li>
-                    <li><a class="dropdown-item" href="ubah-password-admin.php">Ubah Kata Sandi</a></li>
+                    <li><a class="dropdown-item" {{ url('ubah_profil') == url()->current() ? 'active' : '' }}" href="{{ url('ubah_profil') }}">Ubah Profil</a></li>
+                    <li><a class="dropdown-item" {{ url('ubah_password') == url()->current() ? 'active' : '' }}"
+                        href="{{ url('ubah_password') }}">Ubah Kata Sandi</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
@@ -78,6 +79,15 @@
                             <i class="fas fa-file-alt"></i>
                         </div>
                         Tanggapi Laporan
+                    </a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a class="nav-link text-white" href="{{ url('/admin/kegiatan') }}"
+                       aria-expanded="false">
+                        <div class="icon-neat">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        Kelola Kegiatan
                     </a>
                 </li>
             </ul>
