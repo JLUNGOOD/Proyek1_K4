@@ -108,6 +108,9 @@ class AdminController extends Controller
     function tanggapi($id)
     {
         $pengaduan = PengaduanModel::find($id);
+        $pengaduan->update([
+            'is_read' => '1'
+        ]);
         $tanggapan = TanggapanModel::where('pengaduan_id', $id)->first();
         return view('admin.detail_laporan', ['pengaduan' => $pengaduan, 'tanggapan' => $tanggapan]);
     }

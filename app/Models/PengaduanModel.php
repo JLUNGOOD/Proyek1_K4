@@ -17,7 +17,8 @@ class PengaduanModel extends Model
         'judul',
         'isi',
         'tanggal_kejadian',
-        'bukti_gambar'
+        'bukti_gambar',
+        'is_read'
     ];
 
     public function kategori() {

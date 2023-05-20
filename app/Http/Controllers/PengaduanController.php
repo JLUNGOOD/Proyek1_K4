@@ -90,7 +90,7 @@ class PengaduanController extends Controller
     {
         $pengaduans = PengaduanModel::leftJoin('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
             ->whereNull('tanggapan.pengaduan_id')
-            ->select('pengaduan.id', 'pengaduan.judul', 'pengaduan.isi', 'pengaduan.tanggal_kejadian')
+            ->select('pengaduan.id', 'pengaduan.judul', 'pengaduan.isi', 'pengaduan.tanggal_kejadian', 'pengaduan.user_id', 'pengaduan.is_read')
             ->get();
         return response()->json(['pengaduans' => $pengaduans]);
     }
@@ -117,6 +117,7 @@ class PengaduanController extends Controller
                 ->where(function ($query) use ($keyword) {
                     $query->where('judul', 'like', '%' . $keyword . '%');
                 })
+                ->select('pengaduan.*')
                 ->get();
         }
         return response()->json(['pengaduans' => $pengaduans]);

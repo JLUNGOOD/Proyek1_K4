@@ -11,9 +11,15 @@
             <div class="row mb-3">
                 <div class="col-6 col-sm-9">
                     <div class="filter owl-carousel owl-theme">
-                        <button onclick="getAllPengaduan()" id="btn-respon" name="responded" class="btn-switchable btn btn-dark">Semua</button>
-                        <button onclick="getSudahDitanggapi()" id="btn-respon" name="responded" class="btn-switchable btn btn-outline-dark">Direspon</button>
-                        <button onclick="getBelumDitanggapi()" id="btn-not-respon" name="not-responded" class="btn-switchable btn btn-outline-dark">Belum direspon</button>
+                        <button onclick="getAllPengaduan()" id="btn-respon" name="responded"
+                                class="btn-switchable btn btn-dark">Semua
+                        </button>
+                        <button onclick="getSudahDitanggapi()" id="btn-respon" name="responded"
+                                class="btn-switchable btn btn-outline-dark">Direspon
+                        </button>
+                        <button onclick="getBelumDitanggapi()" id="btn-not-respon" name="not-responded"
+                                class="btn-switchable btn btn-outline-dark">Belum direspon
+                        </button>
                     </div>
                 </div>
                 <div class="col-6 col-sm-3">
@@ -21,7 +27,8 @@
                         <input class="form-control border-dark bg-light" placeholder="Cari..."
                                value="{{ session('cariLaporanSaya') ? session('cariLaporanSaya') : '' }}"
                                name="keyword" id="keyword" aria-label="Cari" aria-describedby="button-cari">
-                        <button class="btn btn-dark" onclick="searchPengaduan()" id="button-cari" name="cariLaporanSaya"><i
+                        <button class="btn btn-dark" onclick="searchPengaduan()" id="button-cari"
+                                name="cariLaporanSaya"><i
                                 class="fas fa-search"></i></button>
                     </div>
                 </div>
@@ -34,7 +41,16 @@
                 <div class="col-md-6 mb-3">
                     <div class="position-relative card ">
                         <div class="card-header d-flex justify-content-between">
-                            <span>Pengaduan</span>
+                            @if(auth()->user()->id == $pengaduan->user_id)
+                                <b>Pengaduan Anda</b>
+                            @else
+                                <span>Pengaduan</span>
+                            @endif
+                            @if($pengaduan->is_read == '1')
+                                    <i class='fas fa-check-double text-info'></i>
+                            @else
+                                    <i class='fas fa-check-double'></i>
+                            @endif
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">{{ $pengaduan->judul }}</h5>
@@ -48,12 +64,46 @@
                 </div>
             @endforeach
         </div>
+        <p>*Notes :</p>
+        <ul>
+            <li>Centang Hitam = belum dibaca oleh petugas/admin</li>
+            <li>Centang Biru = sudah dibaca oleh petugas/admin</li>
+        </ul>
     </div>
 @endsection
 
 @push('script')
     <script>
         let sortByResponded = 0; // 0 = unsorted, 1 = responded, 2 = not responded
+
+        // get html template that can be append to list-pengaduan
+        function getTempHtml(pengaduan) {
+            return ` <div class="col-md-6 mb-3">
+                            <div class="position-relative card ">
+                                <div class="card-header d-flex justify-content-between">
+                                    ${
+                                        pengaduan["user_id"] == {{ auth()->user()->id }}
+                                            ? "<b>Pengaduan Anda</b>"
+                                            : "<span>Pengaduan</span>"
+                                    }
+                                    ${
+                                        pengaduan["is_read"] == "1"
+                                            ? "<i class='fas fa-check-double text-info'></i>"
+                                            : "<i class='fas fa-check-double'></i>"
+                                    }
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">${pengaduan['judul']}</h5>
+                                    <a class="btn btn-dark" href="/admin/tanggapi/${pengaduan['id']}">Lihat
+                                        Rincian</a>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    ${pengaduan['tanggal_kejadian']}
+                                </div>
+                            </div>
+                        </div>
+                        `;
+        }
 
         function switchActiveButton(index) {
             const activeButton = document.querySelector('.btn-switchable.btn-dark');
@@ -85,23 +135,7 @@
                 success: (response) => {
                     $('#list-pengaduan').empty();
                     response['pengaduans'].forEach((pengaduan) => {
-                        let temp_html = `
-                        <div class="col-md-6 mb-3">
-                            <div class="position-relative card ">
-                                <div class="card-header d-flex justify-content-between">
-                                    <span>Pengaduan</span>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">${pengaduan['judul']}</h5>
-                                    <a class="btn btn-dark" href="/admin/tanggapi/${pengaduan['id']}">Lihat
-                                        Rincian</a>
-                                </div>
-                                <div class="card-footer text-muted">
-                                    ${pengaduan['tanggal_kejadian']}
-                                </div>
-                            </div>
-                        </div>
-                        `;
+                        let temp_html = getTempHtml(pengaduan);
                         $('#list-pengaduan').append(temp_html);
                     });
                     console.log(response['pengaduans']);
@@ -122,23 +156,7 @@
                 success: (response) => {
                     $('#list-pengaduan').empty();
                     response['pengaduans'].forEach((pengaduan) => {
-                        let temp_html = `
-                        <div class="col-md-6 mb-3">
-                            <div class="position-relative card ">
-                                <div class="card-header d-flex justify-content-between">
-                                    <span>Pengaduan</span>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">${pengaduan['judul']}</h5>
-                                    <a class="btn btn-dark" href="/admin/tanggapi/${pengaduan['id']}">Lihat
-                                        Rincian</a>
-                                </div>
-                                <div class="card-footer text-muted">
-                                    ${pengaduan['tanggal_kejadian']}
-                                </div>
-                            </div>
-                        </div>
-                        `;
+                        let temp_html = getTempHtml(pengaduan);
                         $('#list-pengaduan').append(temp_html);
                     });
                     console.log(response['pengaduans']);
@@ -159,25 +177,10 @@
                 success: (response) => {
                     $('#list-pengaduan').empty();
                     response['pengaduans'].forEach((pengaduan) => {
-                        let temp_html = `
-                        <div class="col-md-6 mb-3">
-                            <div class="position-relative card ">
-                                <div class="card-header d-flex justify-content-between">
-                                    <span>Pengaduan</span>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">${pengaduan['judul']}</h5>
-                                    <a class="btn btn-dark" href="/admin/tanggapi/${pengaduan['id']}">Lihat
-                                        Rincian</a>
-                                </div>
-                                <div class="card-footer text-muted">
-                                    ${pengaduan['tanggal_kejadian']}
-                                </div>
-                            </div>
-                        </div>
-                        `;
+                        let temp_html = getTempHtml(pengaduan);
                         $('#list-pengaduan').append(temp_html);
                     });
+                    console.log(response['pengaduans']);
                 },
             });
         }
