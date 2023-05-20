@@ -13,7 +13,8 @@ class TanggapanModel extends Model
     protected $fillable = [
         'pengaduan_id',
         'user_id',
-        'isi_tanggapan'
+        'isi_tanggapan',
+        'is_read',
     ];
 
     public function user()

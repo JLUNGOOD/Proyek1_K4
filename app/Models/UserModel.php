@@ -46,4 +46,8 @@ class UserModel extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function pengaduan() {
+        return $this->hasMany(PengaduanModel::class, 'user_id', 'id');
+    }
 }

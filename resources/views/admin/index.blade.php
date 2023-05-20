@@ -48,9 +48,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const ctx = document.getElementById('myChart');
-        const backgroundColor = {!! $pengaduan_count !!}.map(() => {
-            return `rgba(${Math.random() * 200}, ${Math.random() * 200}, 255, 1)`;
-        })
         new Chart(ctx, {
             type: 'bar',
             data: {
@@ -58,7 +55,7 @@
                 datasets: [{
                     label: 'Banyak Pengaduan',
                     data: {{ $pengaduan_count }},
-                    backgroundColor: backgroundColor,
+                    backgroundColor: 'rgba(10, 125, 255, 1)',
                     borderWidth: 1
                 }]
             },

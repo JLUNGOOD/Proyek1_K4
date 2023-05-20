@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\KegiatanModel;
+use App\Models\TanggapanModel;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
@@ -28,8 +29,22 @@ class HomeController extends Controller
     public function index()
     {
         $kegiatans = KegiatanModel::latest()->get();
+        $new_tanggapans = [];
+        if (Auth::check()) {
+            $pengaduans = auth()->user()->pengaduan()->get();
+            foreach ($pengaduans as $i => $pengaduan) {
+                $tanggapan = $pengaduan->tanggapan()->latest()->first();
+                if ($tanggapan) {
+                    if ($tanggapan->is_read == 0) {
+                        $new_tanggapans[$i] = $tanggapan;
+                    }
+                }
+            }
+            session(['new_tanggapans' => $new_tanggapans]);
+        }
         return view('user.home_user')
-            ->with('kegiatans', $kegiatans)->with('title', 'Halaman Utama PDAM');
+            ->with('kegiatans', $kegiatans)
+            ->with('title', 'Halaman Utama PDAM');
     }
 
     public function showKegiatan($slug)

@@ -111,6 +111,15 @@ class AdminController extends Controller
         $pengaduan->update([
             'is_read' => '1'
         ]);
+        if (auth()->user()->role == '3') {
+            $tanggapan = $pengaduan->tanggapan()->get();
+            if ($tanggapan->count() > 0) {
+                $tanggapan = $tanggapan->first();
+                $tanggapan->update([
+                    'is_read' => '1'
+                ]);
+            }
+        }
         $tanggapan = TanggapanModel::where('pengaduan_id', $id)->first();
         return view('admin.detail_laporan', ['pengaduan' => $pengaduan, 'tanggapan' => $tanggapan]);
     }

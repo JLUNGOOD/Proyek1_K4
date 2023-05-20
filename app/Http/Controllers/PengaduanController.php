@@ -82,7 +82,9 @@ class PengaduanController extends Controller
 
     function getSudahDitanggapi(Request $request)
     {
-        $pengaduans = PengaduanModel::whereHas('tanggapan')->get();
+        $pengaduans = PengaduanModel::join('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
+            ->select('pengaduan.*', 'tanggapan.is_read as tanggapan_is_read')
+            ->get();
         return response()->json(['pengaduans' => $pengaduans]);
     }
 
@@ -99,16 +101,23 @@ class PengaduanController extends Controller
     {
         $keyword = $request->keyword;
         if ($request['sortByResponded'] == 0) {
-            $pengaduans = PengaduanModel::where('judul', 'like', '%' . $request->keyword . '%')
-                ->orWhere('isi', 'like', '%' . $request->keyword . '%')
+            // Perform left join
+            $leftJoin = PengaduanModel::leftJoin('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
+                ->select('pengaduan.*', 'tanggapan.is_read as tanggapan_is_read');
+
+            // Perform right join
+            $rightJoin = PengaduanModel::rightJoin('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
+                ->select('pengaduan.*', 'tanggapan.is_read as tanggapan_is_read')
+                ->whereNull('pengaduan.id');
+
+            // Perform union of left join and right join
+            $pengaduans = $leftJoin->union($rightJoin)
+                ->where('pengaduan.judul', 'like', '%' . $keyword . '%')
                 ->get();
         } elseif ($request['sortByResponded'] == 1) {
-            $pengaduans = PengaduanModel::whereHas('tanggapan', function ($query) use ($keyword) {
-                $query->Where('judul', 'like', '%' . $keyword . '%');
-            })
-                ->where(function ($query) use ($keyword) {
-                    $query->where('judul', 'like', '%' . $keyword . '%');
-                })
+            $pengaduans = PengaduanModel::join('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
+                ->where('pengaduan.judul', 'like', '%' . $keyword . '%')
+                ->select('pengaduan.*', 'tanggapan.is_read as tanggapan_is_read')
                 ->get();
         } elseif ($request['sortByResponded'] == 2) {
             $pengaduans = PengaduanModel::whereDoesntHave('tanggapan', function ($query) use ($keyword) {
@@ -125,7 +134,10 @@ class PengaduanController extends Controller
 
     public function pengaduanSaya()
     {
-        $daftar_pengaduan = PengaduanModel::all();
+        $daftar_pengaduan = PengaduanModel::leftJoin('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
+            ->select('pengaduan.*', 'tanggapan.is_read as tanggapan_is_read')
+            ->get();
+//        dd($daftar_pengaduan);
         return view('user.pengaduan_saya')
             ->with('daftar_pengaduan', $daftar_pengaduan)
             ->with('title', 'Pengaduan Saya');

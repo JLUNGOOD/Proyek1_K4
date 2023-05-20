@@ -49,9 +49,16 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ url('pengaduan_saya') == url()->current() ? 'active' : '' }}"
-                           href="/pengaduan_saya">Daftar Pengaduan</a>
+                           href="/pengaduan_saya">
+                            Daftar Pengaduan
+                            @if(session('new_tanggapans'))
+                                @if(count(session('new_tanggapans')))
+                                    <span class="badge bg-danger rounded-circle">{{ count(session('new_tanggapans')) }}</span>
+                                @endif
+                            @endif
+                        </a>
                     </li>
-                    @if(auth()->user()->role == 1)
+                    @if(auth()->user()->role == 1 || auth()->user()->role == 2)
                         <li class="nav-item">
                             <a class="nav-link"
                                href="/admin">Admin Panel</a>
@@ -134,21 +141,25 @@
 
             <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
                 <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Useful Links</h5>
-                <p><a href="{{ url('/buat_pengaduan') }}" class="text-white" style="text-decoration: none;">Buat Pengaduan</a></p>
-                <p><a href="{{ url('/pengaduan_saya') }}" class="text-white" style="text-decoration: none;">Daftar Pengaduan</a></p>
+                <p><a href="{{ url('/buat_pengaduan') }}" class="text-white" style="text-decoration: none;">Buat
+                        Pengaduan</a></p>
+                <p><a href="{{ url('/pengaduan_saya') }}" class="text-white" style="text-decoration: none;">Daftar
+                        Pengaduan</a></p>
             </div>
 
             <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
                 <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Contact Us</h5>
 
                 <ul class="fa-ul" style="--fa-li-margin: 1em;">
-                     <li><span class="fa-li"><i class="fas fa-location-arrow"></i></span>
+                    <li><span class="fa-li"><i class="fas fa-location-arrow"></i></span>
                         <a class="text-white" href="https://goo.gl/maps/gqAHo2FVEK7ENg8C6" style="text-decoration:none">
-                        JL. A Yani, No 53-55, Purwantoro, Kec. Blimbing, Kota Malang 65125</a>
-                    </li><br>
-                      <li><span class="fa-li"><i class="fas fa-envelope mr-3"></i></span>
+                            JL. A Yani, No 53-55, Purwantoro, Kec. Blimbing, Kota Malang 65125</a>
+                    </li>
+                    <br>
+                    <li><span class="fa-li"><i class="fas fa-envelope mr-3"></i></span>
                         <a class="text-white" href="http://alwanalawi1@gmail.com" style="text-decoration:none">pdam@gmail.com</a>
-                    </li> <br>
+                    </li>
+                    <br>
                     <li><span class="fa-li"><i class="fas fa-phone mr-3"></i></span>
                         <a class="text-white" href="https://wa.me/6285257146203" style="text-decoration:none">081244305712</a>
                     </li>

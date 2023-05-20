@@ -46,11 +46,18 @@
                             @else
                                 <span>Pengaduan</span>
                             @endif
-                            @if($pengaduan->is_read == '1')
+                            <div>
+                                @if($pengaduan->is_read == '1')
                                     <i class='fas fa-check-double text-info'></i>
-                            @else
+                                @else
                                     <i class='fas fa-check-double'></i>
-                            @endif
+                                @endif
+                                @if($pengaduan->tanggapan_is_read !== null)
+                                    @if($pengaduan->tanggapan_is_read === 0)
+                                        <i class="text-danger fa fa-circle"></i>
+                                    @endif
+                                @endif
+                            </div>
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">{{ $pengaduan->judul }}</h5>
@@ -82,15 +89,22 @@
                             <div class="position-relative card ">
                                 <div class="card-header d-flex justify-content-between">
                                     ${
-                                        pengaduan["user_id"] == {{ auth()->user()->id }}
-                                            ? "<b>Pengaduan Anda</b>"
-                                            : "<span>Pengaduan</span>"
-                                    }
+                pengaduan["user_id"] == {{ auth()->user()->id }}
+                    ? "<b>Pengaduan Anda</b>"
+                    : "<span>Pengaduan</span>"
+            }
+                                    <div>
                                     ${
-                                        pengaduan["is_read"] == "1"
-                                            ? "<i class='fas fa-check-double text-info'></i>"
-                                            : "<i class='fas fa-check-double'></i>"
-                                    }
+                pengaduan["is_read"] == "1"
+                    ? "<i class='fas fa-check-double text-info'></i>"
+                    : "<i class='fas fa-check-double'></i>"
+            }
+            ${
+                pengaduan["tanggapan_is_read"] === 0
+                    ? "<i class='text-danger fa fa-circle'></i>"
+                    : ""
+            }
+                                    </div>
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">${pengaduan['judul']}</h5>
