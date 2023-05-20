@@ -84,10 +84,7 @@
                         </ul>
                     </div>
                 @else
-                    <a class="btn btn-sm btn-outline-dark" href="{{ url('login') }}">Log in</a>
-                    <button type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#daftar">
-                        Sign In
-                    </button>
+                    <a class="btn btn-sm btn-dark" href="{{ url('login') }}">Log in</a>
                 @endauth
             </div>
         </div>
@@ -137,9 +134,8 @@
 
             <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
                 <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Useful Links</h5>
-                <p><a href="" class="text-white" style="text-decoration: none;">Pengaduan</a></p>
-                <p><a href="#" class="text-white" style="text-decoration: none;">Tanggapan</a></p>
-                <p><a href="#" class="text-white" style="text-decoration: none;">Informasi</a></p>
+                <p><a href="{{ url('/buat_pengaduan') }}" class="text-white" style="text-decoration: none;">Buat Pengaduan</a></p>
+                <p><a href="{{ url('/pengaduan_saya') }}" class="text-white" style="text-decoration: none;">Daftar Pengaduan</a></p>
             </div>
 
             <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
@@ -164,7 +160,7 @@
 
         <div class="row align-items-center">
 
-            <div class="col-md-7 col-lg-8" style="margin-left: -100px">
+            <div class="col-md-7 col-lg-8" style="margin-left: 16%;">
                 <p>Copyright 2022. All rights reserved by:
                     <a href="#" style="text-decoration: none;">
                         <strong class="text-warning">Kelompok 4</strong>
