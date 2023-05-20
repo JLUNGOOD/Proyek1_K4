@@ -76,7 +76,7 @@
                                 </div>
                                 <div>
                                     <a class="btn btn-dark"
-                                       href="{{ route('user.show-kegiatan', $kegiatan->slug) }}">Lihat
+                                       href="{{ url('/kegiatan/' . $kegiatan->slug) }}">Lihat
                                         <i class="fas fa-long-arrow-alt-right ms-1"></i></a>
                                 </div>
                             </div>

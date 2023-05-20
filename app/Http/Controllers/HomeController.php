@@ -27,10 +27,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->role == '1') {
-            return redirect('admin');
-        }
-
         $kegiatans = KegiatanModel::latest()->get();
         return view('user.home_user')
             ->with('kegiatans', $kegiatans)->with('title', 'Halaman Utama PDAM');

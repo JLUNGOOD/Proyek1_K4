@@ -60,7 +60,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/', [HomeController::class, 'index']);
-Route::get('/kegiatan/{slug}', [HomeController::class, 'showKegiatan'])->name('user.show-kegiatan');;
+Route::get('/kegiatan/{slug}', [HomeController::class, 'showKegiatan'])->name('user.show-kegiatan');
 
 Route::post('/pengaduan/sudah_ditanggapi', [PengaduanController::class, 'getSudahDitanggapi']);
 Route::post('/pengaduan/belum_ditanggapi', [PengaduanController::class, 'getBelumDitanggapi']);

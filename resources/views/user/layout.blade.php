@@ -49,8 +49,14 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ url('pengaduan_saya') == url()->current() ? 'active' : '' }}"
-                           href="/pengaduan_saya">Pengaduan Saya</a>
+                           href="/pengaduan_saya">Daftar Pengaduan</a>
                     </li>
+                    @if(auth()->user()->role == 1)
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               href="/adminu">Admin Panel</a>
+                        </li>
+                    @endif
                 @endauth
             </ul>
             <div class="d-flex gap-3 navbar-nav my-2">
@@ -138,7 +144,7 @@
 
             <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
                 <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Contact Us</h5>
-            
+
                 <ul class="fa-ul" style="--fa-li-margin: 1em;">
                      <li><span class="fa-li"><i class="fas fa-location-arrow"></i></span>
                         <a class="text-white" href="https://goo.gl/maps/gqAHo2FVEK7ENg8C6" style="text-decoration:none">

@@ -11,8 +11,9 @@
             <div class="row mb-3">
                 <div class="col-6 col-sm-9">
                     <div class="filter owl-carousel owl-theme">
-                        <button onclick="getSudahDitanggapi()" id="btn-respon" name="responded" class="btn btn-dark">Direspon</button>
-                        <button onclick="getBelumDitanggapi()" id="btn-not-respon" name="not-responded" class="btn btn-outline-dark">Belum direspon</button>
+                        <button onclick="getAllPengaduan()" id="btn-respon" name="responded" class="btn-switchable btn btn-dark">Semua</button>
+                        <button onclick="getSudahDitanggapi()" id="btn-respon" name="responded" class="btn-switchable btn btn-outline-dark">Direspon</button>
+                        <button onclick="getBelumDitanggapi()" id="btn-not-respon" name="not-responded" class="btn-switchable btn btn-outline-dark">Belum direspon</button>
                     </div>
                 </div>
                 <div class="col-6 col-sm-3">
@@ -53,12 +54,27 @@
 @push('script')
     <script>
         let sortByResponded = 0; // 0 = unsorted, 1 = responded, 2 = not responded
+
+        function switchActiveButton(index) {
+            const activeButton = document.querySelector('.btn-switchable.btn-dark');
+            activeButton.classList.add('btn-outline-dark');
+            activeButton.classList.remove('btn-dark');
+
+            const nextActiveButton = document.querySelectorAll('.btn-switchable');
+            nextActiveButton[index].classList.add('btn-dark');
+            nextActiveButton[index].classList.remove('btn-outline-dark');
+        }
+
+        function getAllPengaduan() {
+            $('#keyword').val('');
+            sortByResponded = 0;
+            searchPengaduan();
+            switchActiveButton(sortByResponded);
+        }
+
         function getSudahDitanggapi() {
-            $('#btn-respon').removeClass('btn-outline-dark');
-            $('#btn-respon').addClass('btn-dark');
-            $('#btn-not-respon').removeClass('btn-dark');
-            $('#btn-not-respon').addClass('btn-outline-dark');
             sortByResponded = 1;
+            switchActiveButton(sortByResponded);
             $.ajax({
                 method: 'POST',
                 url: '{{ url('/pengaduan/sudah_ditanggapi') }}',
@@ -94,11 +110,8 @@
         }
 
         function getBelumDitanggapi() {
-            $('#btn-not-respon').removeClass('btn-outline-dark');
-            $('#btn-not-respon').addClass('btn-dark');
-            $('#btn-respon').removeClass('btn-dark');
-            $('#btn-respon').addClass('btn-outline-dark');
             sortByResponded = 2;
+            switchActiveButton(sortByResponded);
             $.ajax({
                 method: 'POST',
                 url: '{{ url('/pengaduan/belum_ditanggapi') }}',
@@ -134,6 +147,7 @@
         }
 
         function searchPengaduan() {
+            switchActiveButton(sortByResponded);
             $.ajax({
                 method: 'POST',
                 url: '{{ url('/pengaduan/search') }}',
@@ -164,7 +178,6 @@
                         `;
                         $('#list-pengaduan').append(temp_html);
                     });
-                    console.log(response['pengaduans']);
                 },
             });
         }
