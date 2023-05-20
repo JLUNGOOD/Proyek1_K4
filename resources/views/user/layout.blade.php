@@ -54,7 +54,7 @@
                     @if(auth()->user()->role == 1)
                         <li class="nav-item">
                             <a class="nav-link"
-                               href="/adminu">Admin Panel</a>
+                               href="/admin">Admin Panel</a>
                         </li>
                     @endif
                 @endauth
