@@ -22,7 +22,7 @@ class UserController extends Controller
             }else if(auth()->user()->role == 2){
                 return view('admin.ubah_profil');
             }else if(auth()->user()->role == 3){
-                return view('user.ubah_profil');
+                return view('user.ubah_profil')->with('title', 'Ubah Profil');
             }
         }
     }
@@ -48,7 +48,7 @@ class UserController extends Controller
             }else if(auth()->user()->role == 2){
                 return view('admin.ubah_password');
             }else if(auth()->user()->role == 3){
-                return view('user.ubah_password');
+                return view('user.ubah_password')->with('title', 'Ubah Password');
             }
         }
     }
