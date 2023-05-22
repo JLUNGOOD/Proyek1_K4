@@ -51,24 +51,29 @@ class AdminController extends Controller
         return view('admin.index')
             ->with('categories_name', json_encode($categories_name))
             ->with('pengaduan_count', json_encode($pengaduan_count))
-            ->with('pengaduans', $pengaduans);
+            ->with('pengaduans', $pengaduans)
+            ->with('title', 'Dashboard Admin');
     }
 
     function list_tanggapi()
     {
         $daftar_pengaduan = PengaduanModel::all();
-        return view('admin.tanggapi_laporan', ['daftar_pengaduan' => $daftar_pengaduan]);
+        return view('admin.tanggapi_laporan')
+            ->with('daftar_pengaduan', $daftar_pengaduan)
+            ->with('title', 'Tanggapi Laporan');
     }
 
     function tambah_admin()
     {
-        return view('admin.tambah_admin');
+        return view('admin.tambah_admin')->with('title', 'Tambah Pengguna');
     }
 
     function list_admin()
     {
         $admins = UserModel::where('role', '!=', '3')->get();
-        return view('admin.list_admin', ['admins' => $admins]);
+        return view('admin.list_admin')
+            ->with('admins', $admins)
+            ->with('title', 'Daftar Admin & Pegawai');
     }
 
     function create_user(Request $request)
@@ -121,7 +126,10 @@ class AdminController extends Controller
             }
         }
         $tanggapan = TanggapanModel::where('pengaduan_id', $id)->first();
-        return view('admin.detail_laporan', ['pengaduan' => $pengaduan, 'tanggapan' => $tanggapan]);
+        return view('admin.detail_laporan')
+            ->with('pengaduan', $pengaduan)
+            ->with('tanggapan', $tanggapan)
+            ->with('title', 'Detail Pengaduan');
     }
 
 //    send tanggapan
@@ -139,7 +147,7 @@ class AdminController extends Controller
     public function edit_user($id)
     {
         $user = UserModel::find($id);
-        return view('admin.tambah_admin', ['user' => $user]);
+        return view('admin.tambah_admin')->with('user', $user)->with('title', 'Ubah Pengguna');
     }
 
     public function update_user(Request $request, $id)
@@ -159,12 +167,12 @@ class AdminController extends Controller
     {
         $kegiatans = KegiatanModel::latest()->get();
 
-        return view('admin.list_kegiatan')->with('kegiatans', $kegiatans);
+        return view('admin.list_kegiatan')->with('kegiatans', $kegiatans)->with('title', 'Daftar Kegiatan');
     }
 
     public function createKegiatan()
     {
-        return view('admin.tambah_kegiatan');
+        return view('admin.tambah_kegiatan')->with('title', 'Tambah Kegiatan');
     }
 
     protected function validator(array $data): \Illuminate\Validation\Validator
@@ -211,7 +219,9 @@ class AdminController extends Controller
     public function editKegiatan($slug): Factory|View|Application
     {
         $kegiatan = KegiatanModel::where('slug', $slug)->first();
-        return view('admin.edit_kegiatan', ['kegiatan' => $kegiatan]);
+        return view('admin.edit_kegiatan')
+            ->with('kegiatan', $kegiatan)
+            ->with('title', 'Ubah Kegiatan');
     }
 
     protected function updateKegiatan(Request $request, $slug)

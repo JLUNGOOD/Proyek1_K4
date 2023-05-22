@@ -18,11 +18,11 @@ class UserController extends Controller
     {
         if(auth()->check()){
             if(auth()->user()->role == 1){
-                return view('admin.ubah_profil');
+                return view('admin.ubah_profil')->with('title', 'Ubah Password');
             }else if(auth()->user()->role == 2){
-                return view('admin.ubah_profil');
+                return view('admin.ubah_profil')->with('title', 'Ubah Password');
             }else if(auth()->user()->role == 3){
-                return view('user.ubah_profil')->with('title', 'Ubah Profil');
+                return view('user.ubah_profil')->with('title', 'Ubah Profil')->with('title', 'Ubah Password');
             }
         }
     }
@@ -44,9 +44,9 @@ class UserController extends Controller
     {
         if(auth()->check()){
             if(auth()->user()->role == 1){
-                return view('admin.ubah_password');
+                return view('admin.ubah_password')->with('title', 'Ubah Password');
             }else if(auth()->user()->role == 2){
-                return view('admin.ubah_password');
+                return view('admin.ubah_password')->with('title', 'Ubah Password');
             }else if(auth()->user()->role == 3){
                 return view('user.ubah_password')->with('title', 'Ubah Password');
             }
