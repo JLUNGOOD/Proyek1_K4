@@ -83,6 +83,8 @@
                         </div>
                     @endforeach
                 </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
             </div>
         </div>
     </section>
@@ -98,30 +100,30 @@
         });
 
         const swiper = new Swiper('.swiper', {
-            spaceBetween: 20,
             navigation: {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
             },
-            pagination: {
-                el: '.swiper-pagination',
-            },
             breakpoints: {
-                // Layar dengan lebar lebih kecil dari 576px
-                576: {
+                100: {
                     slidesPerView: 1,
+                    spaceBetween: 10
                 },
-                // Layar dengan lebar lebih kecil dari 768px
+                280: {
+                    slidesPerView: 1.2,
+                    spaceBetween: 20
+                },
+                484: {
+                    slidesPerView: 1.5,
+                    spaceBetween: 20
+                },
                 768: {
-                    slidesPerView: 2,
+                    slidesPerView: 2.2,
+                    spaceBetween: 20
                 },
-                // Layar dengan lebar lebih kecil dari 992px
-                992: {
-                    slidesPerView: 3,
-                },
-                // Layar dengan lebar lebih kecil dari 1200px
-                1200: {
+                1000: {
                     slidesPerView: 4,
+                    spaceBetween: 20
                 },
             },
         });
