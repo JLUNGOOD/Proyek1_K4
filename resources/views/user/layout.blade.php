@@ -92,6 +92,7 @@
                     </div>
                 @else
                     <a class="btn btn-sm btn-dark" href="{{ url('login') }}">Log in</a>
+                    <a class="btn btn-sm btn-outline-dark" href="{{ url('login') }}?signup=true" >Sign up</a>
                 @endauth
             </div>
         </div>
