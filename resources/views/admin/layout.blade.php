@@ -34,10 +34,9 @@
                     <li>
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
-                            <button type="submit" class="dropdown-item" data-bs-toggle="modal"
-                                    data-bs-target="#keluar">
+                            <a type="submit" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#keluar">
                                 <i class="fas fa-sign-out-alt pe-1"></i>Keluar
-                            </button>
+                            </a>
                         </form>
                     </li>
                 </ul>
@@ -96,6 +95,27 @@
 </nav>
 
 @yield('content')
+
+<div class="modal fade" id="keluar" tabindex="-1" aria-labelledby="keluar" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Yakin untuk keluar?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Anda tidak bisa mengakses fitur admin jika anda logout.
+            </div>
+            <div class="modal-footer">
+                <form action="{{ url('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" role="button" class="btn btn-dark">Keluar</button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Batal</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
