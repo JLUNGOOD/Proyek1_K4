@@ -40,7 +40,7 @@
                 <label for="gambar" class="col-sm-3 col-form-label fw-bold">Bukti Gambar</label>
                 <div class="col-sm-9">
                     @if($pengaduan->bukti_gambar)
-                        <img src="{{ asset('/img/pengaduan/' . $pengaduan->bukti_gambar) }}" alt="Bukti Gambar"
+                        <img src="{{ asset('storage/bukti_gambar_pengaduan/' . $pengaduan->bukti_gambar) }}" alt="Bukti Gambar"
                              class="mb-3 border" width="200">
                     @endif
                 </div>
