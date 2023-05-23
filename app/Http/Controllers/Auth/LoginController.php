@@ -47,6 +47,14 @@ class LoginController extends Controller
         ]);
     }
 
+    protected function attemptLogin(Request $request): bool
+    {
+        return $this->guard()->attempt(
+            $this->credentials($request),
+            $request->filled('remember')
+        );
+    }
+
     protected function authenticated(Request $request, $user): RedirectResponse
     {
         return redirect()->intended($this->redirectPath())

@@ -107,12 +107,12 @@
             $('#hapus_gambar').on('change', function () {
                 if ($(this).is(':checked')) {
                     $('#foto_kegiatan').val('').prop('disabled', true);
-                    $('.img-popup').attr('href', '{{ asset('/img/no-img-available.png') }}');
+                    $('.image-popup').attr('href', '{{ asset('/img/no-img-available.png') }}');
                     $('.img-preview').attr('src', '{{ asset('/img/no-img-available.png') }}');
                 } else {
                     $('#foto_kegiatan').prop('disabled', false);
                     const imageUrl = '{{ $kegiatan->foto_kegiatan ? asset('storage/foto_kegiatan/' . $kegiatan->foto_kegiatan) : asset('/img/no-img-available.png') }}';
-                    $('.img-popup').attr('src', imageUrl);
+                    $('.image-popup').attr('href', imageUrl);
                     $('.img-preview').attr('src', imageUrl);
                 }
             });
