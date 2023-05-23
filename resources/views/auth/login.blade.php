@@ -37,7 +37,8 @@
                 </div>
                 <div class="checkbox mb-3">
                     <label>
-                        <input type="checkbox" class="form-check-input" value="remember-me" name="remember"> Ingat saya
+                        <input type="checkbox" class="form-check-input"
+                               name="remember" {{ old('remember') ? 'checked' : '' }}> Ingat saya
                     </label>
                 </div>
                 <button class="w-100 btn btn-lg btn-dark" type="submit">Sign In</button>
@@ -74,7 +75,8 @@
                     </div>
                     <div class="mt-3">
                         <label for="email" class="form-label">Email</label>
-                        <input class="form-control @error('email_register') is-invalid @enderror" name="email_register"
+                        <input class="form-control @error('email_register') is-invalid @enderror"
+                               name="email_register"
                                id="email"
                                placeholder="Masukkan Alamat Email Anda *" required>
                         @error('email_register')
@@ -83,8 +85,10 @@
                     </div>
                     <div class="mt-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control @error('password_register') is-invalid @enderror"
-                               name="password_register" id="password" placeholder="Masukkan Kata Sandi Anda *" required>
+                        <input type="password"
+                               class="form-control @error('password_register') is-invalid @enderror"
+                               name="password_register" id="password" placeholder="Masukkan Kata Sandi Anda *"
+                               required>
                         <div id="passwordHelpBlock" class="form-text">
                             Kata sandi minimal 4 karakter.
                         </div>
@@ -103,7 +107,8 @@
                         @enderror
                     </div>
                     <div class="mt-3">
-                        <label for="tanggal_lahir" class="form-label @error('tanggal_lahir') is-invalid @enderror">
+                        <label for="tanggal_lahir"
+                               class="form-label @error('tanggal_lahir') is-invalid @enderror">
                             Tanggal Lahir
                         </label>
                         <input type="date" class="form-control" name="tanggal_lahir" id="tanggal_lahir"
