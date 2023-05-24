@@ -42,6 +42,8 @@
                     @if($pengaduan->bukti_gambar)
                         <img src="{{ asset('storage/bukti_gambar_pengaduan/' . $pengaduan->bukti_gambar) }}" alt="Bukti Gambar"
                              class="mb-3 border" width="200">
+                    @else
+                        <input readonly class="form-control-plaintext" value="-">
                     @endif
                 </div>
             </div>
@@ -49,7 +51,7 @@
                 <label for="tanggal" class="col-sm-3 col-form-label fw-bold">Tanggal Kejadian</label>
                 <div class="col-sm-9">
                     <input readonly class="form-control-plaintext" id="tanggal"
-                           value="{{ $pengaduan->tanggal_kejadian }}">
+                           value="{{ $pengaduan->tanggal_kejadian ? $pengaduan->tanggal_kejadian : '-' }}">
                 </div>
             </div>
             <div class="mb-3 row border-bottom">

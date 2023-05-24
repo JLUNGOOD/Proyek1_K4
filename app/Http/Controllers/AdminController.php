@@ -113,9 +113,11 @@ class AdminController extends Controller
     function tanggapi($id)
     {
         $pengaduan = PengaduanModel::find($id);
-        $pengaduan->update([
-            'is_read' => '1'
-        ]);
+        if (auth()->user()->role != '3') {
+            $pengaduan->update([
+                'is_read' => '1'
+            ]);
+        }
         if (auth()->user()->role == '3') {
             $tanggapan = $pengaduan->tanggapan()->get();
             if ($tanggapan->count() > 0) {
