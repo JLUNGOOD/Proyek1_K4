@@ -26,6 +26,7 @@
             <div class="col-md-4 mb-3">
                 <div class="card text-bg-light">
                     <div class="card-body">
+                        <input type="hidden" class="delete_id" value="{{ $admin->id }}">
                         <h5 class="card-title">{{ $admin->name }}</h5>
                         <p class="card-text">{{ $admin->email }}</p>
                     </div>
@@ -53,7 +54,7 @@
                         <a class="btn btn-dark" href="{{ url('admin/'.$admin->id.'/edit_user') }}">Ubah</a>
                         <form method="post" action="{{ url('/admin/delete_user/' . $admin->id) }}" class="d-inline-block">
                             @csrf
-                            <button type="submit" class="btn btn-danger">Hapus</button>
+                            <a data-bs-target="#pilihan" data-bs-toggle="modal" class="btn btn-danger" onclick="setDeleteId({{ $admin->id }})">Hapus</a>
                         </form>
                     </div>
                 </div>
@@ -61,6 +62,21 @@
         @endforeach
     </div>
 </div>
+<div class="modal fade" tabindex="-1" role="dialog" data-bs-backdrop="static"data-bs-keyboard="false" aria-hidden="true" id="pilihan">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content rounded-3 shadow">
+            <div class="modal-body p-4 text-center">
+                <h5 class="mb-3">Apakah Anda yakin ingin menghapus User ini?</h5>
+                <p class="mb-0">Tindakan ini tidak dapat dibatalkan dan akan menghapus semua data user tersebut. Anda yakin?</p>
+            </div>
+            <div class="modal-footer flex-nowrap p-0">
+                <button type="submit" onclick="deleteUser()" class="btn btn-lg btn-link fs-6 text-danger text-decoration-none col-6 py-3 m-0 rounded-0 border-end"><strong>Ya, hapus</strong></button>
+                <button type="button" class="btn btn-lg btn-link fs-6 text-dark text-decoration-none col-6 py-3 m-0 rounded-0" data-bs-dismiss="modal">Batal</button>  
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="modal fade" id="keluar" tabindex="-1" aria-labelledby="keluar" aria-hidden="true">
     <div class="modal-dialog">
@@ -78,6 +94,25 @@
         </div>
     </div>
 </div>
+<script>
+    let delete_id;
+    function setDeleteId(id) {
+        delete_id = id;
+    }
+    function deleteUser() {
+        $.ajax({
+            url: window.location.origin + '/admin/delete_user_api/',
+            method: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                id: delete_id
+            },
+            success: function (response) {
+                window.location.reload();
+            }
+        })
+    }
+</script>
 @endsection
 
 @if(session()->has('message'))
