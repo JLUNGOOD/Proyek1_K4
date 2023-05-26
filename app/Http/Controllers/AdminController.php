@@ -106,8 +106,19 @@ class AdminController extends Controller
 
     function delete_user($id)
     {
+        dd($id);
         UserModel::destroy($id);
         return redirect('/admin/list_admin')->with('message', 'User berhasil dihapus');
+    }
+
+    function delete_user_api()
+    {
+        UserModel::destroy(request('id'));
+        session()->flash('message', 'User berhasil dihapus');
+        return response()->json([
+            'message' => 'User berhasil dihapus',
+            'status' => 'success'
+        ]);
     }
 
     function tanggapi($id)

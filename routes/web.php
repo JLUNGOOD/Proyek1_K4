@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/list_admin', [AdminController::class, 'list_admin']);
         Route::post('/admin/create_user', [AdminController::class, 'create_user']);
         Route::post('/admin/delete_user/{id}', [AdminController::class, 'delete_user']);
+        Route::post('/admin/delete_user_api', [AdminController::class, 'delete_user_api']);
 
         Route::post('/admin/send_tanggapan', [AdminController::class, 'send_tanggapan']);
         Route::get('/admin/{id}/edit_user', [AdminController::class, 'edit_user']);
