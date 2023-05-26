@@ -44,6 +44,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/admin/send_tanggapan', [AdminController::class, 'send_tanggapan']);
         Route::get('/admin/{id}/edit_user', [AdminController::class, 'edit_user']);
 
+        Route::post('/admin/tanggapan/update_status', [PengaduanController::class, 'updateStatus']);
+
         Route::get('/admin/kegiatan', [AdminController::class, 'list_kegiatan'])->name('admin.list-kegiatan');
         Route::get('/admin/tambah_kegiatan', [AdminController::class, 'createKegiatan'])
             ->name('admin.create-kegiatan');

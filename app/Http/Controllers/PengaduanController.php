@@ -142,4 +142,13 @@ class PengaduanController extends Controller
             ->with('daftar_pengaduan', $daftar_pengaduan)
             ->with('title', 'Pengaduan Saya');
     }
+
+    public function updateStatus() {
+        $id = request()->id;
+        $status = request()->status;
+        $pengaduan = PengaduanModel::find($id);
+        $pengaduan->status = $status;
+        $pengaduan->save();
+        return back();
+    }
 }

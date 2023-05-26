@@ -5,9 +5,50 @@
 
 @section('content')
     <div class="bg-white container mt-lg shadow rounded pb-4">
-        <form class="container" method="post">
-            <a href="{{ url()->previous() }}" class="btn btn-danger mt-3">Kembali</a>
-            <h2 class="my-4 pt-2">Rincian Laporan</h2>
+        <div class="container" method="post">
+            @if(auth()->user()->role == 3)
+                <a href="{{ url('/pengaduan_saya') }}" class="btn btn-danger mt-3">Kembali</a>
+            @else
+                <a href="{{ url('/admin/tanggapi') }}" class="btn btn-danger mt-3">Kembali</a>
+            @endif
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="my-4 pt-2">Rincian Laporan</h2>
+                @if(auth()->user()->role == 3)
+                    @if($pengaduan->status == 0)
+                        <span class="badge py-2 px-3 rounded-pill bg-dark">Unsolved</span>
+                    @elseif($pengaduan->status == 1)
+                        <span class="badge py-2 px-3 rounded-pill bg-warning">On progress</span>
+                    @elseif($pengaduan->status == 2)
+                        <span class="badge py-2 px-3 rounded-pill bg-success">Solved</span>
+                    @elseif($pengaduan->status == 3)
+                        <span class="badge py-2 px-3 rounded-pill bg-danger">Ditolak</span>
+                    @endif
+                @else
+                    <div>
+                        <form class="d-flex align-items-center gap-2" action="{{ url('/admin/tanggapan/update_status') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $pengaduan->id }}">
+                            <label class="form-check">
+                                <input type="radio" name="status" value="0"
+                                       class="form-check-input" @checked($pengaduan->status == 0)> Unsolved
+                            </label>
+                            <label class="form-check">
+                                <input type="radio" name="status" value="1"
+                                       class="form-check-input" @checked($pengaduan->status == 1)> On progress
+                            </label>
+                            <label class="form-check">
+                                <input type="radio" name="status" value="2"
+                                       class="form-check-input" @checked($pengaduan->status == 2)> Solved
+                            </label>
+                            <label class="form-check">
+                                <input type="radio" name="status" value="3"
+                                       class="form-check-input" @checked($pengaduan->status == 3)> Ditolak
+                            </label>
+                            <button class="btn btn-outline-dark" type="submit">Update Status</button>
+                        </form>
+                    </div>
+                @endif
+            </div>
             <div class="mb-3 row border-bottom">
                 <label for="klarifikasi" class="col-sm-3 col-form-label fw-bold">Klarifikiasi Laporan</label>
                 <div class="col-sm-9">
@@ -40,7 +81,8 @@
                 <label for="gambar" class="col-sm-3 col-form-label fw-bold">Bukti Gambar</label>
                 <div class="col-sm-9">
                     @if($pengaduan->bukti_gambar)
-                        <img src="{{ asset('storage/bukti_gambar_pengaduan/' . $pengaduan->bukti_gambar) }}" alt="Bukti Gambar"
+                        <img src="{{ asset('storage/bukti_gambar_pengaduan/' . $pengaduan->bukti_gambar) }}"
+                             alt="Bukti Gambar"
                              class="mb-3 border" width="200">
                     @else
                         <input readonly class="form-control-plaintext" value="-">
@@ -78,7 +120,7 @@
                     >
                 </div>
             </div>
-        </form>
+        </div>
         @if(!isset($tanggapan))
             @if(auth()->user()->role != 3)
                 <p>
@@ -148,6 +190,7 @@
 @endsection
 
 @push('script')
+
     @if(session('message' ))
         <script>
             $(document).ready(function () {
