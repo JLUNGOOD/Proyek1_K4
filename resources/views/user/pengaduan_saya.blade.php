@@ -103,7 +103,6 @@
 
         // get html template that can be append to list-pengaduan
         function getTempHtml(pengaduan) {
-            console.log(pengaduan);
             return ` <div class="col-md-6 mb-3">
                             <div class="position-relative card ">
                                 <div class="card-header d-flex justify-content-between">
