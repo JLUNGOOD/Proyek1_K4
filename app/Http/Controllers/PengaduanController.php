@@ -92,7 +92,7 @@ class PengaduanController extends Controller
     {
         $pengaduans = PengaduanModel::leftJoin('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
             ->whereNull('tanggapan.pengaduan_id')
-            ->select('pengaduan.id', 'pengaduan.judul', 'pengaduan.isi', 'pengaduan.tanggal_kejadian', 'pengaduan.user_id', 'pengaduan.is_read')
+            ->select('pengaduan.id', 'pengaduan.judul', 'pengaduan.isi', 'pengaduan.tanggal_kejadian', 'pengaduan.user_id', 'pengaduan.is_read', 'pengaduan.status')
             ->get();
         return response()->json(['pengaduans' => $pengaduans]);
     }
@@ -150,5 +150,37 @@ class PengaduanController extends Controller
         $pengaduan->status = $status;
         $pengaduan->save();
         return back();
+    }
+
+    public function getSolved(Request $request){
+        $pengaduans = PengaduanModel::leftJoin('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
+            ->where('pengaduan.status', '=', '1')
+            ->select('pengaduan.*', 'tanggapan.is_read as tanggapan_is_read')
+            ->get();
+        return response()->json(['pengaduans' => $pengaduans]);
+    }
+
+    public function getUnsolved(Request $request){
+        $pengaduans = PengaduanModel::leftJoin('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
+            ->where('pengaduan.status', '=', '0')
+            ->select('pengaduan.*', 'tanggapan.is_read as tanggapan_is_read')
+            ->get();
+        return response()->json(['pengaduans' => $pengaduans]);
+    }
+
+    public function getOnProgress(Request $request){
+        $pengaduans = PengaduanModel::leftJoin('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
+            ->where('pengaduan.status', '=', '2')
+            ->select('pengaduan.*', 'tanggapan.is_read as tanggapan_is_read')
+            ->get();
+        return response()->json(['pengaduans' => $pengaduans]);
+    }
+
+    public function getRejected(Request $request){
+        $pengaduans = PengaduanModel::leftJoin('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
+            ->where('pengaduan.status', '=', '3')
+            ->select('pengaduan.*', 'tanggapan.is_read as tanggapan_is_read')
+            ->get();
+        return response()->json(['pengaduans' => $pengaduans]);
     }
 }

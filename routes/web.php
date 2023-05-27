@@ -67,6 +67,10 @@ Route::get('/kegiatan/{slug}', [HomeController::class, 'showKegiatan'])->name('u
 
 Route::post('/pengaduan/sudah_ditanggapi', [PengaduanController::class, 'getSudahDitanggapi']);
 Route::post('/pengaduan/belum_ditanggapi', [PengaduanController::class, 'getBelumDitanggapi']);
+Route::post('/pengaduan/solved', [PengaduanController::class, 'getSolved']);
+Route::post('/pengaduan/unsolved', [PengaduanController::class, 'getUnsolved']);
+Route::post('/pengaduan/on_progress', [PengaduanController::class, 'getOnProgress']);
+Route::post('/pengaduan/rejected', [PengaduanController::class, 'getRejected']);
 Route::post('/pengaduan/search', [PengaduanController::class, 'searchPengaduan']);
 
 //Route::get('/login', function () {

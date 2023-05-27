@@ -10,7 +10,7 @@
             <h2 class="my-4">Daftar Pengaduan</h2>
             <div class="row mb-3">
                 <div class="col-6 col-sm-9">
-                    <div class="filter owl-carousel owl-theme">
+                    <div class="filter owl-carousel owl-theme d-flex align-items-center gap-2">
                         <button onclick="getAllPengaduan()" id="btn-respon" name="responded"
                                 class="btn-switchable btn btn-dark">Semua
                         </button>
@@ -20,6 +20,15 @@
                         <button onclick="getBelumDitanggapi()" id="btn-not-respon" name="not-responded"
                                 class="btn-switchable btn btn-outline-dark">Belum direspon
                         </button>
+                        <div class="d-inline-flex justify-content-end">
+                            <select id="filterDropdown" class="form-select">
+                                <option class="d-none" value="all">Filter</option>
+                                <option value="solved" onclick="getSolved()">Solved</option>
+                                <option value="unsolved" onclick="getUnsolved()">Unsolved</option>
+                                <option value="onprogress" onclick="getOnProgress()">On Progress</option>
+                                <option value="rejected" onclick="getRejected()">Rejected</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="col-6 col-sm-3">
@@ -64,8 +73,17 @@
                             <a class="btn btn-dark" href="{{ url('/admin/tanggapi/' . $pengaduan->id) }}">Lihat
                                 Rincian</a>
                         </div>
-                        <div class="card-footer text-muted">
+                        <div class="card-footer text-muted d-flex justify-content-between">
                             {{ $pengaduan->tanggal_kejadian }}
+                            @if($pengaduan->status == '1')
+                                <span class="badge bg-success">Solved</span>
+                            @elseif($pengaduan->status == '0')
+                                <span class="badge bg-danger">Unsolved</span>
+                            @elseif($pengaduan->status == '2')
+                                <span class="badge bg-warning">On Progress</span>
+                            @elseif($pengaduan->status == '3')
+                                <span class="badge bg-secondary">Rejected</span>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -85,6 +103,7 @@
 
         // get html template that can be append to list-pengaduan
         function getTempHtml(pengaduan) {
+            console.log(pengaduan);
             return ` <div class="col-md-6 mb-3">
                             <div class="position-relative card ">
                                 <div class="card-header d-flex justify-content-between">
@@ -111,8 +130,13 @@
                                     <a class="btn btn-dark" href="/admin/tanggapi/${pengaduan['id']}">Lihat
                                         Rincian</a>
                                 </div>
-                                <div class="card-footer text-muted">
+                                <div class="card-footer text-muted d-flex justify-content-between">
                                     ${pengaduan['tanggal_kejadian']}
+                                    ${pengaduan['status'] == "1" ? "<span class='badge bg-success'>Solved</span>" : 
+                                        pengaduan['status'] == "0" ? "<span class='badge bg-danger'>Unsolved</span>" :
+                                        pengaduan['status'] == "2" ? "<span class='badge bg-warning'>On Progress</span>" :
+                                        pengaduan['status'] == "3" ? "<span class='badge bg-secondary'>Rejected</span>" : ""
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -199,6 +223,21 @@
             });
         }
 
+        const selectElement = document.getElementById('filterDropdown');
+
+        selectElement.addEventListener('change', function() {
+            const selectedOption = this.value;
+
+            if (selectedOption === 'unsolved') {
+                getUnsolved();
+            } else if (selectedOption === 'solved') {
+                getSolved();
+            } else if (selectedOption === 'onProgress') {
+                getOnProgress();
+            } else {
+                getRejected();
+            }
+        });
         // $(document).ready(function () {
         //     $('body').addClass('h-100vh d-flex flex-column justify-content-between');
         //     $('.filter.owl-carousel').owlCarousel({
@@ -206,6 +245,88 @@
         //         autoWidth: true,
         //     });
         // })
+        let status;
+        function getUnsolved() {
+            status = 0;
+            switchActiveButton(sortByResponded);
+            $.ajax({
+                method: 'POST',
+                url: '{{ url('/pengaduan/unsolved') }}',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    sortByResponded: sortByResponded
+                },
+                success: (response) => {
+                    $('#list-pengaduan').empty();
+                    response['pengaduans'].forEach((pengaduan) => {
+                        let temp_html = getTempHtml(pengaduan);
+                        $('#list-pengaduan').append(temp_html);
+                    });
+                    console.log(response['pengaduans']);
+                },
+            });
+        }
+        function getSolved() {
+            status = 1;
+            switchActiveButton(sortByResponded);
+            $.ajax({
+                method: 'POST',
+                url: '{{ url('/pengaduan/solved') }}',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    sortByResponded: sortByResponded
+                },
+                success: (response) => {
+                    $('#list-pengaduan').empty();
+                    response['pengaduans'].forEach((pengaduan) => {
+                        let temp_html = getTempHtml(pengaduan);
+                        $('#list-pengaduan').append(temp_html);
+                    });
+                    console.log(response['pengaduans']);
+                },
+            });
+        }
+        function getOnProgress() {
+            status = 2;
+            switchActiveButton(sortByResponded);
+            $.ajax({
+                method: 'POST',
+                url: '{{ url('/pengaduan/on_progress') }}',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    sortByResponded: sortByResponded
+                },
+                success: (response) => {
+                    $('#list-pengaduan').empty();
+                    response['pengaduans'].forEach((pengaduan) => {
+                        let temp_html = getTempHtml(pengaduan);
+                        $('#list-pengaduan').append(temp_html);
+                    });
+                    console.log(response['pengaduans']);
+                },
+            });
+        }
+        function getRejected() {
+            status = 3;
+            switchActiveButton(sortByResponded);
+            console.log(status);
+            $.ajax({
+                method: 'POST',
+                url: '{{ url('/pengaduan/rejected') }}',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    sortByResponded: sortByResponded
+                },
+                success: (response) => {
+                    $('#list-pengaduan').empty();
+                    response['pengaduans'].forEach((pengaduan) => {
+                        let temp_html = getTempHtml(pengaduan);
+                        $('#list-pengaduan').append(temp_html);
+                    });
+                    console.log(response['pengaduans']);
+                },
+            });
+        }
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
             charset="utf-8"></script>
