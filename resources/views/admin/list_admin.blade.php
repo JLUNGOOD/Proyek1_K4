@@ -78,7 +78,7 @@
 </div>
 
 
-<div class="modal fade" id="keluar" tabindex="-1" aria-labelledby="keluar" aria-hidden="true">
+{{-- <div class="modal fade" id="keluar" tabindex="-1" aria-labelledby="keluar" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -93,7 +93,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 <script>
     let delete_id;
     function setDeleteId(id) {

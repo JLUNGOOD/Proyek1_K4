@@ -92,14 +92,14 @@ class AdminController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-
+        
         UserModel::create([
             'name' => $request['name'],
             'email' => $request['email'],
             'role' => $request['role'],
             'jenis_kelamin' => $request['jenis_kelamin'],
             'tanggal_lahir' => $request['tanggal_lahir'],
-            'password' => Hash::make($request['password_register']),
+            'password' => Hash::make($request['password']),
         ]);
         return redirect('/admin/list_admin')->with('message', 'User berhasil ditambahkan');
     }
