@@ -58,6 +58,10 @@
                             @endif
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ url('kegiatan') == url()->current() ? 'active' : '' }}"
+                           href="/kegiatan">Kegiatan</a>
+                    </li>
                     @if(auth()->user()->role == 1 || auth()->user()->role == 2)
                         <li class="nav-item">
                             <a class="nav-link"

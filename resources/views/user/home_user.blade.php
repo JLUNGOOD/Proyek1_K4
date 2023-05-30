@@ -56,36 +56,32 @@
             <div class="swiper">
                 <div class="swiper-wrapper">
                     @foreach($kegiatans as $kegiatan)
-                        <div class="swiper-slide card border-0 shadow">
-                            <div class="h-180 rounded-top overflow-hidden">
-                                <img class="object-fit-cover"
-                                     src="{{ $kegiatan->foto_kegiatan ? asset('storage/foto_kegiatan/' . $kegiatan->foto_kegiatan) : asset('/img/no-img-available.png') }}">
-                            </div>
-                            <div class="desc card-body border bg-white p-3">
-                                <div class="mb-2">
-                                    <h2 class="card-title h5 mb-0">{{ Str::limit($kegiatan->judul_kegiatan, 40) }}</h2>
+                        <div class="swiper-slide mb-3">
+                            <a href="{{ url('/kegiatan/' . $kegiatan->slug) }}" class="card activity card-has-bg"
+                               style="background-image:url('{{ $kegiatan->foto_kegiatan ? asset('storage/foto_kegiatan/' . $kegiatan->foto_kegiatan) : asset('/img/no-img-available.png') }}');">
+                                <div class="card-img-overlay d-flex flex-column">
+                                    <div class="card-body text-white">
+                                        <small class="text-aqua mb-2">Kegiatan</small>
+                                        <h5 class="card-title mt-0 ">{{ $kegiatan->judul_kegiatan }}</h5>
+                                        <small><i
+                                                class="far fa-clock me-2"></i>{{ \Carbon\Carbon::parse($kegiatan->tanggal_kegiatan)->format('d M Y') }}
+                                        </small>
+                                    </div>
+                                    <div class="card-footer text-white">
+                                        <h6 class="my-0 text-white d-block">{{ $kegiatan->user->name }}</h6>
+                                        <small>{{ $kegiatan->user->email }}</small>
+                                    </div>
                                 </div>
-                                <p class="card-text text-secondary">
-                                    {{ strip_tags(Str::limit($kegiatan->isi_kegiatan, 80)) }}
-                                </p>
-                            </div>
-                            <div
-                                class="card-footer border border-top-0 bg-white p-3 d-flex justify-content-between align-items-center">
-                                <div class="text-secondary">
-                                    <i class="far fa-calendar-alt me-1"></i>{{ \Carbon\Carbon::parse($kegiatan->tanggal_kegiatan)->format('d M Y') }}
-                                </div>
-                                <div>
-                                    <a class="btn btn-dark"
-                                       href="{{ url('/kegiatan/' . $kegiatan->slug) }}">Lihat
-                                        <i class="fas fa-long-arrow-alt-right ms-1"></i></a>
-                                </div>
-                            </div>
+                            </a>
                         </div>
                     @endforeach
                 </div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"><i class="fas fa-chevron-left"></i></div>
+                <div class="swiper-button-next"><i class="fas fa-chevron-right"></i></div>
             </div>
+        </div>
+        <div class="pb-5 text-center">
+            <a href="{{ url('kegiatan') }}" role="button" class="btn btn-dark">Lihat Semua Kegiatan</a>
         </div>
     </section>
 

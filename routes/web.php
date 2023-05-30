@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -63,6 +64,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/kegiatan/', [KegiatanController::class, 'index'])->name('kegiatan.kegiatan');
 Route::get('/kegiatan/{slug}', [HomeController::class, 'showKegiatan'])->name('user.show-kegiatan');
 
 Route::post('/pengaduan/sudah_ditanggapi', [PengaduanController::class, 'getSudahDitanggapi']);
