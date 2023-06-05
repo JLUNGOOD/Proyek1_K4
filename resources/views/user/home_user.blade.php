@@ -54,10 +54,10 @@
         <h1 class="display-5 text-center fw-bold py-4">Kegiatan</h1>
         <div class="py-4 container overflow-hidden">
             <div class="swiper">
-                <div class="swiper-wrapper">
+                <div class="swiper-wrapper mb-3">
                     @foreach($kegiatans as $kegiatan)
-                        <div class="swiper-slide mb-3">
-                            <a href="{{ url('/kegiatan/' . $kegiatan->slug) }}" class="card activity card-has-bg"
+                        <div class="swiper-slide">
+                            <a href="{{ url('/kegiatan/' . $kegiatan->slug) }}" class="card activity shadow card-has-bg"
                                style="background-image:url('{{ $kegiatan->foto_kegiatan ? asset('storage/foto_kegiatan/' . $kegiatan->foto_kegiatan) : asset('/img/no-img-available.png') }}');">
                                 <div class="card-img-overlay d-flex flex-column">
                                     <div class="card-body text-white">
@@ -75,13 +75,20 @@
                             </a>
                         </div>
                     @endforeach
+                    <div class="swiper-slide">
+                        <a href="{{ url('kegiatan') }}" class="card activity shadow card-has-bg">
+                            <div class="card-img-overlay d-flex flex-column">
+                                <div
+                                    class="card-body text-white d-flex justify-content-center align-items-center flex-column">
+                                    <h3 class="card-title mt-0 mb-4">Semua Kegiatan</h3>
+                                    <i class="fs-1 rounded-circle p-4 border border-4 border-white fas fa-arrow-right">
+                                    </i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
-                <div class="swiper-button-prev"><i class="fas fa-chevron-left"></i></div>
-                <div class="swiper-button-next"><i class="fas fa-chevron-right"></i></div>
             </div>
-        </div>
-        <div class="pb-5 text-center">
-            <a href="{{ url('kegiatan') }}" role="button" class="btn btn-dark">Lihat Semua Kegiatan</a>
         </div>
     </section>
 

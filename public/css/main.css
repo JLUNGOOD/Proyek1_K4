@@ -103,25 +103,11 @@ select::selection {
     border: none;
     transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
     overflow: hidden;
-    border-radius: 20px;
     min-height: 400px;
-    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.2);
-}
-
-@media (max-width: 768px) {
-    .activity {
-        min-height: 350px;
-    }
-}
-
-@media (max-width: 420px) {
-    .activity {
-        min-height: 300px;
-    }
 }
 
 .activity.card-has-bg {
-    transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+    transition: .5s ease-in-out;
     background-size: cover;
     background-position: center center;
 }
@@ -143,12 +129,11 @@ select::selection {
 
 .activity.card-has-bg:hover {
     transform: scale(0.98);
-    box-shadow: 0 0 5px -2px rgba(0, 0, 0, 0.3);
 }
 
 .activity.card-has-bg:hover .card-img-overlay {
-    transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
-    background: rgb(0, 0, 0);
+    transition: .5s ease-in-out;
+    background: rgb(130, 195, 236);
     background: linear-gradient(
         0deg,
         rgba(130, 195, 236, 0.5) 0%,
@@ -162,7 +147,7 @@ select::selection {
 }
 
 .activity .card-body {
-    transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+    transition: .5s ease-in-out;
 }
 
 .activity:hover .card-body {
@@ -172,11 +157,15 @@ select::selection {
 .activity:hover .text-white,
 .activity:hover .text-aqua {
     color: #1a1e21 !important;
-    transition: 500ms ease;
+    transition: .5s ease-in-out;
+}
+
+.activity:hover .border-white {
+    border-color: #1a1e21 !important;
 }
 
 .activity .card-img-overlay {
-    transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
+    transition: .8s ease-in-out;
     background: rgb(26, 30, 33);
     background: linear-gradient(
         0deg,
@@ -185,21 +174,15 @@ select::selection {
     );
 }
 
-.swiper-button-prev::after,
-.swiper-button-next::after {
-    display: none;
+@media (max-width: 768px) {
+    .activity {
+        min-height: 380px;
+    }
 }
 
-.swiper-button-prev,
-.swiper-button-next {
-    padding: 8px 15px;
-    background-color: #f0f0f0;
-    border-radius: 5px;
-    border: 2px solid #1a1e21;
-}
-
-.swiper-button-prev i,
-.swiper-button-next i {
-    color: #1a1e21;
+@media (max-width: 484px) {
+    .activity {
+        min-height: 350px;
+    }
 }
 

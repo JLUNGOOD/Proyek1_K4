@@ -53,7 +53,8 @@
                             Daftar Pengaduan
                             @if(session('new_tanggapans'))
                                 @if(count(session('new_tanggapans')))
-                                    <span class="badge bg-danger rounded-circle">{{ count(session('new_tanggapans')) }}</span>
+                                    <span
+                                        class="badge bg-danger rounded-circle">{{ count(session('new_tanggapans')) }}</span>
                                 @endif
                             @endif
                         </a>
@@ -96,7 +97,7 @@
                     </div>
                 @else
                     <a class="btn btn-sm btn-dark" href="{{ url('login') }}">Log in</a>
-                    <a class="btn btn-sm btn-outline-dark" href="{{ url('login') }}?signup=true" >Sign up</a>
+                    <a class="btn btn-sm btn-outline-dark" href="{{ url('login') }}?signup=true">Sign up</a>
                 @endauth
             </div>
         </div>
@@ -134,56 +135,58 @@
     </form>
 @endauth
 
-<footer class="bg-secondary text-white pt-5 pb-4">
-    <div class="container text-center text-md-left">
+<footer class="bg-dark text-white pt-5 pb-4">
+    <div class="container text-md-left">
         <div class="row gy-3">
-            <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                <h5 class="text-uppercase mb-4 font-weight-bold text-warning">PDAM Kota Malang</h5>
+            <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3 text-center">
+                <h5 class="text-uppercase mb-4 font-weight-bold text-aqua">PDAM Kota Malang</h5>
                 <p>Memberikan pelayanan terbaik bagi masyarakat dengan sepenuh hati,
                     Guna terciptanya kesejahteraan masyarakat dan kemajuan bangsa
                 </p>
             </div>
 
-            <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Useful Links</h5>
-                <p><a href="{{ url('/buat_pengaduan') }}" class="text-white" style="text-decoration: none;">Buat
-                        Pengaduan</a></p>
-                <p><a href="{{ url('/pengaduan_saya') }}" class="text-white" style="text-decoration: none;">Daftar
-                        Pengaduan</a></p>
+            <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3 text-center">
+                <h5 class="text-uppercase mb-4 font-weight-bold text-aqua">Useful Links</h5>
+                <p>
+                    <a href="{{ url('/buat_pengaduan') }}" class="text-white text-decoration-none">Buat Pengaduan</a>
+                </p>
+                <p>
+                    <a href="{{ url('/pengaduan_saya') }}" class="text-white text-decoration-none">Daftar Pengaduan</a>
+                </p>
             </div>
 
-            <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Contact Us</h5>
-
-                <ul class="fa-ul" style="--fa-li-margin: 1em;">
-                    <li><span class="fa-li"><i class="fas fa-location-arrow"></i></span>
-                        <a class="text-white" href="https://goo.gl/maps/gqAHo2FVEK7ENg8C6" style="text-decoration:none">
-                            JL. A Yani, No 53-55, Purwantoro, Kec. Blimbing, Kota Malang 65125</a>
-                    </li>
-                    <br>
-                    <li><span class="fa-li"><i class="fas fa-envelope mr-3"></i></span>
-                        <a class="text-white" href="http://alwanalawi1@gmail.com" style="text-decoration:none">pdam@gmail.com</a>
-                    </li>
-                    <br>
-                    <li><span class="fa-li"><i class="fas fa-phone mr-3"></i></span>
-                        <a class="text-white" href="https://wa.me/6285257146203" style="text-decoration:none">081244305712</a>
-                    </li>
-                </ul>
+            <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3 text-center">
+                <h5 class="text-uppercase mb-4 font-weight-bold text-aqua text-center">Contact Us</h5>
+                <p>
+                    <a href="https://goo.gl/maps/gqAHo2FVEK7ENg8C6"
+                       class="text-white text-decoration-none d-flex align-items-center justify-content-center">
+                        <i class="fas fa-location-arrow"></i>
+                        <span class="ms-2">JL. A Yani, No 53-55, Purwantoro, Kec. Blimbing, Kota Malang 65125</span>
+                    </a>
+                </p>
+                <p>
+                    <a href="http://alwanalawi1@gmail.com"
+                       class="text-white text-decoration-none d-flex align-items-center justify-content-center">
+                        <i class="fas fa-envelope"></i>
+                        <span class="ms-2">pdam@gmail.com</span>
+                    </a>
+                </p>
+                <p>
+                    <a href="https://wa.me/6285257146203"
+                       class="text-white text-decoration-none d-flex align-items-center justify-content-center">
+                        <i class="fas fa-phone"></i>
+                        <span class="ms-2">081244305712</span>
+                    </a>
+                </p>
             </div>
         </div>
 
         <hr class="mb-4">
 
-        <div class="row align-items-center">
-
-            <div class="col-md-7 col-lg-8" style="margin-left: 16%;">
-                <p>Copyright 2022. All rights reserved by:
-                    <a href="#" style="text-decoration: none;">
-                        <strong class="text-warning">Kelompok 4</strong>
-                    </a>
-                </p>
-            </div>
-
+        <div class="row text-center">
+            <p>Copyright 2022. All rights reserved by:
+                <a href="" class="text-decoration-none fw-bold text-aqua">Kelompok 4</a>
+            </p>
         </div>
     </div>
 </footer>
