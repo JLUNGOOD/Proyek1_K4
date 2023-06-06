@@ -6,7 +6,11 @@
 @section('content')
     <div class="bg-white container mt-lg shadow rounded pb-4">
         <div class="container">
-            <a href="javascript:history.back()" class="btn btn-danger mt-3">Kembali</a>
+            @if(url('admin/tanggapi/' . $pengaduan->id) == url()->current())
+                <a href="{{ url('admin/tanggapi') }}" class="btn btn-danger mt-3">Kembali</a>
+            @else
+                <a href="{{ url('pengaduan_saya') }}" class="btn btn-danger mt-3">Kembali</a>
+            @endif
 
             <div class="d-flex justify-content-between align-items-center">
                 <h2 class="my-4 pt-2">Rincian Pengaduan</h2>
