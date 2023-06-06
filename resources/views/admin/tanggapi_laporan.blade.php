@@ -21,7 +21,7 @@
                                 class="btn-switchable btn btn-outline-dark">Belum direspon
                         </button>
                         <div class="d-inline-flex justify-content-end">
-                            <select id="filterDropdown" class="form-select">
+                            <select id="filterDropdown" class="form-select border-dark">
                                 <option class="d-none" value="all">Filter</option>
                                 <option value="solved" onclick="getSolved()">Solved</option>
                                 <option value="unsolved" onclick="getUnsolved()">Unsolved</option>
@@ -48,7 +48,7 @@
         <div class="row" id="list-pengaduan">
             @foreach($daftar_pengaduan as $pengaduan)
                 <div class="col-md-6 mb-3">
-                    <div class="position-relative card ">
+                    <div class="position-relative card">
                         <div class="card-header d-flex justify-content-between">
                             @if(auth()->user()->id == $pengaduan->user_id)
                                 <b>Pengaduan Anda</b>
@@ -73,7 +73,7 @@
                             <a class="btn btn-dark" href="{{ url('/admin/tanggapi/' . $pengaduan->id) }}">Lihat
                                 Rincian</a>
                         </div>
-                        <div class="card-footer text-muted d-flex justify-content-between">
+                        <div class="card-footer text-muted d-flex justify-content-between align-items-center">
                             {{ $pengaduan->tanggal_kejadian }}
                             @if($pengaduan->status == '1')
                                 <span class="badge bg-success">Solved</span>
@@ -131,7 +131,7 @@
                                 </div>
                                 <div class="card-footer text-muted d-flex justify-content-between">
                                     ${pengaduan['tanggal_kejadian']}
-                                    ${pengaduan['status'] == "1" ? "<span class='badge bg-success'>Solved</span>" : 
+                                    ${pengaduan['status'] == "1" ? "<span class='badge bg-success'>Solved</span>" :
                                         pengaduan['status'] == "0" ? "<span class='badge bg-danger'>Unsolved</span>" :
                                         pengaduan['status'] == "2" ? "<span class='badge bg-warning'>On Progress</span>" :
                                         pengaduan['status'] == "3" ? "<span class='badge bg-secondary'>Rejected</span>" : ""

@@ -21,7 +21,7 @@
                                 class="btn-switchable btn btn-outline-dark">Belum direspon
                         </button>
                         <div class="d-inline-flex justify-content-end">
-                            <select id="filterDropdown" class="form-select">
+                            <select id="filterDropdown" class="form-select border-dark">
                                 <option class="d-none" value="all">Filter</option>
                                 <option value="solved" onclick="getSolved()">Solved</option>
                                 <option value="unsolved" onclick="getUnsolved()">Unsolved</option>
@@ -61,19 +61,18 @@
                                 @else
                                     <i class='fas fa-check-double'></i>
                                 @endif
-                                @if($pengaduan->tanggapan_is_read !== null)
-                                    @if($pengaduan->tanggapan_is_read === 0)
-                                        <i class="text-danger fa fa-circle"></i>
-                                    @endif
+                                @if ($pengaduan->tanggapan_is_read === 0)
+                                    <i class="text-danger fa fa-circle"></i>
                                 @endif
+
                             </div>
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">{{ $pengaduan->judul }}</h5>
-                            <a class="btn btn-dark" href="{{ url('/admin/tanggapi/' . $pengaduan->id) }}">Lihat
+                            <a class="btn btn-dark" href="{{ url('/pengaduan_saya/' . $pengaduan->id) }}">Lihat
                                 Rincian</a>
                         </div>
-                        <div class="card-footer text-muted d-flex justify-content-between">
+                        <div class="card-footer text-muted d-flex justify-content-between align-items-center">
                             {{ $pengaduan->tanggal_kejadian }}
                             @if($pengaduan->status == '1')
                                 <span class="badge bg-success">Solved</span>
@@ -131,11 +130,11 @@
                                 </div>
                                 <div class="card-footer text-muted d-flex justify-content-between">
                                     ${pengaduan['tanggal_kejadian']}
-                                    ${pengaduan['status'] == "1" ? "<span class='badge bg-success'>Solved</span>" : 
-                                        pengaduan['status'] == "0" ? "<span class='badge bg-danger'>Unsolved</span>" :
-                                        pengaduan['status'] == "2" ? "<span class='badge bg-warning'>On Progress</span>" :
-                                        pengaduan['status'] == "3" ? "<span class='badge bg-secondary'>Rejected</span>" : ""
-                                    }
+                                    ${pengaduan['status'] == "1" ? "<span class='badge bg-success'>Solved</span>" :
+                pengaduan['status'] == "0" ? "<span class='badge bg-danger'>Unsolved</span>" :
+                    pengaduan['status'] == "2" ? "<span class='badge bg-warning'>On Progress</span>" :
+                        pengaduan['status'] == "3" ? "<span class='badge bg-secondary'>Rejected</span>" : ""
+            }
                                 </div>
                             </div>
                         </div>
@@ -224,7 +223,7 @@
 
         const selectElement = document.getElementById('filterDropdown');
 
-        selectElement.addEventListener('change', function() {
+        selectElement.addEventListener('change', function () {
             const selectedOption = this.value;
 
             if (selectedOption === 'unsolved') {
@@ -245,6 +244,7 @@
         //     });
         // })
         let status;
+
         function getUnsolved() {
             status = 0;
             switchActiveButton(sortByResponded);
@@ -265,6 +265,7 @@
                 },
             });
         }
+
         function getSolved() {
             status = 1;
             switchActiveButton(sortByResponded);
@@ -285,6 +286,7 @@
                 },
             });
         }
+
         function getOnProgress() {
             status = 2;
             switchActiveButton(sortByResponded);
@@ -305,6 +307,7 @@
                 },
             });
         }
+
         function getRejected() {
             status = 3;
             switchActiveButton(sortByResponded);

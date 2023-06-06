@@ -5,15 +5,12 @@
 
 @section('content')
     <div class="bg-white container mt-lg shadow rounded pb-4">
-        <div class="container" method="post">
-            @if(auth()->user()->role == 3)
-                <a href="{{ url('/pengaduan_saya') }}" class="btn btn-danger mt-3">Kembali</a>
-            @else
-                <a href="{{ url('/admin/tanggapi') }}" class="btn btn-danger mt-3">Kembali</a>
-            @endif
+        <div class="container">
+            <a href="javascript:history.back()" class="btn btn-danger mt-3">Kembali</a>
+
             <div class="d-flex justify-content-between align-items-center">
-                <h2 class="my-4 pt-2">Rincian Laporan</h2>
-                @if(auth()->user()->role == 3)
+                <h2 class="my-4 pt-2">Rincian Pengaduan</h2>
+                @if(url('pengaduan_saya/' . $pengaduan->id) == url()->current())
                     @if($pengaduan->status == 0)
                         <span class="badge py-2 px-3 rounded-pill bg-dark">Unsolved</span>
                     @elseif($pengaduan->status == 1)
@@ -21,32 +18,31 @@
                     @elseif($pengaduan->status == 2)
                         <span class="badge py-2 px-3 rounded-pill bg-success">Solved</span>
                     @elseif($pengaduan->status == 3)
-                        <span class="badge py-2 px-3 rounded-pill bg-danger">Ditolak</span>
+                        <span class="badge py-2 px-3 rounded-pill bg-danger">Rejected</span>
                     @endif
                 @else
-                    <div>
-                        <form class="d-flex align-items-center gap-2" action="{{ url('/admin/tanggapan/update_status') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="id" value="{{ $pengaduan->id }}">
-                            <label class="form-check">
-                                <input type="radio" name="status" value="0"
-                                       class="form-check-input" @checked($pengaduan->status == 0)> Unsolved
-                            </label>
-                            <label class="form-check">
-                                <input type="radio" name="status" value="1"
-                                       class="form-check-input" @checked($pengaduan->status == 1)> On progress
-                            </label>
-                            <label class="form-check">
-                                <input type="radio" name="status" value="2"
-                                       class="form-check-input" @checked($pengaduan->status == 2)> Solved
-                            </label>
-                            <label class="form-check">
-                                <input type="radio" name="status" value="3"
-                                       class="form-check-input" @checked($pengaduan->status == 3)> Ditolak
-                            </label>
-                            <button class="btn btn-outline-dark" type="submit">Update Status</button>
-                        </form>
-                    </div>
+                    <form class="d-flex align-items-center gap-2"
+                          action="{{ url('/admin/tanggapan/update_status') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $pengaduan->id }}">
+                        <label class="form-check">
+                            <input type="radio" name="status" value="0"
+                                   class="form-check-input" @checked($pengaduan->status == 0)> Unsolved
+                        </label>
+                        <label class="form-check">
+                            <input type="radio" name="status" value="1"
+                                   class="form-check-input" @checked($pengaduan->status == 1)> Solved
+                        </label>
+                        <label class="form-check">
+                            <input type="radio" name="status" value="2"
+                                   class="form-check-input" @checked($pengaduan->status == 2)> Un Progress
+                        </label>
+                        <label class="form-check">
+                            <input type="radio" name="status" value="3"
+                                   class="form-check-input" @checked($pengaduan->status == 3)> Ditolak
+                        </label>
+                        <button class="btn btn-outline-dark" type="submit">Update Status</button>
+                    </form>
                 @endif
             </div>
             <div class="mb-3 row border-bottom">
@@ -85,7 +81,9 @@
                              alt="Bukti Gambar"
                              class="mb-3 border" width="200">
                     @else
-                        <input readonly class="form-control-plaintext" value="-">
+                        <label>
+                            <input readonly class="form-control-plaintext" value="-">
+                        </label>
                     @endif
                 </div>
             </div>
@@ -93,7 +91,7 @@
                 <label for="tanggal" class="col-sm-3 col-form-label fw-bold">Tanggal Kejadian</label>
                 <div class="col-sm-9">
                     <input readonly class="form-control-plaintext" id="tanggal"
-                           value="{{ $pengaduan->tanggal_kejadian ? $pengaduan->tanggal_kejadian : '-' }}">
+                           value="{{ $pengaduan->tanggal_kejadian ?? '-' }}">
                 </div>
             </div>
             <div class="mb-3 row border-bottom">
@@ -116,38 +114,55 @@
                 <label for="tanggal_lapor" class="col-sm-3 col-form-label fw-bold">Tanggal Lapor</label>
                 <div class="col-sm-9">
                     <input readonly class="form-control-plaintext" id="tanggal_lapor"
-                           value="{{ $pengaduan->created_at }}"
-                    >
+                           value="{{ $pengaduan->created_at ?? '-' }}">
                 </div>
             </div>
         </div>
-        @if(!isset($tanggapan))
-            @if(auth()->user()->role != 3)
-                <p>
-                    <button class="btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#tanggapi"
-                            aria-expanded="false" aria-controls="collapseExample">
-                        Beri Tanggapan <i class="ps-2 fas fa-angle-down"></i>
-                    </button>
-                </p>
-                <div class="collapse" id="tanggapi">
-                    <div class="card card-body mb-3">
-                        <form method="post" action="{{ url('/admin/send_tanggapan') }}">
-                            @csrf
-                            <input type="hidden" value="{{ auth()->user()->id }}" name="user_id">
-                            <input type="hidden" value="{{ $pengaduan->id }}" name="pengaduan_id">
-                            <div class="mb-3">
-                                <label for="isi" class="form-label fw-bold">Isi Tanggapan</label>
-                                <textarea class="form-control" name="isi" id="isi" rows="3"
-                                          placeholder="Ketik Tanggapan *" required></textarea>
-                                <div id="catatan" class="form-text">
-                                    Catatan: Tanggapan yang sudah dikirim tidak bisa diubah.
-                                </div>
-                            </div>
-                            <button onclick="" name="tanggapan" class="btn btn-dark">Kirim</button>
-                        </form>
+        @if(url('pengaduan_saya/' . $pengaduan->id) == url()->current())
+            <form class="container">
+                <h2 class="my-4 pt-2">Tanggapan</h2>
+                @if(isset($tanggapan->user->name))
+                    <div class="mb-3 row border-bottom">
+                        <label for="ditanggapi-oleh" class="col-sm-3 col-form-label fw-bold">Ditanggapi Oleh</label>
+                        <div class="col-sm-9">
+                            <input readonly class="form-control-plaintext" id="ditanggapi-oleh"
+                                   value="{{ $tanggapan->user->name }}">
+                        </div>
+                    </div>
+                @endif
+                <div class="mb-3 row border-bottom">
+                    <label for="isi-tanggapan" class="col-sm-3 col-form-label fw-bold">Tanggapan</label>
+                    <div class="col-sm-9">
+                        <textarea class="form-control-plaintext" id="isi-tanggapan"
+                                  rows="3" readonly>{{ $tanggapan->isi_tanggapan ?? 'Belum Ditanggapi' }}</textarea>
                     </div>
                 </div>
-            @endif
+            </form>
+        @elseif(!isset($tanggapan))
+            <p>
+                <button class="btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#tanggapi"
+                        aria-expanded="false" aria-controls="collapseExample">
+                    Beri Tanggapan <i class="ps-2 fas fa-angle-down"></i>
+                </button>
+            </p>
+            <div class="collapse" id="tanggapi">
+                <div class="card card-body mb-3">
+                    <form method="post" action="{{ url('/admin/send_tanggapan') }}">
+                        @csrf
+                        <input type="hidden" value="{{ auth()->user()->id ?? null }}" name="user_id">
+                        <input type="hidden" value="{{ $pengaduan->id }}" name="pengaduan_id">
+                        <div class="mb-3">
+                            <label for="isi" class="form-label fw-bold">Isi Tanggapan</label>
+                            <textarea class="form-control" name="isi" id="isi" rows="3"
+                                      placeholder="Ketik Tanggapan *" required></textarea>
+                            <div id="catatan" class="form-text">
+                                Catatan: Tanggapan yang sudah dikirim tidak bisa diubah.
+                            </div>
+                        </div>
+                        <button onclick="" name="tanggapan" class="btn btn-dark">Kirim</button>
+                    </form>
+                </div>
+            </div>
         @else
             <form class="container">
                 <h2 class="my-4 pt-2">Tanggapan</h2>

@@ -92,7 +92,7 @@ class AdminController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        
+
         UserModel::create([
             'name' => $request['name'],
             'email' => $request['email'],
@@ -124,20 +124,8 @@ class AdminController extends Controller
     function tanggapi($id)
     {
         $pengaduan = PengaduanModel::find($id);
-        if (auth()->user()->role != '3') {
-            $pengaduan->update([
-                'is_read' => '1'
-            ]);
-        }
-        if (auth()->user()->role == '3') {
-            $tanggapan = $pengaduan->tanggapan()->get();
-            if ($tanggapan->count() > 0) {
-                $tanggapan = $tanggapan->first();
-                $tanggapan->update([
-                    'is_read' => '1'
-                ]);
-            }
-        }
+        $pengaduan->update(['is_read' => '1']);
+
         $tanggapan = TanggapanModel::where('pengaduan_id', $id)->first();
         return view('admin.detail_laporan')
             ->with('pengaduan', $pengaduan)

@@ -28,7 +28,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $kegiatans = KegiatanModel::latest()->get();
+        $kegiatans = KegiatanModel::latest()->limit(7)->get();
         $new_tanggapans = [];
         if (Auth::check()) {
             $pengaduans = auth()->user()->pengaduan()->get();

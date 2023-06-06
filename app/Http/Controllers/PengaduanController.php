@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\KategoriModel;
 use App\Models\PengaduanModel;
+use App\Models\TanggapanModel;
 use App\Services\FileService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -143,7 +144,25 @@ class PengaduanController extends Controller
             ->with('title', 'Pengaduan Saya');
     }
 
-    public function updateStatus() {
+    public function detailPengaduan($id)
+    {
+        $pengaduan = PengaduanModel::find($id);
+        $tanggapan = $pengaduan->tanggapan()->get();
+        if ($tanggapan->count() > 0) {
+            $tanggapan = $tanggapan->first();
+            $tanggapan->update([
+                'is_read' => '1'
+            ]);
+        }
+        $tanggapan = TanggapanModel::where('pengaduan_id', $id)->first();
+        return view('admin.detail_laporan')
+            ->with('pengaduan', $pengaduan)
+            ->with('tanggapan', $tanggapan)
+            ->with('title', 'Detail Pengaduan');
+    }
+
+    public function updateStatus()
+    {
         $id = request()->id;
         $status = request()->status;
         $pengaduan = PengaduanModel::find($id);
@@ -152,7 +171,8 @@ class PengaduanController extends Controller
         return back();
     }
 
-    public function getSolved(Request $request){
+    public function getSolved(Request $request)
+    {
         $pengaduans = PengaduanModel::leftJoin('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
             ->where('pengaduan.status', '=', '1')
             ->select('pengaduan.*', 'tanggapan.is_read as tanggapan_is_read')
@@ -160,7 +180,8 @@ class PengaduanController extends Controller
         return response()->json(['pengaduans' => $pengaduans]);
     }
 
-    public function getUnsolved(Request $request){
+    public function getUnsolved(Request $request)
+    {
         $pengaduans = PengaduanModel::leftJoin('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
             ->where('pengaduan.status', '=', '0')
             ->select('pengaduan.*', 'tanggapan.is_read as tanggapan_is_read')
@@ -168,7 +189,8 @@ class PengaduanController extends Controller
         return response()->json(['pengaduans' => $pengaduans]);
     }
 
-    public function getOnProgress(Request $request){
+    public function getOnProgress(Request $request)
+    {
         $pengaduans = PengaduanModel::leftJoin('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
             ->where('pengaduan.status', '=', '2')
             ->select('pengaduan.*', 'tanggapan.is_read as tanggapan_is_read')
@@ -176,7 +198,8 @@ class PengaduanController extends Controller
         return response()->json(['pengaduans' => $pengaduans]);
     }
 
-    public function getRejected(Request $request){
+    public function getRejected(Request $request)
+    {
         $pengaduans = PengaduanModel::leftJoin('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
             ->where('pengaduan.status', '=', '3')
             ->select('pengaduan.*', 'tanggapan.is_read as tanggapan_is_read')

@@ -26,17 +26,18 @@ Route::middleware('auth')->group(function () {
     Route::post('/buat_pengaduan', [PengaduanController::class, 'store'])->name('pengaduan.store');
 
     Route::get('/pengaduan_saya', [PengaduanController::class, 'pengaduanSaya']);
+    Route::get('/pengaduan_saya/{id}', [PengaduanController::class, 'detailPengaduan']);
 
     Route::get('/ubah_profil', [UserController::class, 'editProfile'])->name('user.edit-profile');
     Route::post('/ubah_profil', [UserController::class, 'updateProfile'])->name('user.update-profile');
 
     Route::get('/ubah_password', [UserController::class, 'editPassword'])->name('user.edit-password');
     Route::post('/ubah_password', [UserController::class, 'updatePassword'])->name('user.update-password');
-    Route::get('/admin/tanggapi/{id}', [AdminController::class, 'tanggapi']);
 
     Route::middleware(['admin'])->group(function () {
         Route::get('/admin', [AdminController::class, 'index']);
         Route::get('/admin/tanggapi', [AdminController::class, 'list_tanggapi']);
+        Route::get('/admin/tanggapi/{id}', [AdminController::class, 'tanggapi']);
         Route::get('/admin/tambah_admin', [AdminController::class, 'tambah_admin']);
         Route::get('/admin/list_admin', [AdminController::class, 'list_admin']);
         Route::post('/admin/create_user', [AdminController::class, 'create_user']);

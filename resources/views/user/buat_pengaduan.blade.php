@@ -74,7 +74,8 @@
                         <small class="text-danger">{{ $message }} </small>
                         @enderror
                     </div>
-                    <button type="button" class="btn btn-dark d-block mb-4" data-bs-toggle="modal"
+                    <button type="button" class="btn btn-dark d-block mb-4"
+                            {{ auth()->user()->role != '3' ? 'disabled' : ''}} data-bs-toggle="modal"
                             data-bs-target="#modalChoice">KIRIM
                     </button>
 
