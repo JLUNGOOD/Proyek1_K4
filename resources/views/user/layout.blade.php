@@ -60,6 +60,10 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link {{ url('semua_pengaduan') == url()->current() ? 'active' : '' }}"
+                           href="/semua_pengaduan">Semua Pengaduan</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {{ url('kegiatan') == url()->current() ? 'active' : '' }}"
                            href="/kegiatan">Kegiatan</a>
                     </li>

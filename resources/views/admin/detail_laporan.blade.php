@@ -14,7 +14,7 @@
 
             <div class="d-flex justify-content-between align-items-center">
                 <h2 class="my-4 pt-2">Rincian Pengaduan</h2>
-                @if(url('pengaduan_saya/' . $pengaduan->id) == url()->current())
+                @if(auth()->user()->role == 3)
                     @if($pengaduan->status == 0)
                         <span class="badge py-2 px-3 rounded-pill bg-dark">Unsolved</span>
                     @elseif($pengaduan->status == 1)
@@ -39,7 +39,7 @@
                         </label>
                         <label class="form-check">
                             <input type="radio" name="status" value="2"
-                                   class="form-check-input" @checked($pengaduan->status == 2)> Un Progress
+                                   class="form-check-input" @checked($pengaduan->status == 2)> On Progress
                         </label>
                         <label class="form-check">
                             <input type="radio" name="status" value="3"

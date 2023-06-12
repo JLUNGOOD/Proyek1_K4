@@ -11,6 +11,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\DataTables;
 
 class PengaduanController extends Controller
 {
@@ -142,6 +143,22 @@ class PengaduanController extends Controller
         return view('user.pengaduan_saya')
             ->with('daftar_pengaduan', $daftar_pengaduan)
             ->with('title', 'Pengaduan Saya');
+    }
+
+    public function showSemuaPengaduan()
+    {
+        return view('user.semua_pengaduan')
+            ->with('title', 'Semua Pengaduan');
+    }
+
+    public function getDataSemuaPengaduan()
+    {
+        $pengaduans = PengaduanModel::leftJoin('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
+            ->select('pengaduan.*', 'tanggapan.is_read as tanggapan_is_read')
+            ->get();
+        return DataTables::of($pengaduans)
+            ->addIndexColumn()
+            ->make(true);
     }
 
     public function detailPengaduan($id)
