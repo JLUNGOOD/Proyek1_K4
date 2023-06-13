@@ -79,8 +79,7 @@
                 <label for="status" class="col-sm-3 col-form-label fw-bold">Status</label>
                 <div class="col-sm-9">
                     <input readonly class="form-control-plaintext" id="status"
-                           value="{{ isset($tanggapan) ? "Sudah ditanggapi" : "Belum direspon" }}"
-                    >
+                           value="{{ isset($tanggapan) ? "Sudah ditanggapi" : "Belum direspon" }}">
                 </div>
             </div>
             <div class="mb-3 row border-bottom">
