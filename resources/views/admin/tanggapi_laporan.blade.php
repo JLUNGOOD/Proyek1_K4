@@ -9,32 +9,35 @@
         <div class="container py-2">
             <h2 class="my-4">Daftar Pengaduan</h2>
             <div class="row mb-3">
-                <div class="col-6 col-sm-9">
-                    <div class="filter owl-carousel owl-theme d-flex align-items-center gap-2">
-                        <button onclick="getAllPengaduan()" id="btn-respon" name="responded"
-                                class="btn-switchable btn btn-dark">Semua
-                        </button>
-                        <button onclick="getSudahDitanggapi()" id="btn-respon" name="responded"
-                                class="btn-switchable btn btn-outline-dark">Direspon
-                        </button>
-                        <button onclick="getBelumDitanggapi()" id="btn-not-respon" name="not-responded"
-                                class="btn-switchable btn btn-outline-dark">Belum direspon
-                        </button>
-                        <div class="d-inline-flex justify-content-end">
+                <div class="col-md-9 col-lg-10">
+                    <div class="filter d-flex flex-wrap align-items-center justify-content-between justify-content-md-start gap-2">
+                        <div class="d-flex flex-wrap gap-2">
+                            <button onclick="getAllPengaduan()" id="btn-respon" name="responded"
+                                    class="btn-switchable btn btn-dark">Semua
+                            </button>
+                            <button onclick="getSudahDitanggapi()" id="btn-respon" name="responded"
+                                    class="btn-switchable btn btn-outline-dark">Direspon
+                            </button>
+                            <button onclick="getBelumDitanggapi()" id="btn-not-respon" name="not-responded"
+                                    class="btn-switchable btn btn-outline-dark">Belum direspon
+                            </button>
+                        </div>
+                        <div class="d-flex">
+                            <label for="filterDropdown"></label>
                             <select id="filterDropdown" class="form-select border-dark">
-                                <option class="d-none" value="all">Filter</option>
+                                <option selected disabled value="">Filter</option>
                                 <option value="solved" onclick="getSolved()">Solved</option>
                                 <option value="unsolved" onclick="getUnsolved()">Unsolved</option>
                                 <option value="onprogress" onclick="getOnProgress()">On Progress</option>
                                 <option value="rejected" onclick="getRejected()">Rejected</option>
                             </select>
+                            <button class="btn btn-outline-dark mx-2" data-bs-toggle="modal" data-bs-target="#modalInfo">
+                                <i class="fas fa-question"></i>
+                            </button>
                         </div>
-                        <button class="btn btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalInfo">
-                            <i class="fas fa-question"></i>
-                        </button>
                     </div>
                 </div>
-                <div class="col-6 col-sm-3">
+                <div class="col-md-3 col-lg-2 mt-2 mt-md-0">
                     <div class="input-group">
                         <input class="form-control border-dark bg-light" placeholder="Cari..."
                                value="{{ session('cariLaporanSaya') ? session('cariLaporanSaya') : '' }}"
@@ -77,7 +80,10 @@
                                 Rincian</a>
                         </div>
                         <div class="card-footer text-muted d-flex justify-content-between align-items-center">
-                            {{ $pengaduan->tanggal_kejadian }}
+                            <div>
+                                <i class="far fa-calendar-alt pe-1"></i>
+                                {{ $pengaduan->tanggal_kejadian ?  \Carbon\Carbon::parse($pengaduan->tanggal_kejadian)->format('d M Y') : 'Tidak Diketahui' }}
+                            </div>
                             @if($pengaduan->status == '1')
                                 <span class="badge bg-success">Solved</span>
                             @elseif($pengaduan->status == '0')
