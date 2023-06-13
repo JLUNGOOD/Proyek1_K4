@@ -43,6 +43,15 @@
                         @enderror
                     </div>
                     <div class="mb-3">
+                        <label for="alamat" class="form-label fw-bold">Alamat Pengaduan</label>
+                        <input class="form-control @error('alamat') is-invalid @enderror" name="alamat" id="alamat"
+                               aria-describedby="alamat" placeholder="Ketik Alamat Pengaduan Anda *"
+                               value="{{ old('alamat') ?? '' }}">
+                        @error('alamat')
+                        <small class="text-danger">{{ $message }} </small>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
                         <label for="isi" class="form-label fw-bold">Isi Pengadauan</label>
                         <textarea class="form-control @error('isi') is-invalid @enderror" name="isi" id="isi" rows="3"
                                   placeholder="Ketik Isi Pengaduan Anda *">{{ old('isi') ?? '' }}</textarea>

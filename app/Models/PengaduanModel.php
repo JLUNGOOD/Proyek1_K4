@@ -15,6 +15,7 @@ class PengaduanModel extends Model
         'kategori_id',
         'user_id',
         'judul',
+        'alamat',
         'isi',
         'tanggal_kejadian',
         'bukti_gambar',

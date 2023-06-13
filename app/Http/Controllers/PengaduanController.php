@@ -38,6 +38,7 @@ class PengaduanController extends Controller
         return Validator::make($data, [
             'kategori' => ['required', 'exists:kategori,id'],
             'judul' => ['required', 'string', 'max:255'],
+            'alamat' => ['required', 'string'],
             'isi' => ['required', 'string'],
             'tanggal_kejadian' => ['nullable', 'date'],
             'bukti_gambar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048']
@@ -64,6 +65,7 @@ class PengaduanController extends Controller
         $pengaduan->kategori_id = $request->kategori;
         $pengaduan->user_id = auth()->id();
         $pengaduan->judul = $request->judul;
+        $pengaduan->alamat = $request->alamat;
         $pengaduan->isi = $request->isi;
         $pengaduan->tanggal_kejadian = $request->tanggal_kejadian;
 
