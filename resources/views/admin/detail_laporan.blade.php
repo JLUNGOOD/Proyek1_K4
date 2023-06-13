@@ -50,20 +50,26 @@
                 @endif
             </div>
             <div class="mb-3 row border-bottom">
-                <label for="klarifikasi" class="col-sm-3 col-form-label fw-bold">Klarifikiasi Laporan</label>
+                <label for="klarifikasi" class="col-sm-3 col-form-label fw-bold">Kategori Pengaduan</label>
                 <div class="col-sm-9">
                     <input readonly class="form-control-plaintext" id="klarifikasi"
                            value="{{ $pengaduan->kategori->name }}">
                 </div>
             </div>
             <div class="mb-3 row border-bottom">
-                <label for="judul" class="col-sm-3 col-form-label fw-bold">Judul Laporan</label>
+                <label for="judul" class="col-sm-3 col-form-label fw-bold">Judul Pengaduan</label>
                 <div class="col-sm-9">
                     <input readonly class="form-control-plaintext" id="judul" value="{{ $pengaduan->judul }}">
                 </div>
             </div>
             <div class="mb-3 row border-bottom">
-                <label for="isi" class="col-sm-3 col-form-label fw-bold">Isi Laporan</label>
+                <label for="alamat" class="col-sm-3 col-form-label fw-bold">Alamat Pengaduan</label>
+                <div class="col-sm-9">
+                    <input readonly class="form-control-plaintext" id="alamat" value="{{ $pengaduan->alamat }}">
+                </div>
+            </div>
+            <div class="mb-3 row border-bottom">
+                <label for="isi" class="col-sm-3 col-form-label fw-bold">Isi Pengaduan</label>
                 <div class="col-sm-9">
                     <textarea readonly class="form-control-plaintext" rows="5" id="isi"
                               style="resize: none">{{ $pengaduan->isi }}</textarea>

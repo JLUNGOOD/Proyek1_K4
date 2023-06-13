@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('kategori_id');
             $table->foreignId('user_id');
             $table->string('judul', 255);
+            $table->text('alamat');
             $table->text('isi');
             $table->date('tanggal_kejadian')->nullable();
             $table->string('bukti_gambar')->nullable();
