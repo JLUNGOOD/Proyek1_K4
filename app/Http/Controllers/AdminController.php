@@ -136,12 +136,29 @@ class AdminController extends Controller
 //    send tanggapan
     function send_tanggapan(Request $request)
     {
-        TanggapanModel::create([
-            'pengaduan_id' => $request['pengaduan_id'],
-            'user_id' => $request['user_id'],
-            'is_read' => '0',
-            'isi_tanggapan' => $request['isi'],
+        $validator = Validator::make($request->all(), [
+            'foto_tanggapan' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:5120'],
+            'isi_tanggapan' => ['required', 'string'],
         ]);
+
+        if ($validator->fails()) {
+            return redirect('/admin/tanggapi/' . $request['pengaduan_id'])
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $tanggapan = new TanggapanModel;
+        $tanggapan->user_id = auth()->user()->id;
+        $tanggapan->pengaduan_id = $request['pengaduan_id'];
+        if ($request->hasFile('foto_tanggapan')) {
+            $image = $request->file('foto_tanggapan');
+            $uniqueFileName = $this->fileService->generateUniqueFileName($image, $tanggapan->pengaduan_id);
+            $image->storeAs('public/foto_tanggapan', $uniqueFileName);
+
+            $tanggapan->foto_tanggapan = $uniqueFileName;
+        }
+        $tanggapan->isi_tanggapan = $request['isi_tanggapan'];
+
+        $tanggapan->save();
         return redirect('/admin/tanggapi/' . $request['pengaduan_id'])->with('message', 'Tanggapan berhasil dikirim');
     }
 
