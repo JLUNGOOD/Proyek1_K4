@@ -52,8 +52,8 @@
             </div>
         </div>
     </div>
-    <div class="container pt-5">
-        @if (count($daftar_pengaduan) > 0)
+    <div class="container py-5">
+        @if (count($daftar_pengaduan) == 0)
             <div class="row" id="list-pengaduan">
                 @foreach($daftar_pengaduan as $pengaduan)
                     <div class="col-md-6 mb-3">
