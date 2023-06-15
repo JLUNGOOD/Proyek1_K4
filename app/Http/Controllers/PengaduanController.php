@@ -11,6 +11,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
@@ -140,14 +141,17 @@ class PengaduanController extends Controller
 
     public function pengaduanSaya()
     {
+        $user = Auth::user();
         $daftar_pengaduan = PengaduanModel::leftJoin('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
+            ->where('pengaduan.user_id', $user->id) 
             ->select('pengaduan.*', 'tanggapan.is_read as tanggapan_is_read')
             ->get();
-//        dd($daftar_pengaduan);
+
         return view('user.pengaduan_saya')
             ->with('daftar_pengaduan', $daftar_pengaduan)
             ->with('title', 'Pengaduan Saya');
     }
+
 
     public function showSemuaPengaduan()
     {
