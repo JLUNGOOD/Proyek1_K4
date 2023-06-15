@@ -3,6 +3,11 @@
     'user.layout',
 ])
 
+@push('css')
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
+@endpush
+
 @section('content')
     <div class="bg-white container mt-lg shadow rounded pb-4">
         <div class="container">
@@ -79,8 +84,7 @@
                 <label for="status" class="col-sm-3 col-form-label fw-bold">Status</label>
                 <div class="col-sm-9">
                     <input readonly class="form-control-plaintext" id="status"
-                           value="{{ isset($tanggapan) ? "Sudah ditanggapi" : "Belum direspon" }}"
-                    >
+                           value="{{ isset($tanggapan) ? "Sudah ditanggapi" : "Belum direspon" }}">
                 </div>
             </div>
             <div class="mb-3 row border-bottom">
@@ -157,19 +161,34 @@
             </p>
             <div class="collapse" id="tanggapi">
                 <div class="card card-body mb-3">
-                    <form method="post" action="{{ url('/admin/send_tanggapan') }}">
+                    <form method="post" action="{{ url('/admin/send_tanggapan') }}" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" value="{{ auth()->user()->id ?? null }}" name="user_id">
                         <input type="hidden" value="{{ $pengaduan->id }}" name="pengaduan_id">
                         <div class="mb-3">
+                            <label for="foto_kegiatan" class="form-label fw-bold">Foto Kegiatan</label>
+                            <div>
+                                <a class="image-popup d-inline-block" href="{{ asset('/img/no-img-available.png') }}">
+                                    <img src="{{ asset('/img/no-img-available.png') }}"
+                                         class="img-preview d-block rounded border mb-2" alt="Image Preview">
+                                </a>
+                            </div>
+                            <input type="file" class="form-control @error('foto_tanggapan') is-invalid @enderror"
+                                   name="foto_tanggapan" id="foto_tanggapan" value="{{ old('foto_tanggapan') }}">
+                            <div class="form-text">Ukuran file maksimum 5 MB</div>
+                            @error('foto_tanggapan')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
                             <label for="isi" class="form-label fw-bold">Isi Tanggapan</label>
-                            <textarea class="form-control" name="isi" id="isi" rows="3"
+                            <textarea class="form-control" name="isi_tanggapan" id="isi_tanggapan" rows="3"
                                       placeholder="Ketik Tanggapan *" required></textarea>
                             <div id="catatan" class="form-text">
                                 Catatan: Tanggapan yang sudah dikirim tidak bisa diubah.
                             </div>
                         </div>
-                        <button onclick="" name="tanggapan" class="btn btn-dark">Kirim</button>
+                        <button type="submit" name="tanggapan" class="btn btn-dark">Kirim</button>
                     </form>
                 </div>
             </div>
@@ -181,6 +200,15 @@
                     <div class="col-sm-9">
                         <input readonly class="form-control-plaintext" id="ditanggapi-oleh"
                                value="{{ $tanggapan->user->name }}">
+                    </div>
+                </div>
+                <div class="mb-3 row border-bottom">
+                    <label for="foto_tanggapan" class="form-label fw-bold">Bukti Foto</label>
+                    <div>
+                        <a class="image-popup d-inline-block" href="{{ asset('storage/foto_tanggapan/' . $tanggapan->foto_tanggapan) }}">
+                            <img src="{{ asset('storage/foto_tanggapan/' . $tanggapan->foto_tanggapan) }}"
+                                 class="img-preview d-block rounded border mb-2" alt="Image Preview">
+                        </a>
                     </div>
                 </div>
                 <div class="mb-3 row border-bottom">
@@ -215,7 +243,44 @@
 @endsection
 
 @push('script')
+    <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.image-popup').magnificPopup({
+                type: 'image',
+                zoom: {
+                    enabled: true,
+                    duration: 300,
+                    easing: 'ease-in-out'
+                }
+            });
 
+            $('#foto_tanggapan').change(function () {
+                const file = this.files[0];
+                const reader = new FileReader();
+                const imagePreview = $('.img-preview');
+                const imagePopup = $('.image-popup');
+
+                reader.onload = function (e) {
+                    if (file.type.includes('image')) {
+                        imagePreview.attr('src', e.target.result);
+                        imagePopup.attr('href', e.target.result);
+                    }
+                };
+
+                if (file) {
+                    reader.readAsDataURL(file);
+                } else {
+                    const defaultImage = '{{ asset('/img/no-img-available.png') }}';
+                    imagePreview.attr('src', defaultImage);
+                    imagePopup.attr('href', defaultImage);
+                }
+            });
+
+        });
+    </script>
+    
     @if(session('message' ))
         <script>
             $(document).ready(function () {
