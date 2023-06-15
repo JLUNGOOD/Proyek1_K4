@@ -11,6 +11,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
@@ -242,6 +243,12 @@ class PengaduanController extends Controller
         $dateEnd = request()->dateEnd;
         $pengaduans = PengaduanModel::whereBetween('tanggal_kejadian', [$dateStart, $dateEnd])->get();
         $domPdf = Pdf::loadView('layouts.pengaduan_pdf', ['pengaduans' => $pengaduans, 'dateStart' => $dateStart, 'dateEnd' => $dateEnd]);
-        return $domPdf->stream();
+
+        $filename = 'laporan_pengaduan_' . $dateStart . '_to_' . $dateEnd . '.pdf';
+
+        Storage::disk('public')->put('pdf/' . $filename, $domPdf->output());
+
+        return response()->download(public_path('storage/pdf/' . $filename));
     }
+
 }
