@@ -145,6 +145,15 @@
                     </div>
                 @endif
                 <div class="mb-3 row border-bottom">
+                    <label for="foto_tanggapan" class="form-label fw-bold">Bukti Foto</label>
+                    <div>
+                        <a class="image-popup d-inline-block" href="{{ asset('storage/foto_tanggapan/' . $tanggapan->foto_tanggapan) }}">
+                            <img src="{{ asset('storage/foto_tanggapan/' . $tanggapan->foto_tanggapan) }}"
+                                 class="img-preview d-block rounded border mb-2" alt="Image Preview">
+                        </a>
+                    </div>
+                </div>
+                <div class="mb-3 row border-bottom">
                     <label for="isi-tanggapan" class="col-sm-3 col-form-label fw-bold">Tanggapan</label>
                     <div class="col-sm-9">
                         <textarea class="form-control-plaintext" id="isi-tanggapan"
