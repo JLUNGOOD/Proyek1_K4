@@ -13,6 +13,8 @@
         <div class="container">
             @if(url('admin/tanggapi/' . $pengaduan->id) == url()->current())
                 <a href="{{ url('admin/tanggapi') }}" class="btn btn-danger mt-3">Kembali</a>
+            @elseif(url('semua_pengaduan/' . $pengaduan->id) == url()->current())
+                <a href="{{ url('semua_pengaduan') }}" class="btn btn-danger mt-3">Kembali</a>
             @else
                 <a href="{{ url('pengaduan_saya') }}" class="btn btn-danger mt-3">Kembali</a>
             @endif
@@ -289,7 +291,7 @@
 
         });
     </script>
-    
+
     @if(session('message' ))
         <script>
             $(document).ready(function () {

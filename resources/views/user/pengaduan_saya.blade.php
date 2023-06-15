@@ -59,11 +59,7 @@
                     <div class="col-md-6 mb-3">
                         <div class="position-relative card ">
                             <div class="card-header d-flex justify-content-between">
-                                @if(auth()->user()->id == $pengaduan->user_id)
-                                    <b>Pengaduan Anda</b>
-                                @else
-                                    <span>Pengaduan</span>
-                                @endif
+                                Pengaduan Anda
                                 <div>
                                     @if($pengaduan->is_read == '1')
                                         <i class='fas fa-check-double text-info'></i>
@@ -142,11 +138,7 @@
             return ` <div class="col-md-6 mb-3">
                             <div class="position-relative card ">
                                 <div class="card-header d-flex justify-content-between">
-                                    ${
-                pengaduan["user_id"] == {{ auth()->user()->id }}
-                    ? "<b>Pengaduan Anda</b>"
-                    : "<span>Pengaduan</span>"
-            }
+                                Pengaduan Anda
                                     <div>
                                     ${
                 pengaduan["is_read"] == "1"
@@ -165,9 +157,12 @@
                                     <a class="btn btn-dark" href="/pengaduan_saya/${pengaduan['id']}">Lihat
                                         Rincian</a>
                                 </div>
-                                <div class="card-footer text-muted d-flex justify-content-between">
-                                    ${pengaduan['tanggal_kejadian']}
-                                    ${pengaduan['status'] == "1" ? "<span class='badge bg-success'>Solved</span>" :
+                                <div class="card-footer text-muted d-flex justify-content-between align-items-center">
+                                    <div>
+                                    <i class="far fa-calendar-alt pe-1"></i>
+                                    {{ $pengaduan->tanggal_kejadian ?  \Carbon\Carbon::parse($pengaduan->tanggal_kejadian)->format('d M Y') : 'Tidak Diketahui' }}
+            </div>
+${pengaduan['status'] == "1" ? "<span class='badge bg-success'>Solved</span>" :
                 pengaduan['status'] == "0" ? "<span class='badge bg-danger'>Unsolved</span>" :
                     pengaduan['status'] == "2" ? "<span class='badge bg-warning'>On Progress</span>" :
                         pengaduan['status'] == "3" ? "<span class='badge bg-secondary'>Rejected</span>" : ""

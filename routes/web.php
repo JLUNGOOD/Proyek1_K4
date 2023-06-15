@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/semua_pengaduan', [PengaduanController::class, 'showSemuaPengaduan']);
     Route::get('/semua_pengaduan/get_data', [PengaduanController::class, 'getDataSemuaPengaduan']);
+    Route::get('/semua_pengaduan/{id}', [PengaduanController::class, 'detailPengaduan']);
 
     Route::get('/ubah_profil', [UserController::class, 'editProfile'])->name('user.edit-profile');
     Route::post('/ubah_profil', [UserController::class, 'updateProfile'])->name('user.update-profile');

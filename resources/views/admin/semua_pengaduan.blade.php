@@ -77,7 +77,7 @@
                     {data:'tanggal_kejadian',name:'tanggal_kejadian'},
                     {data:'status',name:'status'},
                     {data:'id', orderable: false, searchable: false,
-                        render: (id, type, row) => `<a href="{{ url('/admin/tanggapi') }}/${id}" class="btn btn-sm btn-info mr-2"><i class="fa fa-eye mr-1"></i>Show</a>`
+                        render: (id, type, row) => `<a href="{{ url('/admin/tanggapi') }}/${id}" class="btn btn-sm btn-info mr-2"><i class="fa fa-eye pe-1"></i>Show</a>`
                     },
                 ]
             });

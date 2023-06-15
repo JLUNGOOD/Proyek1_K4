@@ -9,7 +9,7 @@
 @section('content')
     <div class="bg-white mt-lg shadow">
         <div class="container py-2">
-            <h2 class="my-4">Daftar Pengaduan</h2>
+            <h2 class="my-4">Semua Pengaduan</h2>
         </div>
     </div>
     <div class="container py-5">
@@ -53,7 +53,7 @@
                     {data:'tanggal_kejadian',name:'tanggal_kejadian'},
                     {data:'status', name: 'status'},
                     {data:'id', orderable: false, searchable: false,
-                        render: (id, type, row) => `<a href="{{ url('/pengaduan_saya') }}/${id}" class="btn btn-sm btn-info mr-2"><i class="fa fa-eye mr-1"></i>Show</a>`
+                        render: (id, type, row) => `<a href="{{ url('/semua_pengaduan') }}/${id}" class="btn btn-sm btn-info mr-2"><i class="fa fa-eye pe-1"></i>Show</a>`
                     },
                 ]
             });
