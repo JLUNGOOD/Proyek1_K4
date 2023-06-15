@@ -96,6 +96,62 @@
 
 @yield('content')
 
+<footer class="bg-dark text-white pt-5 pb-4">
+    <div class="container text-md-left">
+        <div class="row gy-3">
+            <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3 text-center">
+                <h5 class="text-uppercase mb-4 font-weight-bold text-aqua">PDAM Kota Malang</h5>
+                <p>Memberikan pelayanan terbaik bagi masyarakat dengan sepenuh hati,
+                    Guna terciptanya kesejahteraan masyarakat dan kemajuan bangsa
+                </p>
+            </div>
+
+            <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3 text-center">
+                <h5 class="text-uppercase mb-4 font-weight-bold text-aqua">Useful Links</h5>
+                <p>
+                    <a href="{{ url('/buat_pengaduan') }}" class="text-white text-decoration-none">Buat Pengaduan</a>
+                </p>
+                <p>
+                    <a href="{{ url('/pengaduan_saya') }}" class="text-white text-decoration-none">Daftar Pengaduan</a>
+                </p>
+            </div>
+
+            <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3 text-center">
+                <h5 class="text-uppercase mb-4 font-weight-bold text-aqua text-center">Contact Us</h5>
+                <p>
+                    <a href="https://goo.gl/maps/gqAHo2FVEK7ENg8C6"
+                       class="text-white text-decoration-none d-flex align-items-center justify-content-center">
+                        <i class="fas fa-location-arrow"></i>
+                        <span class="ms-2">JL. A Yani, No 53-55, Purwantoro, Kec. Blimbing, Kota Malang 65125</span>
+                    </a>
+                </p>
+                <p>
+                    <a href="http://alwanalawi1@gmail.com"
+                       class="text-white text-decoration-none d-flex align-items-center justify-content-center">
+                        <i class="fas fa-envelope"></i>
+                        <span class="ms-2">pdam@gmail.com</span>
+                    </a>
+                </p>
+                <p>
+                    <a href="https://wa.me/6285257146203"
+                       class="text-white text-decoration-none d-flex align-items-center justify-content-center">
+                        <i class="fas fa-phone"></i>
+                        <span class="ms-2">081244305712</span>
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <hr class="mb-4">
+
+        <div class="row text-center">
+            <p>Copyright 2022. All rights reserved by:
+                <a href="" class="text-decoration-none fw-bold text-aqua">Kelompok 4</a>
+            </p>
+        </div>
+    </div>
+</footer>
+
 <div class="modal fade" id="keluar" tabindex="-1" aria-labelledby="keluar" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

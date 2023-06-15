@@ -57,10 +57,12 @@ class AdminController extends Controller
 
     function list_tanggapi()
     {
-        $daftar_pengaduan = PengaduanModel::all();
-        return view('admin.tanggapi_laporan')
-            ->with('daftar_pengaduan', $daftar_pengaduan)
-            ->with('title', 'Tanggapi Laporan');
+//        $daftar_pengaduan = PengaduanModel::all();
+//        return view('admin.tanggapi_laporan')
+//            ->with('daftar_pengaduan', $daftar_pengaduan)
+//            ->with('title', 'Tanggapi Laporan');
+        return view('admin.semua_pengaduan')
+            ->with('title', 'Tanggapi Pengaduan');
     }
 
     function tambah_admin()

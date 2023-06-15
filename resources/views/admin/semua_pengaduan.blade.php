@@ -1,4 +1,4 @@
-@extends('user.layout')
+@extends('admin.layout')
 
 @push('css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
@@ -7,9 +7,17 @@
 @endpush
 
 @section('content')
-    <div class="bg-white mt-lg shadow">
-        <div class="container py-2">
-            <h2 class="my-4">Daftar Pengaduan</h2>
+    <div class="bg-white mt-lg pb-4 shadow">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center py-2">
+                <h2 class="my-4">Daftar Pengaduan</h2>
+                <p>
+                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#formCetakLaporan" aria-expanded="false" aria-controls="formCetakLaporan">
+                        Cetak Laporan
+                    </button>
+                </p>
+            </div>
+
         </div>
     </div>
     <div class="container py-5">
@@ -51,9 +59,9 @@
                     {data:'judul',name:'judul'},
                     {data:'alamat',name:'alamat'},
                     {data:'tanggal_kejadian',name:'tanggal_kejadian'},
-                    {data:'status', name: 'status'},
+                    {data:'status',name:'status'},
                     {data:'id', orderable: false, searchable: false,
-                        render: (id, type, row) => `<a href="{{ url('/pengaduan_saya') }}/${id}" class="btn btn-sm btn-info mr-2"><i class="fa fa-eye mr-1"></i>Show</a>`
+                        render: (id, type, row) => `<a href="{{ url('/admin/tanggapi') }}/${id}" class="btn btn-sm btn-info mr-2"><i class="fa fa-eye mr-1"></i>Show</a>`
                     },
                 ]
             });

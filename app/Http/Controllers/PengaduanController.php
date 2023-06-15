@@ -160,6 +160,15 @@ class PengaduanController extends Controller
             ->get();
         return DataTables::of($pengaduans)
             ->addIndexColumn()
+            ->addColumn('status', function ($row) {
+                $status = $row->status;
+                $html = $status == "1" ? "<span class='badge bg-success'>Solved</span>" :
+                    ($status == "0" ? "<span class='badge bg-danger'>Unsolved</span>" :
+                        ($status == "2" ? "<span class='badge bg-warning'>On Progress</span>" :
+                            ($status == "3" ? "<span class='badge bg-secondary'>Rejected</span>" : "")));
+                return $html;
+            })
+            ->rawColumns(['status'])
             ->make(true);
     }
 
