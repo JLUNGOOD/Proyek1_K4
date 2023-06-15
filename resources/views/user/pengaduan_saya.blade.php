@@ -53,7 +53,7 @@
         </div>
     </div>
     <div class="container py-5">
-        @if (count($daftar_pengaduan) == 0)
+        @if (count($daftar_pengaduan) != 0)
             <div class="row" id="list-pengaduan">
                 @foreach($daftar_pengaduan as $pengaduan)
                     <div class="col-md-6 mb-3">
@@ -162,7 +162,7 @@
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">${pengaduan['judul']}</h5>
-                                    <a class="btn btn-dark" href="/admin/tanggapi/${pengaduan['id']}">Lihat
+                                    <a class="btn btn-dark" href="/pengaduan_saya/${pengaduan['id']}">Lihat
                                         Rincian</a>
                                 </div>
                                 <div class="card-footer text-muted d-flex justify-content-between">
@@ -176,6 +176,18 @@
                             </div>
                         </div>
                         `;
+        }
+
+        // append and empty alert to list-pengaduan
+        function showEmptyData() {
+            $('#list-pengaduan').empty();
+            $('#list-pengaduan').append(`
+            <div class="text-center">
+                <img src="{{ asset('img/undraw_No_data_re_kwbl.png') }}" width="300px" class="img-fluid" alt="No Data"
+                     loading="lazy">
+                <h4 class="mt-3">Tidak ada data yang tersedia.</h4>
+            </div>
+            `);
         }
 
         function switchActiveButton(index) {
@@ -206,6 +218,10 @@
                     sortByResponded: sortByResponded
                 },
                 success: (response) => {
+                    if (response['pengaduans'].length === 0) {
+                        showEmptyData();
+                        return;
+                    }
                     $('#list-pengaduan').empty();
                     response['pengaduans'].forEach((pengaduan) => {
                         let temp_html = getTempHtml(pengaduan);
@@ -227,6 +243,10 @@
                     sortByResponded: sortByResponded
                 },
                 success: (response) => {
+                    if (response['pengaduans'].length === 0) {
+                        showEmptyData();
+                        return;
+                    }
                     $('#list-pengaduan').empty();
                     response['pengaduans'].forEach((pengaduan) => {
                         let temp_html = getTempHtml(pengaduan);
@@ -248,6 +268,10 @@
                     sortByResponded: sortByResponded
                 },
                 success: (response) => {
+                    if (response['pengaduans'].length === 0) {
+                        showEmptyData();
+                        return;
+                    }
                     $('#list-pengaduan').empty();
                     response['pengaduans'].forEach((pengaduan) => {
                         let temp_html = getTempHtml(pengaduan);
@@ -287,6 +311,10 @@
                     sortByResponded: sortByResponded
                 },
                 success: (response) => {
+                    if (response['pengaduans'].length === 0) {
+                        showEmptyData();
+                        return;
+                    }
                     $('#list-pengaduan').empty();
                     response['pengaduans'].forEach((pengaduan) => {
                         let temp_html = getTempHtml(pengaduan);
@@ -308,6 +336,10 @@
                     sortByResponded: sortByResponded
                 },
                 success: (response) => {
+                    if (response['pengaduans'].length === 0) {
+                        showEmptyData();
+                        return;
+                    }
                     $('#list-pengaduan').empty();
                     response['pengaduans'].forEach((pengaduan) => {
                         let temp_html = getTempHtml(pengaduan);
@@ -329,6 +361,10 @@
                     sortByResponded: sortByResponded
                 },
                 success: (response) => {
+                    if (response['pengaduans'].length === 0) {
+                        showEmptyData();
+                        return;
+                    }
                     $('#list-pengaduan').empty();
                     response['pengaduans'].forEach((pengaduan) => {
                         let temp_html = getTempHtml(pengaduan);
@@ -351,6 +387,10 @@
                     sortByResponded: sortByResponded
                 },
                 success: (response) => {
+                    if (response['pengaduans'].length === 0) {
+                        showEmptyData();
+                        return;
+                    }
                     $('#list-pengaduan').empty();
                     response['pengaduans'].forEach((pengaduan) => {
                         let temp_html = getTempHtml(pengaduan);
