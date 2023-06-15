@@ -52,6 +52,8 @@ Route::middleware('auth')->group(function () {
 
         Route::post('/admin/tanggapan/update_status', [PengaduanController::class, 'updateStatus']);
 
+        Route::post('/admin/export_pdf', [PengaduanController::class, 'exportPDF']);
+
         Route::get('/admin/kegiatan', [AdminController::class, 'list_kegiatan'])->name('admin.list-kegiatan');
         Route::get('/admin/tambah_kegiatan', [AdminController::class, 'createKegiatan'])
             ->name('admin.create-kegiatan');

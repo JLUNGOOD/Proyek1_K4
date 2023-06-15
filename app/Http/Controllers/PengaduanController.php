@@ -6,6 +6,7 @@ use App\Models\KategoriModel;
 use App\Models\PengaduanModel;
 use App\Models\TanggapanModel;
 use App\Services\FileService;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -233,5 +234,14 @@ class PengaduanController extends Controller
             ->select('pengaduan.*', 'tanggapan.is_read as tanggapan_is_read')
             ->get();
         return response()->json(['pengaduans' => $pengaduans]);
+    }
+
+    public function exportPdf()
+    {
+        $dateStart = request()->dateStart;
+        $dateEnd = request()->dateEnd;
+        $pengaduans = PengaduanModel::whereBetween('tanggal_kejadian', [$dateStart, $dateEnd])->get();
+        $domPdf = Pdf::loadView('layouts.pengaduan_pdf', ['pengaduans' => $pengaduans, 'dateStart' => $dateStart, 'dateEnd' => $dateEnd]);
+        return $domPdf->stream();
     }
 }

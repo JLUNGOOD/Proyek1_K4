@@ -17,7 +17,23 @@
                     </button>
                 </p>
             </div>
-
+            <div class="collapse" id="formCetakLaporan">
+                <div class="card card-body">
+                    <form class="form-row d-flex gap-2" method="POST" action="{{ url('/admin/export_pdf') }}">
+                        @csrf
+                        <div class="form-group col">
+                            <input type="date" class="form-control" name="dateStart" id="exportDateStart" required>
+                        </div>
+                        <div class="form-group col-1 mt-1 text-center">
+                            <label>-----</label>
+                        </div>
+                        <div class="form-group col">
+                            <input type="date" class="form-control" name="dateEnd" id="exportDateEnd" required>
+                        </div>
+                        <button class="btn btn-danger">Cetak Pdf</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <div class="container py-5">
