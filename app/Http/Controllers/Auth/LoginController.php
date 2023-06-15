@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -78,12 +79,28 @@ class LoginController extends Controller
             : redirect('/');
     }
 
+    protected function redirectToAdmin()
+    {
+        return '/admin';
+    }
+
+    protected function redirectToUser()
+    {
+        return '/';
+    }
     public function redirectPath()
     {
         if (method_exists($this, 'redirectTo')) {
             return $this->redirectTo();
         }
 
-        return property_exists($this, 'redirectTo') ? $this->redirectTo : '/';
+        if (Auth::check() && Auth::user()->role == '1') {
+            return '/admin';
+        } else if (Auth::check() && Auth::user()->role == '2') {
+            return '/admin';
+        } else {
+            return '/';
+        }
     }
+
 }
