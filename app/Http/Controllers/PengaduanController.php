@@ -91,6 +91,7 @@ class PengaduanController extends Controller
     {
         $pengaduans = PengaduanModel::join('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
             ->select('pengaduan.*', 'tanggapan.is_read as tanggapan_is_read')
+            ->where('pengaduan.user_id', auth()->id())
             ->get();
         return response()->json(['pengaduans' => $pengaduans]);
     }
@@ -100,6 +101,7 @@ class PengaduanController extends Controller
         $pengaduans = PengaduanModel::leftJoin('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
             ->whereNull('tanggapan.pengaduan_id')
             ->select('pengaduan.id', 'pengaduan.judul', 'pengaduan.isi', 'pengaduan.tanggal_kejadian', 'pengaduan.user_id', 'pengaduan.is_read', 'pengaduan.status')
+            ->where('pengaduan.user_id', auth()->id())
             ->get();
         return response()->json(['pengaduans' => $pengaduans]);
     }
@@ -107,15 +109,19 @@ class PengaduanController extends Controller
     function searchPengaduan(Request $request)
     {
         $keyword = $request->keyword;
+        $userId = auth()->id();
+
         if ($request['sortByResponded'] == 0) {
             // Perform left join
             $leftJoin = PengaduanModel::leftJoin('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
-                ->select('pengaduan.*', 'tanggapan.is_read as tanggapan_is_read');
+                ->select('pengaduan.*', 'tanggapan.is_read as tanggapan_is_read')
+                ->where('pengaduan.user_id', $userId);
 
             // Perform right join
             $rightJoin = PengaduanModel::rightJoin('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
                 ->select('pengaduan.*', 'tanggapan.is_read as tanggapan_is_read')
-                ->whereNull('pengaduan.id');
+                ->whereNull('pengaduan.id')
+                ->where('pengaduan.user_id', $userId);
 
             // Perform union of left join and right join
             $pengaduans = $leftJoin->union($rightJoin)
@@ -124,26 +130,30 @@ class PengaduanController extends Controller
         } elseif ($request['sortByResponded'] == 1) {
             $pengaduans = PengaduanModel::join('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
                 ->where('pengaduan.judul', 'like', '%' . $keyword . '%')
+                ->where('pengaduan.user_id', $userId)
                 ->select('pengaduan.*', 'tanggapan.is_read as tanggapan_is_read')
                 ->get();
         } elseif ($request['sortByResponded'] == 2) {
             $pengaduans = PengaduanModel::whereDoesntHave('tanggapan', function ($query) use ($keyword) {
-                $query->Where('judul', 'like', '%' . $keyword . '%');
+                $query->where('judul', 'like', '%' . $keyword . '%');
             })
                 ->where(function ($query) use ($keyword) {
                     $query->where('judul', 'like', '%' . $keyword . '%');
                 })
+                ->where('user_id', $userId)
                 ->select('pengaduan.*')
                 ->get();
         }
+
         return response()->json(['pengaduans' => $pengaduans]);
     }
+
 
     public function pengaduanSaya()
     {
         $user = Auth::user();
         $daftar_pengaduan = PengaduanModel::leftJoin('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
-            ->where('pengaduan.user_id', $user->id) 
+            ->where('pengaduan.user_id', $user->id)
             ->select('pengaduan.*', 'tanggapan.is_read as tanggapan_is_read')
             ->get();
 
@@ -210,6 +220,7 @@ class PengaduanController extends Controller
         $pengaduans = PengaduanModel::leftJoin('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
             ->where('pengaduan.status', '=', '1')
             ->select('pengaduan.*', 'tanggapan.is_read as tanggapan_is_read')
+            ->where('pengaduan.user_id', auth()->id())
             ->get();
         return response()->json(['pengaduans' => $pengaduans]);
     }
@@ -219,6 +230,7 @@ class PengaduanController extends Controller
         $pengaduans = PengaduanModel::leftJoin('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
             ->where('pengaduan.status', '=', '0')
             ->select('pengaduan.*', 'tanggapan.is_read as tanggapan_is_read')
+            ->where('pengaduan.user_id', auth()->id())
             ->get();
         return response()->json(['pengaduans' => $pengaduans]);
     }
@@ -228,6 +240,7 @@ class PengaduanController extends Controller
         $pengaduans = PengaduanModel::leftJoin('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
             ->where('pengaduan.status', '=', '2')
             ->select('pengaduan.*', 'tanggapan.is_read as tanggapan_is_read')
+            ->where('pengaduan.user_id', auth()->id())
             ->get();
         return response()->json(['pengaduans' => $pengaduans]);
     }
@@ -237,6 +250,7 @@ class PengaduanController extends Controller
         $pengaduans = PengaduanModel::leftJoin('tanggapan', 'pengaduan.id', '=', 'tanggapan.pengaduan_id')
             ->where('pengaduan.status', '=', '3')
             ->select('pengaduan.*', 'tanggapan.is_read as tanggapan_is_read')
+            ->where('pengaduan.user_id', auth()->id())
             ->get();
         return response()->json(['pengaduans' => $pengaduans]);
     }
