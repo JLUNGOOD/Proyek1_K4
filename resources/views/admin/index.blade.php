@@ -42,11 +42,11 @@
                     <div class="card-text d-flex justify-content-around">
                         <div class="d-flex flex-column align-items-center">
                             <h5>Belum Direspon</h5>
-                            <p>{{ $pengaduans['today_belum_direspon'] }}</p>
+                            <p>{{ $pengaduans['bulan_ini_belum_direspon'] }}</p>
                         </div>
                         <div class="d-flex flex-column align-items-center">
                             <h5>Direspon</h5>
-                            <p>{{ $pengaduans['today_sudah_direspon'] }}</p>
+                            <p>{{ $pengaduans['bulan_ini_sudah_direspon'] }}</p>
                         </div>
                     </div>
                 </div>
