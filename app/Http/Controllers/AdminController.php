@@ -186,6 +186,8 @@ class AdminController extends Controller
         $tanggapan->isi_tanggapan = $request['isi_tanggapan'];
 
         $tanggapan->save();
+
+        PengaduanModel::where('id', $request['pengaduan_id'])->update(['status' => $request['status']]);
         return redirect('/admin/tanggapi/' . $request['pengaduan_id'])->with('message', 'Tanggapan berhasil dikirim');
     }
 

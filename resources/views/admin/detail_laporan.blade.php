@@ -24,9 +24,9 @@
                 @if(auth()->user()->role == 3)
                     @if($pengaduan->status == 0)
                         <span class="badge py-2 px-3 rounded-pill bg-dark">Unsolved</span>
-                    @elseif($pengaduan->status == 1)
-                        <span class="badge py-2 px-3 rounded-pill bg-warning">On progress</span>
                     @elseif($pengaduan->status == 2)
+                        <span class="badge py-2 px-3 rounded-pill bg-warning">On progress</span>
+                    @elseif($pengaduan->status == 1)
                         <span class="badge py-2 px-3 rounded-pill bg-success">Solved</span>
                     @elseif($pengaduan->status == 3)
                         <span class="badge py-2 px-3 rounded-pill bg-danger">Rejected</span>
@@ -176,6 +176,21 @@
                         @csrf
                         <input type="hidden" value="{{ auth()->user()->id ?? null }}" name="user_id">
                         <input type="hidden" value="{{ $pengaduan->id }}" name="pengaduan_id">
+                        <div class="d-flex gap-2">
+                            <b>Status : </b>
+                            <label class="form-check">
+                                <input type="radio" name="status" value="1"
+                                       class="form-check-input"> Solved
+                            </label>
+                            <label class="form-check">
+                                <input type="radio" name="status" value="2"
+                                       class="form-check-input"> On Progress
+                            </label>
+                            <label class="form-check">
+                                <input type="radio" name="status" value="3"
+                                       class="form-check-input"> Ditolak
+                            </label>
+                        </div>
                         <div class="mb-3">
                             <label for="foto_kegiatan" class="form-label fw-bold">Foto Kegiatan</label>
                             <div>
