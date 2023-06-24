@@ -51,14 +51,25 @@ class AdminController extends Controller
                 ->whereMonth('created_at', $month)
                 ->count()
         ];
+
+        // for displaying in chart dropdown
+        $months = [];
+        for ($month = 1; $month <= 12; $month++) {
+            $date = Carbon::create(null, $month, 1);
+            $months[] = $date->locale('your_locale')->monthName;
+        }
+
+        $selected_month = request('month') ?? Carbon::now()->month;
         foreach ($categories as $i => $category) {
             $categories_name[$i] = $category->name;
-            $pengaduan_count[$i] = PengaduanModel::where('kategori_id', $category->id)->count();
+            $pengaduan_count[$i] = PengaduanModel::where('kategori_id', $category->id)->whereMonth('created_at', $selected_month)->count();
         }
         return view('admin.index')
             ->with('categories_name', json_encode($categories_name))
             ->with('pengaduan_count', json_encode($pengaduan_count))
             ->with('pengaduans', $pengaduans)
+            ->with('months', $months)
+            ->with('selected_month', $selected_month)
             ->with('title', 'Dashboard Admin');
     }
 

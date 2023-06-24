@@ -54,6 +54,19 @@
         </div>
 
         <div class="w-75">
+            <h3 class="text-center fw-bold py-3">Total Laporan Berdasarkan Kategori Pada Bulan {{ $selected_month }}</h3>
+            <div class="d-flex justify-content-between w-100 container">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Pilih Bulan
+                    </button>
+                    <ul class="dropdown-menu" style="z-index: 99999">
+                        @foreach($months as $i => $month)
+                            <li><a class="dropdown-item" href="{{ url('admin?month=' . ++$i)  }}">{{ $month }}</a></li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
             <h3 class="text-center fw-bold py-3">Total Laporan Berdasarkan Kategori</h3>
             <canvas id="myChart"></canvas>
         </div>
@@ -72,13 +85,13 @@
         label: 'Banyak Pengaduan',
         data: {{ $pengaduan_count }},
         backgroundColor: [
-            'rgba(10, 125, 255, 1)', 
-            'rgba(255, 99, 132, 1)', 
-            'rgba(54, 162, 235, 1)', 
-            'rgba(255, 206, 86, 1)', 
-            'rgba(75, 192, 192, 1)', 
-            'rgba(153, 102, 255, 1)', 
-            'rgba(255, 159, 64, 1)' 
+            'rgba(10, 125, 255, 1)',
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
         ],
         borderWidth: 1
         }]
@@ -103,8 +116,8 @@
                     const style = meta.controller.getStyle(i);
 
                     return {
-                    text: label + ': ' + data.datasets[0].data[i], 
-                    fillStyle: style.backgroundColor, 
+                    text: label + ': ' + data.datasets[0].data[i],
+                    fillStyle: style.backgroundColor,
                     strokeStyle: style.borderColor,
                     lineWidth: style.borderWidth,
                     hidden: isNaN(data.datasets[0].data[i]) || meta.data[i].hidden,
