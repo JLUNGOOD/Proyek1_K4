@@ -262,14 +262,17 @@ class PengaduanController extends Controller
         $dateStart = request()->dateStart;
         $dateEnd = request()->dateEnd;
         $pengaduans = PengaduanModel::whereBetween('tanggal_kejadian', [$dateStart, $dateEnd])->get();
-
+        $tanggapan = TanggapanModel::whereHas('pengaduan', function ($query) use ($dateStart, $dateEnd) {
+            $query->whereBetween('tanggal_kejadian', [$dateStart, $dateEnd]);
+        })->get();
+        
         $options = new Options();
         $options->set('defaultPaperSize', 'A4');
         $options->set('defaultPaperOrientation', 'landscape'); 
 
         $dompdf = new Dompdf($options);
         
-        $pdf = view('layouts.pengaduan_pdf', ['pengaduans' => $pengaduans, 'dateStart' => $dateStart, 'dateEnd' => $dateEnd]);
+        $pdf = view('layouts.pengaduan_pdf', ['pengaduans' => $pengaduans, 'tanggapan' => $tanggapan, 'dateStart' => $dateStart, 'dateEnd' => $dateEnd]);
         
         $dompdf->loadHtml($pdf->render());
         
