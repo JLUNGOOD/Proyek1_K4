@@ -60,9 +60,16 @@ class AdminController extends Controller
         }
 
         $selected_month = request('month') ?? Carbon::now()->month;
-        foreach ($categories as $i => $category) {
-            $categories_name[$i] = $category->name;
-            $pengaduan_count[$i] = PengaduanModel::where('kategori_id', $category->id)->whereMonth('created_at', $selected_month)->count();
+        if ($selected_month == 13) {
+            foreach ($categories as $i => $category) {
+                $categories_name[$i] = $category->name;
+                $pengaduan_count[$i] = PengaduanModel::where('kategori_id', $category->id)->count();
+            }
+        } else {
+            foreach ($categories as $i => $category) {
+                $categories_name[$i] = $category->name;
+                $pengaduan_count[$i] = PengaduanModel::where('kategori_id', $category->id)->whereMonth('created_at', $selected_month)->count();
+            }
         }
         return view('admin.index')
             ->with('categories_name', json_encode($categories_name))

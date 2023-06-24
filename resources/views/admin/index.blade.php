@@ -54,7 +54,7 @@
         </div>
 
         <div class="w-75">
-            <h3 class="text-center fw-bold py-3">Total Laporan Berdasarkan Kategori Pada Bulan {{ $selected_month }}</h3>
+            <h3 class="text-center fw-bold py-3">Total Laporan Berdasarkan Kategori Pada {{ ($selected_month == 13) ? 'Semua Bulan' : 'Bulan ' . $selected_month }}</h3>
             <div class="d-flex justify-content-between w-100 container">
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -64,10 +64,10 @@
                         @foreach($months as $i => $month)
                             <li><a class="dropdown-item" href="{{ url('admin?month=' . ++$i)  }}">{{ $month }}</a></li>
                         @endforeach
+                            <li><a class="dropdown-item" href="{{ url('admin?month=13')  }}">Semua Bulan</a></li>
                     </ul>
                 </div>
             </div>
-            <h3 class="text-center fw-bold py-3">Total Laporan Berdasarkan Kategori</h3>
             <canvas id="myChart"></canvas>
         </div>
     </div>
