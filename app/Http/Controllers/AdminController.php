@@ -30,6 +30,7 @@ class AdminController extends Controller
     function index()
     {
         $today = Carbon::today();
+        $month = Carbon::now()->month;
         $categories = KategoriModel::all();
         $categories_name = [];
         $pengaduan_count = [];
@@ -42,6 +43,12 @@ class AdminController extends Controller
                 ->count(),
             'today_belum_direspon' => PengaduanModel::whereDoesntHave('tanggapan')
                 ->whereDate('created_at', $today)
+                ->count(),
+            'bulan_ini_belum_direspon' => PengaduanModel::whereDoesntHave('tanggapan')
+                ->whereMonth('created_at', $month)
+                ->count(),
+            'bulan_ini_sudah_direspon' => PengaduanModel::whereHas('tanggapan')
+                ->whereMonth('created_at', $month)
                 ->count()
         ];
         foreach ($categories as $i => $category) {
@@ -108,7 +115,7 @@ class AdminController extends Controller
 
     function delete_user($id)
     {
-        dd($id);
+        // dd($id);
         UserModel::destroy($id);
         return redirect('/admin/list_admin')->with('message', 'User berhasil dihapus');
     }

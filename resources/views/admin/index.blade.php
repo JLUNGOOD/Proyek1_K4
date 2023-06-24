@@ -6,10 +6,10 @@
         <div class="d-flex justify-content-center gap-4">
             <div class="card border border-5 border-warning" style="width: 18rem; background-color: #f5c99f">
                 <div class="card-body">
-                    <h4 class="card-title fw-bold text-center">Laporan Hari Ini</h4>
+                    <h4 class="card-title fw-bold text-center">Pengaduan Hari Ini</h4>
                     <div class="card-text d-flex justify-content-around">
                         <div class="d-flex flex-column align-items-center">
-                            <h5>Baru</h5>
+                            <h5>Belum Direspon</h5>
                             <p>{{ $pengaduans['today_belum_direspon'] }}</p>
                         </div>
                         <div class="d-flex flex-column align-items-center">
@@ -22,15 +22,31 @@
 
             <div class="card border border-5 border-primary" style="width: 18rem; background-color: #75a9ff">
                 <div class="card-body">
-                    <h4 class="card-title fw-bold text-center">Total Laporan</h4>
+                    <h4 class="card-title fw-bold text-center">Total Pengaduan</h4>
                     <div class="card-text d-flex justify-content-around">
                         <div class="d-flex flex-column align-items-center">
-                            <h5>Baru</h5>
+                            <h5>Belum Direspon</h5>
                             <p>{{ $pengaduans['total_belum_direspon'] }}</p>
                         </div>
                         <div class="d-flex flex-column align-items-center">
                             <h5>Direspon</h5>
                             <p>{{ $pengaduans['total_sudah_direspon'] }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border border-5 border-success" style="width: 18rem; background-color: #08f100">
+                <div class="card-body">
+                    <h4 class="card-title fw-bold text-center">Pengaduan Bulan Ini</h4>
+                    <div class="card-text d-flex justify-content-around">
+                        <div class="d-flex flex-column align-items-center">
+                            <h5>Belum Direspon</h5>
+                            <p>{{ $pengaduans['today_belum_direspon'] }}</p>
+                        </div>
+                        <div class="d-flex flex-column align-items-center">
+                            <h5>Direspon</h5>
+                            <p>{{ $pengaduans['today_sudah_direspon'] }}</p>
                         </div>
                     </div>
                 </div>
