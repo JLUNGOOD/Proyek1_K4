@@ -129,6 +129,7 @@
     </div>
 @endsection
 
+@if (count($daftar_pengaduan) != 0)
 @push('script')
     <script>
         let sortByResponded = 0; // 0 = unsorted, 1 = responded, 2 = not responded
@@ -397,3 +398,4 @@ ${pengaduan['status'] == "1" ? "<span class='badge bg-success'>Solved</span>" :
         }
     </script>
 @endpush
+@endif
