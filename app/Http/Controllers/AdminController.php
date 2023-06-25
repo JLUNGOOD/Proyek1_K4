@@ -29,11 +29,14 @@ class AdminController extends Controller
 
     function index()
     {
+        $user = auth()->user();
         $today = Carbon::today();
         $month = Carbon::now()->month;
         $categories = KategoriModel::all();
         $categories_name = [];
         $pengaduan_count = [];
+        $total_user = UserModel::count();
+        $user_today = UserModel::whereDate('created_at', $today)->count();
         $pengaduans = [
             'total' => PengaduanModel::all()->count(),
             'total_sudah_direspon' => PengaduanModel::whereHas('tanggapan')->count(),
@@ -72,12 +75,15 @@ class AdminController extends Controller
             }
         }
         return view('admin.index')
+            ->with('user', $user)
             ->with('categories_name', json_encode($categories_name))
             ->with('pengaduan_count', json_encode($pengaduan_count))
             ->with('pengaduans', $pengaduans)
             ->with('months', $months)
             ->with('selected_month', $selected_month)
-            ->with('title', 'Dashboard Admin');
+            ->with('title', 'Dashboard Admin')
+            ->with('total_user', $total_user)
+            ->with('user_today', $user_today);
     }
 
     function list_tanggapi()
