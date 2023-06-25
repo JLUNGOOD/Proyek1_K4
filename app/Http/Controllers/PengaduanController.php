@@ -7,6 +7,8 @@ use App\Models\PengaduanModel;
 use App\Models\TanggapanModel;
 use App\Services\FileService;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -260,13 +262,28 @@ class PengaduanController extends Controller
         $dateStart = request()->dateStart;
         $dateEnd = request()->dateEnd;
         $pengaduans = PengaduanModel::whereBetween('tanggal_kejadian', [$dateStart, $dateEnd])->get();
-        $domPdf = Pdf::loadView('layouts.pengaduan_pdf', ['pengaduans' => $pengaduans, 'dateStart' => $dateStart, 'dateEnd' => $dateEnd]);
+        $tanggapan = TanggapanModel::whereHas('pengaduan', function ($query) use ($dateStart, $dateEnd) {
+            $query->whereBetween('tanggal_kejadian', [$dateStart, $dateEnd]);
+        })->get();
+        
+        $options = new Options();
+        $options->set('defaultPaperSize', 'A4');
+        $options->set('defaultPaperOrientation', 'landscape'); 
+
+        $dompdf = new Dompdf($options);
+        
+        $pdf = view('layouts.pengaduan_pdf', ['pengaduans' => $pengaduans, 'tanggapan' => $tanggapan, 'dateStart' => $dateStart, 'dateEnd' => $dateEnd]);
+        
+        $dompdf->loadHtml($pdf->render());
+        
+        $dompdf->render();
 
         $filename = 'laporan_pengaduan_' . $dateStart . '_to_' . $dateEnd . '.pdf';
 
-        Storage::disk('public')->put('pdf/' . $filename, $domPdf->output());
+        Storage::disk('public')->put('pdf/' . $filename, $dompdf->output());
 
         return response()->download(public_path('storage/pdf/' . $filename));
     }
+
 
 }

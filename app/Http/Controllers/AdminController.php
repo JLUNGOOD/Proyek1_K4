@@ -29,10 +29,14 @@ class AdminController extends Controller
 
     function index()
     {
+        $user = auth()->user();
         $today = Carbon::today();
+        $month = Carbon::now()->month;
         $categories = KategoriModel::all();
         $categories_name = [];
         $pengaduan_count = [];
+        $total_user = UserModel::count();
+        $user_today = UserModel::whereDate('created_at', $today)->count();
         $pengaduans = [
             'total' => PengaduanModel::all()->count(),
             'total_sudah_direspon' => PengaduanModel::whereHas('tanggapan')->count(),
@@ -42,17 +46,44 @@ class AdminController extends Controller
                 ->count(),
             'today_belum_direspon' => PengaduanModel::whereDoesntHave('tanggapan')
                 ->whereDate('created_at', $today)
+                ->count(),
+            'bulan_ini_belum_direspon' => PengaduanModel::whereDoesntHave('tanggapan')
+                ->whereMonth('created_at', $month)
+                ->count(),
+            'bulan_ini_sudah_direspon' => PengaduanModel::whereHas('tanggapan')
+                ->whereMonth('created_at', $month)
                 ->count()
         ];
-        foreach ($categories as $i => $category) {
-            $categories_name[$i] = $category->name;
-            $pengaduan_count[$i] = PengaduanModel::where('kategori_id', $category->id)->count();
+
+        // for displaying in chart dropdown
+        $months = [];
+        for ($month = 1; $month <= 12; $month++) {
+            $date = Carbon::create(null, $month, 1);
+            $months[] = $date->locale('your_locale')->monthName;
+        }
+
+        $selected_month = request('month') ?? Carbon::now()->month;
+        if ($selected_month == 13) {
+            foreach ($categories as $i => $category) {
+                $categories_name[$i] = $category->name;
+                $pengaduan_count[$i] = PengaduanModel::where('kategori_id', $category->id)->count();
+            }
+        } else {
+            foreach ($categories as $i => $category) {
+                $categories_name[$i] = $category->name;
+                $pengaduan_count[$i] = PengaduanModel::where('kategori_id', $category->id)->whereMonth('created_at', $selected_month)->count();
+            }
         }
         return view('admin.index')
+            ->with('user', $user)
             ->with('categories_name', json_encode($categories_name))
             ->with('pengaduan_count', json_encode($pengaduan_count))
             ->with('pengaduans', $pengaduans)
-            ->with('title', 'Dashboard Admin');
+            ->with('months', $months)
+            ->with('selected_month', $selected_month)
+            ->with('title', 'Dashboard Admin')
+            ->with('total_user', $total_user)
+            ->with('user_today', $user_today);
     }
 
     function list_tanggapi()
@@ -108,7 +139,7 @@ class AdminController extends Controller
 
     function delete_user($id)
     {
-        dd($id);
+        // dd($id);
         UserModel::destroy($id);
         return redirect('/admin/list_admin')->with('message', 'User berhasil dihapus');
     }
@@ -161,6 +192,8 @@ class AdminController extends Controller
         $tanggapan->isi_tanggapan = $request['isi_tanggapan'];
 
         $tanggapan->save();
+
+        PengaduanModel::where('id', $request['pengaduan_id'])->update(['status' => $request['status']]);
         return redirect('/admin/tanggapi/' . $request['pengaduan_id'])->with('message', 'Tanggapan berhasil dikirim');
     }
 
